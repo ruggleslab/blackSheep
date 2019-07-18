@@ -1,1 +1,3 @@
-
+from outliers import make_outliers_table
+from outliers import compare_groups_outliers
+from outliers import run_outliers
