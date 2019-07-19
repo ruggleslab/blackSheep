@@ -121,7 +121,7 @@ def testDifferentGroupsOutliers(
     group1_list: SampleList,
     outlier_table: DataFrame,
     correction_type: str = "Benjamini-Hochberg",
-) -> Series:
+) -> Tuple[Series, DataFrame]:
     """
 
     :param group0_list: List of samples in group of interest

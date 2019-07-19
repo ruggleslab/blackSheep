@@ -1,4 +1,3 @@
-from typing import Optional, List
 from pandas import DataFrame
 import pandas as pd
 import numpy as np
@@ -8,7 +7,12 @@ from scipy.cluster import hierarchy
 from scipy.spatial.distance import pdist
 
 
-def computeOrder(df, optimal=True, dist_method="euclidean", cluster_method="average"):
+def computeOrder(
+    df: DataFrame,
+    optimal: bool = True,
+    dist_method: str = "euclidean",
+    cluster_method: str = "average",
+):
 
     dist_mat = pdist(df, metric=dist_method)
     link_mat = hierarchy.linkage(dist_mat, method=cluster_method)
@@ -22,12 +26,12 @@ def computeOrder(df, optimal=True, dist_method="euclidean", cluster_method="aver
 
 
 def clustermap(
-    df,
-    dist_method="euclidean",
-    cluster_method="average",
-    col_cluster=True,
-    row_cluster=True,
-    optimal=True,
+    df: DataFrame,
+    dist_method: str = "euclidean",
+    cluster_method: str = "average",
+    col_cluster: bool = True,
+    row_cluster: bool = True,
+    optimal: bool = True,
     **heatmap_kws
 ):
 

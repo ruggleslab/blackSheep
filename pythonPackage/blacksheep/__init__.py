@@ -6,6 +6,5 @@ __all__ = [
     "make_outliers_table",
     "compare_groups_outliers",
     "run_outliers",
-    "write_gene_lists",
     "plot_heatmap",
 ]
