@@ -1,24 +1,36 @@
+from typing import Optional, List
 from pandas import DataFrame
 import pandas as pd
 import numpy as np
-
-import catheat
 import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import pdist
 
 
+def computeOrder(df, optimal=True, dist_method="euclidean", cluster_method="average"):
+
+    dist_mat = pdist(df, metric=dist_method)
+    link_mat = hierarchy.linkage(dist_mat, method=cluster_method)
+
+    if optimal == True:
+        return hierarchy.leaves_list(
+            hierarchy.optimal_leaf_ordering(link_mat, dist_mat)
+        )
+    else:
+        return hierarchy.leaves_list(link_mat)
+
+
 def clustermap(
-        df: DataFrame,
-        fillna: float = 0,
-        dist_method: str = "euclidean",
-        cluster_method: str = "average",
-        col_cluster: bool = True,
-        row_cluster: bool = True,
-        optimal: bool = True,
-        **heatmap_kws
+    df,
+    dist_method="euclidean",
+    cluster_method="average",
+    col_cluster=True,
+    row_cluster=True,
+    optimal=True,
+    **heatmap_kws
 ):
-    df = df.fillna(fillna).transpose()
+
     if row_cluster == True:
         row_order = computeOrder(df, optimal, dist_method, cluster_method)
         row_order = [df.index[i] for i in row_order]
@@ -39,5 +51,4 @@ def clustermap(
 
 
 def plot_heatmap():
-    
-    return
+    pass

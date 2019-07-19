@@ -1,3 +1,11 @@
-from outliers import make_outliers_table
-from outliers import compare_groups_outliers
-from outliers import run_outliers
+from .classes import qValues, OutlierTable
+from .outliers import make_outliers_table, compare_groups_outliers, run_outliers
+from .visualization import plot_heatmap
+
+__all__ = [
+    "make_outliers_table",
+    "compare_groups_outliers",
+    "run_outliers",
+    "write_gene_lists",
+    "plot_heatmap",
+]
