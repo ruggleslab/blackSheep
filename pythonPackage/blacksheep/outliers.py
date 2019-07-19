@@ -201,7 +201,8 @@ def getSampleLists(
     """
 
     :param annotations: A DataFrame with samples as the index and annotations as columns. Each
-    column must contain exactly 2 different values, and optionally missing values.
+    column must contain exactly 2 different values, and optionally missing values. Columns with
+    less or more than 2 options will be ignored.
     :param col: Which column to define groups for.
     :return: A label for group0, the list of samples in group0, a label for group1 and the list
     of samples in group1.
@@ -215,7 +216,7 @@ def getSampleLists(
 
 
 def filterOutliers(
-    df: DataFrame, group0_list: SampleList, group1_list: SampleList, frac_filter: float
+    df: DataFrame, group0_list: SampleList, group1_list: SampleList, frac_filter: Optional[float]
 ) -> DataFrame:
     """
 
@@ -224,7 +225,7 @@ def filterOutliers(
     :param group0_list: List of samples in the group of interest.
     :param group1_list: List of samples in the outgroup.
     :param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
-    have an outlier value to be considered in the comparison. Float between 0 and 1.
+    have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
     :return: A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
     rows without enough outliers in group0 are also removed.
     """
@@ -300,7 +301,7 @@ def compareGroups(
     outliers: DataFrame,
     group0: SampleList,
     group1: SampleList,
-    frac_filter: float,
+    frac_filter: Optional[float],
     label: str,
 ) -> DataFrame:
     df = filterOutliers(outliers, group0, group1, frac_filter)
@@ -323,10 +324,22 @@ def compareGroups(
 def compare_groups_outliers(
     outliers: DataFrame,
     annotations: DataFrame,
-    frac_filter: float = 0.3,
+    frac_filter: Optional[float] = 0.3,
     save_qvalues: bool = False,
     output_prefix: str = "outliers",
-) -> Optional[DataFrame]:
+) -> DataFrame:
+    """
+
+    :param outliers:
+    :param annotations: A DataFrame with samples as the index and annotations as columns. Each
+    column must contain exactly 2 different values, and optionally missing values. Columns with
+    less or more than 2 options will be ignored.
+    :param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
+    have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+    :param save_qvalues:
+    :param output_prefix:
+    :return:
+    """
     outliers = outliers.transpose()
     results_df = pd.DataFrame(index=outliers.index)
     for comp in annotations.columns:
@@ -370,7 +383,7 @@ def compare_groups_outliers(
 def run_outliers(
     df: DataFrame,
     annotations: DataFrame,
-    frac_filter: float = 0.3,
+    frac_filter: Optional[float] = 0.3,
     iqrs: float = 1.5,
     up_or_down: str = "up",
     aggregate: bool = True,
@@ -384,8 +397,11 @@ def run_outliers(
     """
 
     :param df: Input DataFrame with samples as rows and sites or genes as columns.
-    :param annotations:
-    :param frac_filter:
+    :param annotations: A DataFrame with samples as the index and annotations as columns. Each
+    column must contain exactly 2 different values, and optionally missing values. Columns with
+    less or more than 2 options will be ignored.
+    :param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
+    have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
     :param iqrs: The number of IQRs above or below the median to consider a value as an outlier.
     Default 1.5.
     :param up_or_down: Whether to call up or down outliers. Up meaning above the median; down
