@@ -1,5 +1,11 @@
 pythonPackage/.idea/*
-pythonPackage/.idea*
 .idea/*
 ~*
 #*
+.gitignore
+drafts_refs/*
+pythonPackage/.ipynb_checkpoints/*
+pythonPackage/blacksheep/.mypy_cache/*
+pythonPackage/blacksheep/__pycache__/*
+pythonPackage/generating_test_docs.ipynb
+pythonPackage/tests/__pycache__/*
