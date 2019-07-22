@@ -1,13 +1,13 @@
-from typing import List, Tuple, Optional
+from typing import List, Optional
 
 import pandas as pd
 from pandas import DataFrame
-from .classes import OutlierTable, qValues
-from .outlierTable import convertToOutliers
-from .outlierTable import convertToCounts
-from .outlierTable import makeFracTable
-from .comparisons import compareGroups
-from .comparisons import getSampleLists
+from classes import OutlierTable, qValues
+from outlierTable import convertToOutliers
+from outlierTable import convertToCounts
+from outlierTable import makeFracTable
+from comparisons import compareGroups
+from comparisons import getSampleLists
 
 
 SampleList = List[str]
@@ -18,13 +18,11 @@ def make_outliers_table(
     iqrs: float = 1.5,
     up_or_down: str = "up",
     aggregate: bool = True,
-    frac_table: bool = False,
     save_outlier_table: bool = False,
     save_frac_table: bool = False,
     output_prefix: str = "outliers",
     ind_sep: str = "-",
-    output_comparison_summaries: bool = False,
-) -> Tuple[DataFrame, Optional[DataFrame]]:
+) -> OutlierTable:
     """
 
     :param df: Input DataFrame with samples as rows and sites or genes as columns.
@@ -53,22 +51,20 @@ def make_outliers_table(
 
     df = convertToOutliers(df, samples, iqrs, up_or_down)
 
-    df = convertToCounts(df, samples, aggregate, ind_sep)
+    df = convertToCounts(df, samples, aggregate, ind_sep).transpose()
 
-    if frac_table:
-        fracTable = makeFracTable(df, samples).transpose()
-        if save_frac_table:
-            fracTable.to_csv(
-                "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
-            )
-    else:
-        fracTable = None
+    fracTable = makeFracTable(df, samples).transpose()
+    if save_frac_table:
+        fracTable.to_csv(
+            "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
+        )
+
     if save_outlier_table:
         df.transpose().to_csv(
             "%s.%s.count_table.tsv" % (output_prefix, up_or_down), sep="\t"
         )
 
-    outliers = OutlierTable(df.transpose(), up_or_down, iqrs, samples, fracTable)
+    outliers = OutlierTable(df, up_or_down, iqrs, samples, fracTable)
     return outliers
 
 
@@ -95,7 +91,7 @@ def compare_groups_outliers(
     counts in the fisher table, pvalues and q values per row. Default False.
     :return:
     """
-
+    # TODO comvert prints to logging
     df = outliers.df.transpose()
     outlier_samples = outliers.samples
     up_or_down = outliers.up_or_down
@@ -112,8 +108,11 @@ def compare_groups_outliers(
         ]
         group0 = [samp for samp in group0 if samp in outlier_samples]
         group1 = [samp for samp in group1 if samp in outlier_samples]
-        if (len(group0) == 0) or (len(group1) == 0):
-            print("Number of categories in %s is not 2, skipping %s" % (comp, comp))
+        if (len(group0) < 2) or (len(group1) < 2):
+            print(
+                "Number of categories in %s is not 2, or too few samples in each category, "
+                "skipping %s" % (comp, comp)
+            )
             continue
         if len(not_there) > 0:
             print(
@@ -178,7 +177,6 @@ def run_outliers(
     iqrs: float = 1.5,
     up_or_down: str = "up",
     aggregate: bool = True,
-    frac_table: bool = False,
     save_outlier_table: bool = False,
     save_frac_table: bool = False,
     save_qvalues: bool = False,
@@ -231,7 +229,11 @@ def run_outliers(
         ind_sep,
     )
     counts = outliers.df
-    frac_table = outliers.frac_table
+    samples = outliers.samples
+    if outliers.frac_table is None:
+        frac_table = makeFracTable(counts, samples)
+    else:
+        frac_table = outliers.frac_table
     qvalues = compare_groups_outliers(
         counts,
         annotations,
