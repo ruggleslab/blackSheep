@@ -168,17 +168,11 @@ def compareGroups(
 ) -> Tuple[DataFrame, Optional[DataFrame]]:
     df = filterOutliers(outliers, group0, group1, frac_filter)
     if len(df) > 0:
-        print(
-            "Testing %s rows for enrichment in %s %s samples"
-            % (len(df), comp, group0_label)
-        )
         col, fisher_info = testDifferentGroupsOutliers(group0, group1, df)
         col = pd.DataFrame(col)
         col.columns = [label]
         results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
     else:
-        print(
-            "No rows had outliers in at least %s of %s %s samples"
-            % (frac_filter, comp, group0_label)
-        )
+        #TODO add a logging error here
+        fisher_info = DataFrame(columns=[label])
     return results_df, fisher_info

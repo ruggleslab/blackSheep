@@ -85,6 +85,7 @@ def makeFracTable(df: DataFrame, samples: SampleList):
     :return: A table with one column per sample with the fraction of sites in each row
     that are outliers per each sample. This table is useful for visualization but not statistics.
     """
+    df = df.transpose()
     cols_outliers = [x + "_outliers" for x in samples]
     cols_notOutliers = [x + "_notOutliers" for x in samples]
     df = df.fillna(0)

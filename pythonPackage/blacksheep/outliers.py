@@ -2,15 +2,20 @@ from typing import List, Optional
 
 import pandas as pd
 from pandas import DataFrame
-from classes import OutlierTable, qValues
-from outlierTable import convertToOutliers
-from outlierTable import convertToCounts
-from outlierTable import makeFracTable
-from comparisons import compareGroups
-from comparisons import getSampleLists
+from .classes import OutlierTable, qValues
+from .outlierTable import convertToOutliers
+from .outlierTable import convertToCounts
+from .outlierTable import makeFracTable
+from .comparisons import compareGroups
+from .comparisons import getSampleLists
 
 
 SampleList = List[str]
+
+def renameFisherTable(string, labelmap):
+    for orig, out in labelmap.items():
+        string = string.replace(orig, out)
+    return string
 
 
 def make_outliers_table(
@@ -53,14 +58,14 @@ def make_outliers_table(
 
     df = convertToCounts(df, samples, aggregate, ind_sep).transpose()
 
-    fracTable = makeFracTable(df, samples).transpose()
+    fracTable = makeFracTable(df, samples).transpose().dropna(how='all')
     if save_frac_table:
         fracTable.to_csv(
             "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
         )
 
     if save_outlier_table:
-        df.transpose().to_csv(
+        df.to_csv(
             "%s.%s.count_table.tsv" % (output_prefix, up_or_down), sep="\t"
         )
 
@@ -121,14 +126,14 @@ def compare_groups_outliers(
             )
 
         # doing tests
-        label = "%s_%s_enrichment_FDR" % (comp, group0_label)
+        label0 = "fisherFDR_%s_%s" % (comp, group0_label)
         results_df, fisher_info0 = compareGroups(
-            results_df, df, group0, group1, frac_filter, label
+            results_df, df, group0, group1, frac_filter, label0
         )
 
-        label = "%s_%s_enrichment_FDR" % (comp, group1_label)
+        label1 = "fisherFDR_%s_%s" % (comp, group1_label)
         results_df, fisher_info1 = compareGroups(
-            results_df, df, group1, group0, frac_filter, label
+            results_df, df, group1, group0, frac_filter, label1
         )
 
         if output_comparison_summaries:
@@ -138,7 +143,8 @@ def compare_groups_outliers(
                 "fisherp": "enrichment_fisherp_%s_%s" % (comp, group0_label),
             }
             fisher_info0.columns = [
-                col.replace(label_map) for col in fisher_info0.columns
+                renameFisherTable(col, label_map) for col in \
+                    fisher_info0.columns
             ]
 
             label_map = {
@@ -147,27 +153,23 @@ def compare_groups_outliers(
                 "fisherp": "enrichment_fisherp_%s_%s" % (comp, group1_label),
             }
             fisher_info1.columns = [
-                col.replace(label_map) for col in fisher_info1.columns
-            ]
-
-            comp_df = results_df[
-                [
-                    "%s_%s_enrichment_FDR" % (comp, group0_label),
-                    "%s_%s_enrichment_FDR" % (comp, group1_label),
-                ]
+                renameFisherTable(col, label_map) for col in fisher_info1.columns
             ]
 
             comp_df = pd.concat(
-                [fisher_info0, fisher_info1, comp_df], axis=1, join="outer", sort=False
-            ).drop_duplicates(axis=1)
+                [fisher_info0, fisher_info1], axis=0,join="outer",
+                sort=True
+            ).merge(results_df[
+                [label0, label1]
+            ], left_index=True, right_index=True)
             comp_df.to_csv(
                 "%s.%s.%s.qvalues.tsv" % (output_prefix, up_or_down, comp), sep="\t"
             )
 
     if save_qvalues:
         results_df.to_csv("%s.%s.qvalues.tsv" % (output_prefix, up_or_down), sep="\t")
-    results_df = qValues(df, annotations.columns, frac_filter)
-    return results_df
+    qvals = qValues(df, annotations.columns, frac_filter)
+    return qvals
 
 
 def run_outliers(
@@ -222,26 +224,20 @@ def run_outliers(
         iqrs,
         up_or_down,
         aggregate,
-        frac_table,
         save_outlier_table,
         save_frac_table,
         output_prefix,
         ind_sep,
     )
-    counts = outliers.df
-    samples = outliers.samples
-    if outliers.frac_table is None:
-        frac_table = makeFracTable(counts, samples)
-    else:
-        frac_table = outliers.frac_table
-    qvalues = compare_groups_outliers(
-        counts,
+
+    frac_table = outliers.frac_table
+    qvals = compare_groups_outliers(
+        outliers,
         annotations,
         frac_filter,
         save_qvalues,
         output_prefix,
-        up_or_down,
         output_comparison_summaries,
     )
 
-    return qvalues, frac_table
+    return qvals, frac_table

@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from classes import OutlierTable
+from .classes import OutlierTable
 
 
 def parseValues(path):
@@ -14,6 +14,10 @@ def parseValues(path):
 
 
 def parseOutliers(path, updown, iqrs, samples, frac_table):
+    if path[-3:] == "tsv":
+        sep = "\t"
+    elif path[-3:] == "csv":
+        sep = ","
     df = pd.read_csv(path, sep=sep, index_col=0)
     return OutlierTable(df, updown, iqrs, samples, frac_table)
 
