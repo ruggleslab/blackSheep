@@ -1,0 +1,10 @@
+,comp0_0_enrichment_FDR,comp0_1_enrichment_FDR,comp1_0.0_enrichment_FDR,comp1_1.0_enrichment_FDR,comp2_1_enrichment_FDR,comp2_0_enrichment_FDR,comp3_0_enrichment_FDR,comp4_0_enrichment_FDR
+geneA,,,,,,,,
+geneB,,,,,,,,
+geneC,,0.296653431650594,,,,,,
+geneD,0.28735632183908066,,,0.329501915708812,,0.005108556832694756,0.5977011494252876,
+geneE,,,,,,,,
+geneF,,,,0.19555555555555568,,0.09989053092501389,,
+geneG,,,,,,,,
+geneH,,0.0030364840791837723,0.4394158791289527,,1.0,,0.5977011494252876,1.0
+geneI,,0.0030364840791837723,0.16470588235294079,,,,,1.0
