@@ -3,3 +3,4 @@ pythonPackage/.idea*
 .idea/*
 ~*
 #*
+.gitignore
