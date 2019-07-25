@@ -58,7 +58,7 @@ def make_outliers_table(
 
     df = convertToCounts(df, samples, aggregate, ind_sep).transpose()
 
-    fracTable = makeFracTable(df, samples).transpose().dropna(how='all')
+    fracTable = makeFracTable(df, samples).dropna(how='all')
     if save_frac_table:
         fracTable.to_csv(
             "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
@@ -96,7 +96,7 @@ def compare_groups_outliers(
     counts in the fisher table, pvalues and q values per row. Default False.
     :return:
     """
-    # TODO comvert prints to logging
+    # TODO convert prints to logging
     df = outliers.df.transpose()
     outlier_samples = outliers.samples
     up_or_down = outliers.up_or_down
@@ -165,10 +165,10 @@ def compare_groups_outliers(
             comp_df.to_csv(
                 "%s.%s.%s.qvalues.tsv" % (output_prefix, up_or_down, comp), sep="\t"
             )
-
+    results_df = results_df.dropna(how='all', axis=0)
     if save_qvalues:
         results_df.to_csv("%s.%s.qvalues.tsv" % (output_prefix, up_or_down), sep="\t")
-    qvals = qValues(df, annotations.columns, frac_filter)
+    qvals = qValues(results_df, annotations.columns, frac_filter)
     return qvals
 
 
@@ -240,4 +240,4 @@ def run_outliers(
         output_comparison_summaries,
     )
 
-    return qvals, frac_table
+    return outliers, qvals

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from .classes import OutlierTable
+from .outlierTable import makeFracTable
 
 
 def parseValues(path):
@@ -8,17 +9,22 @@ def parseValues(path):
         sep = "\t"
     elif path[-3:] == "csv":
         sep = ","
-
+    else:
+        raise ValueError('File must be .csv or .tsv')
     df = pd.read_csv(path, sep=sep, index_col=0)
     return df
 
 
-def parseOutliers(path, updown, iqrs, samples, frac_table):
+def parseOutliers(path, updown, iqrs):
     if path[-3:] == "tsv":
         sep = "\t"
     elif path[-3:] == "csv":
         sep = ","
+    else:
+        raise ValueError('File must be .csv or .tsv')
     df = pd.read_csv(path, sep=sep, index_col=0)
+    samples = sorted(list(set([ind.rsplit("_", 1)[0] for ind in df.index])))
+    frac_table = makeFracTable(df, samples)
     return OutlierTable(df, updown, iqrs, samples, frac_table)
 
 
@@ -27,6 +33,8 @@ def parseAnnotations(path):
         sep = "\t"
     elif path[-3:] == "csv":
         sep = ","
+    else:
+        raise ValueError('File must be .csv or .tsv')
     df = pd.read_csv(path, sep=sep, index_col=0)
     return df
 

@@ -2,34 +2,76 @@ import pandas as pd
 from blacksheep.cli import main
 
 def test_cli_outliers_table():
-    args = ['outliers_table', 'tests/sample_endo.csv', '--iqrs', '1.5',
+    args = ['outliers_table', 'tests/sample_endo.csv',
+            '--iqrs', '1.5',
             '--up_or_down', 'up',
             '--output_prefix', 'tests/output/outliers_table_test',
-            '--ind_sep', '-', '--write_frac_table']
+            '--ind_sep', '-',
+            '--write_frac_table']
 
     main(args)
 
 
-def test_cli_compare_groups():
+def test_cli_compare_groups_with_heatmaps():
     args = ['compare_groups', 'tests/sample_endo_outliers_table.csv',
-            'tests/sample_annotations.csv', '--iqrs', '1.5',
+            'tests/sample_annotations.csv',
+            '--iqrs', '1.5',
             '--up_or_down', 'up',
             '--output_prefix', 'tests/output/compare_groups_test',
-            '--frac_filter', '0.1', '--write_comparison_summaries']
+            '--frac_filter', '0.1',
+            '--write_comparison_summaries',
+            '--make_heatmaps',
+            '--write_gene_list',
+            '--fdr', '0.5',
+            '--red_or_blue', 'red']
+
+    main(args)
+
+def test_vis():
+    args = ['visualize',
+            'tests/output/pipeline_test.up.qvalues.tsv',
+            'tests/sample_annotations.csv',
+            'tests/output/pipeline_test.up.fraction_table.tsv',
+            'fisherFDR_MSI_status_MSI-H',
+            '--annotations_to_show','Histologic_type MSI_status',
+            '--output_prefix', 'tests/output/vis_cli_test',
+            '--write_gene_list',
+            '--fdr', '0.5',
+            '--red_or_blue', 'red']
 
     main(args)
 
 
 def test_cli_pipeline():
-    args = ['outliers', 'tests/sample_endo.csv', 'tests/sample_annotations.csv', '--iqrs', '1.5',
+    args = ['outliers',
+            'tests/sample_endo.csv',
+            'tests/sample_annotations.csv',
+            '--iqrs', '1.5',
             '--up_or_down', 'up',
-            '--output_prefix', 'tests/output/pipeline_test', '--write_frac_table',
+            '--output_prefix', 'tests/output/pipeline_test',
+            '--write_frac_table',
             '--write_outlier_table',
-            '--ind_sep', '-', '--frac_filter', '0.10', '--write_comparison_summaries']
+            '--ind_sep', '-',
+            '--frac_filter', '0.10',
+            '--write_comparison_summaries']
 
     main(args)
 
-    # stnd_frac_table = pd.read_csv('')
-    # stnd_outlier_table = pd.read_csv('sample_endo_outliers_table.csv', index_col=0)
-    # stnd_qvals = pd.read_csv()
-    pass
+
+def test_cli_pipeline_with_figures():
+    args = ['outliers',
+            'tests/sample_endo.csv',
+            'tests/sample_annotations.csv',
+            '--iqrs', '1.5',
+            '--up_or_down', 'up',
+            '--output_prefix', 'tests/output/pipeline_figs_test',
+            '--ind_sep', '-',
+            '--frac_filter', '0.10',
+            '--write_comparison_summaries',
+            '--fdr', '0.5',
+            '--write_gene_list',
+            '--make_heatmaps',
+            '--red_or_blue', 'blue',
+            ]
+
+    main(args)

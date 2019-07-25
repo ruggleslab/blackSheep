@@ -1,11 +1,13 @@
 import sys
 import argparse
 import os.path
+import matplotlib.pyplot as plt
 from .outliers import run_outliers
 from .outliers import make_outliers_table
 from .outliers import compare_groups_outliers
-from .classes import OutlierTable
 from . import parsers
+from .visualization import plot_heatmap
+from .visualization import write_genes
 
 
 def check_positive(arg):
@@ -22,8 +24,6 @@ def check_positive(arg):
 def is_valid_file(arg):
     if not os.path.exists(arg):
         raise argparse.ArgumentTypeError("The file %s does not exist" % arg)
-    elif (arg[-4:] != ".tsv") and (arg[-4:] != ".csv"):
-        raise argparse.ArgumentTypeError("%s is not a tsv or csv" % arg)
     else:
         return arg
 
@@ -49,7 +49,29 @@ def bn0and1(arg):
     else:
         return arg
 
+
+def fileToList(path):
+    with open(path, 'r') as fh:
+        return [x for x in fh.readlines()]
+
+
+def colsFileOrList(arg):
+    arg = arg.split()
+
+    if len(arg) > 1:
+        print(arg)
+        return arg
+    elif len(arg) == 1:
+        try:
+            return fileToList(arg[0])
+        except:
+            raise argparse.ArgumentTypeError('Cannot read %s as list or file' %arg)
+    else:
+        raise argparse.ArgumentTypeError('Cannot read %s as list or file' % arg)
+
+
 def parse_args(args):
+    #TODO finish helps
     parser = argparse.ArgumentParser(prog="BlackSheep")
     parser.add_argument("--version", action="version", version="%(prog)s 0.0.1")
 
@@ -108,7 +130,9 @@ def parse_args(args):
     )
 
     comparisons = subparsers.add_parser("compare_groups")
-    comparisons.add_argument("outliers_table", type=is_valid_file)
+    comparisons.add_argument(
+        "outliers_table", type=is_valid_file,
+    )
     comparisons.add_argument("annotations_table", type=is_valid_file)
     comparisons.add_argument("--frac_filter", type=bn0and1, default=0.3)
     comparisons.add_argument(
@@ -121,6 +145,23 @@ def parse_args(args):
         "--iqrs", type=check_positive, default=1.5, help="Number of IQRs in "
     )
     comparisons.add_argument("--up_or_down", type=str, choices=["up", "down"])
+    comparisons.add_argument("--fdr", type=bn0and1, default=0.05)
+    comparisons.add_argument("--write_gene_list", default=False, action='store_true')
+    comparisons.add_argument("--make_heatmaps", default=False, action='store_true')
+    comparisons.add_argument("--red_or_blue", type=str, choices=["red", "blue"], default="red")
+    comparisons.add_argument("--annotation_colors", type=is_valid_file, default=None)
+
+    figures = subparsers.add_parser("visualize")
+    figures.add_argument("comparison_qvalues", type=is_valid_file)
+    figures.add_argument("annotation_header", type=is_valid_file)
+    figures.add_argument("fraction_table", type=is_valid_file)
+    figures.add_argument("comparison_of_interest", type=str)
+    figures.add_argument("--annotations_to_show", type=colsFileOrList, default=None, nargs='+')
+    figures.add_argument("--fdr", type=bn0and1, default=0.05)
+    figures.add_argument("--red_or_blue", type=str, choices=["red", "blue"], default="red")
+    figures.add_argument("--output_prefix", type=check_output_prefix, default='outliers')
+    figures.add_argument("--annotation_colors", type=is_valid_file, default=None)
+    figures.add_argument("--write_gene_list", default=False, action='store_true')
 
     pipeline = subparsers.add_parser("outliers")
     pipeline.add_argument(
@@ -185,7 +226,11 @@ def parse_args(args):
     pipeline.add_argument(
         "--write_comparison_summaries", default=False, action="store_true"
     )
-
+    pipeline.add_argument("--fdr", type=bn0and1, default=0.05)
+    pipeline.add_argument("--write_gene_list", default=False, action='store_true')
+    pipeline.add_argument("--make_heatmaps", default=False, action='store_true')
+    pipeline.add_argument("--red_or_blue", type=str, choices=["red", "blue"], default="red")
+    pipeline.add_argument("--annotation_colors", type=is_valid_file, default=None)
     return parser.parse_args(args)
 
 
@@ -194,6 +239,8 @@ def main(args):
         args = parse_args(sys.argv[1:])
     else:
         args = parse_args(args)
+
+
     if args.which == "outliers_table":
         df = parsers.parseValues(args.values)
         make_outliers_table(
@@ -207,14 +254,14 @@ def main(args):
             ind_sep=args.ind_sep,
         )
 
+
     elif args.which == "compare_groups":
         outliers = parsers.parseOutliers(
-            args.outliers_table, args.up_or_down, args.iqrs, None, None
+            args.outliers_table, args.up_or_down, args.iqrs
         )
-        outliers.samples = [ind.rsplit("_", 1)[0] for ind in outliers.df.index]
 
         annotations = parsers.parseAnnotations(args.annotations_table)
-        qvalues = compare_groups_outliers(
+        qVals = compare_groups_outliers(
             outliers,
             annotations,
             args.frac_filter,
@@ -222,11 +269,51 @@ def main(args):
             output_prefix=args.output_prefix,
             output_comparison_summaries=args.write_comparison_summaries,
         )
+        if args.write_gene_list:
+            write_genes(qVals.df, args.fdr, args.output_prefix)
+
+        if args.make_heatmaps:
+            for col_of_interest in qVals.df.columns:
+                plot_heatmap(
+                    annotations, qVals.df, col_of_interest, outliers.frac_table,
+                    fdr=args.fdr, red_or_blue=args.red_or_blue,
+                    output_prefix=args.output_prefix,
+                    colors=args.annotation_colors, savefig=True
+                )
+                plt.close()
+
+
+    elif args.which == "visualize":
+        qvals = parsers.parseValues(args.comparison_qvalues)
+        annotations = parsers.parseValues(args.annotation_header)
+        frac_table = parsers.parseValues(args.fraction_table)
+        col_of_interest = args.comparison_of_interest
+        annot_cols = args.annotations_to_show[0]
+
+        try:
+            annotations = annotations[annot_cols]
+        except:
+            raise ValueError('Some cols not in annotations: %s'%annot_cols)
+
+        annot_label = col_of_interest.split('_', 1)[1].rsplit('_', 1)[0]
+        if not annot_label in annot_cols:
+            raise ValueError('%s must be in annotations columns to show'%annot_label)
+
+        plot_heatmap(
+            annotations, qvals, col_of_interest, frac_table,
+            fdr=args.fdr, red_or_blue=args.red_or_blue,
+            output_prefix=args.output_prefix,
+            colors=args.annotation_colors, savefig=True
+        )
+        plt.close()
+        if args.write_gene_list:
+            write_genes(qvals[[col_of_interest]], args.fdr, args.output_prefix)
+
 
     elif args.which == "outliers":
         df = parsers.parseValues(args.values)
         annotations = parsers.parseAnnotations(args.annotations)
-        qvals, frac_table = run_outliers(
+        outLiers, qVals = run_outliers(
             df,
             annotations,
             args.frac_filter,
@@ -240,6 +327,20 @@ def main(args):
             ind_sep=args.ind_sep,
             output_comparison_summaries=args.write_comparison_summaries,
         )
+        if args.write_gene_list:
+            write_genes(qVals.df, args.fdr, args.output_prefix)
+
+        if args.make_heatmaps:
+            for col_of_interest in qVals.df.columns:
+                plot_heatmap(
+                    annotations, qVals.df, col_of_interest, outLiers.frac_table,
+                    fdr=args.fdr, red_or_blue=args.red_or_blue,
+                    output_prefix=args.output_prefix,
+                    colors=args.annotation_colors, savefig=True
+                )
+                plt.close()
+
+
     with open("%s.parameters.txt" % args.output_prefix, "w") as fh:
         for arg in vars(args):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
