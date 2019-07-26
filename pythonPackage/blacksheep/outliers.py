@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import pandas as pd
 from pandas import DataFrame
@@ -11,6 +11,7 @@ from .comparisons import getSampleLists
 
 
 SampleList = List[str]
+
 
 def renameFisherTable(string, labelmap):
     for orig, out in labelmap.items():
@@ -58,16 +59,14 @@ def make_outliers_table(
 
     df = convertToCounts(df, samples, aggregate, ind_sep).transpose()
 
-    fracTable = makeFracTable(df, samples).dropna(how='all')
+    fracTable = makeFracTable(df, samples).dropna(how="all")
     if save_frac_table:
         fracTable.to_csv(
             "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
         )
 
     if save_outlier_table:
-        df.to_csv(
-            "%s.%s.count_table.tsv" % (output_prefix, up_or_down), sep="\t"
-        )
+        df.to_csv("%s.%s.count_table.tsv" % (output_prefix, up_or_down), sep="\t")
 
     outliers = OutlierTable(df, up_or_down, iqrs, samples, fracTable)
     return outliers
@@ -143,8 +142,7 @@ def compare_groups_outliers(
                 "fisherp": "enrichment_fisherp_%s_%s" % (comp, group0_label),
             }
             fisher_info0.columns = [
-                renameFisherTable(col, label_map) for col in \
-                    fisher_info0.columns
+                renameFisherTable(col, label_map) for col in fisher_info0.columns
             ]
 
             label_map = {
@@ -157,15 +155,12 @@ def compare_groups_outliers(
             ]
 
             comp_df = pd.concat(
-                [fisher_info0, fisher_info1], axis=0,join="outer",
-                sort=True
-            ).merge(results_df[
-                [label0, label1]
-            ], left_index=True, right_index=True)
+                [fisher_info0, fisher_info1], axis=0, join="outer", sort=True
+            ).merge(results_df[[label0, label1]], left_index=True, right_index=True)
             comp_df.to_csv(
                 "%s.%s.%s.qvalues.tsv" % (output_prefix, up_or_down, comp), sep="\t"
             )
-    results_df = results_df.dropna(how='all', axis=0)
+    results_df = results_df.dropna(how="all", axis=0)
     if save_qvalues:
         results_df.to_csv("%s.%s.qvalues.tsv" % (output_prefix, up_or_down), sep="\t")
     qvals = qValues(results_df, annotations.columns, frac_filter)
@@ -185,7 +180,7 @@ def run_outliers(
     output_prefix: str = "outliers",
     ind_sep: str = "-",
     output_comparison_summaries: bool = False,
-) -> DataFrame:
+) -> Tuple[OutlierTable, qValues]:
     """
 
     :param df: Input DataFrame with samples as rows and sites or genes as columns.
@@ -230,7 +225,6 @@ def run_outliers(
         ind_sep,
     )
 
-    frac_table = outliers.frac_table
     qvals = compare_groups_outliers(
         outliers,
         annotations,

@@ -93,6 +93,8 @@ def makeFracTable(df: DataFrame, samples: SampleList):
     with np.errstate(divide="ignore", invalid="ignore"):
         frac_outliers = df[cols_outliers].values / num_total_psites
 
-    frac_outliers = pd.DataFrame(frac_outliers, index=df.index, columns=samples).transpose()
+    frac_outliers = pd.DataFrame(
+        frac_outliers, index=df.index, columns=samples
+    ).transpose()
 
     return frac_outliers

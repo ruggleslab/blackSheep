@@ -173,6 +173,6 @@ def compareGroups(
         col.columns = [label]
         results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
     else:
-        #TODO add a logging error here
+        # TODO add a logging error here
         fisher_info = DataFrame(columns=[label])
     return results_df, fisher_info

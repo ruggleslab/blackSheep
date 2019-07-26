@@ -10,7 +10,7 @@ def parseValues(path):
     elif path[-3:] == "csv":
         sep = ","
     else:
-        raise ValueError('File must be .csv or .tsv')
+        raise ValueError("File must be .csv or .tsv")
     df = pd.read_csv(path, sep=sep, index_col=0)
     return df
 
@@ -21,7 +21,7 @@ def parseOutliers(path, updown, iqrs):
     elif path[-3:] == "csv":
         sep = ","
     else:
-        raise ValueError('File must be .csv or .tsv')
+        raise ValueError("File must be .csv or .tsv")
     df = pd.read_csv(path, sep=sep, index_col=0)
     samples = sorted(list(set([ind.rsplit("_", 1)[0] for ind in df.index])))
     frac_table = makeFracTable(df, samples)
@@ -34,7 +34,7 @@ def parseAnnotations(path):
     elif path[-3:] == "csv":
         sep = ","
     else:
-        raise ValueError('File must be .csv or .tsv')
+        raise ValueError("File must be .csv or .tsv")
     df = pd.read_csv(path, sep=sep, index_col=0)
     return df
 
