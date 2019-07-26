@@ -1,8 +1,7 @@
-import pandas as pd
 from blacksheep.cli import main
 
 def test_cli_outliers_table():
-    args = ['outliers_table', 'tests/sample_endo.csv',
+    args = ['outliers_table', 'tests/pidgin_values.csv',
             '--iqrs', '1.5',
             '--up_or_down', 'up',
             '--output_prefix', 'tests/output/outliers_table_test',
@@ -13,7 +12,7 @@ def test_cli_outliers_table():
 
 
 def test_cli_compare_groups_with_heatmaps():
-    args = ['compare_groups', 'tests/sample_endo_outliers_table.csv',
+    args = ['compare_groups', 'tests/pidgin_outliers.csv',
             'tests/sample_annotations.csv',
             '--iqrs', '1.5',
             '--up_or_down', 'up',
@@ -27,13 +26,14 @@ def test_cli_compare_groups_with_heatmaps():
 
     main(args)
 
+
 def test_vis():
     args = ['visualize',
-            'tests/output/pipeline_test.up.qvalues.tsv',
-            'tests/sample_annotations.csv',
-            'tests/output/pipeline_test.up.fraction_table.tsv',
-            'fisherFDR_MSI_status_MSI-H',
-            '--annotations_to_show','Histologic_type MSI_status',
+            'tests/pidgin_qvalues.csv',
+            'tests/pidgin_annotations.csv',
+            'tests/pidgin_fracTable.csv',
+            'fisherFDR_comp0_1',
+            '--annotations_to_show','comp0 comp1',
             '--output_prefix', 'tests/output/vis_cli_test',
             '--write_gene_list',
             '--fdr', '0.5',
@@ -44,8 +44,8 @@ def test_vis():
 
 def test_cli_pipeline():
     args = ['outliers',
-            'tests/sample_endo.csv',
-            'tests/sample_annotations.csv',
+            'tests/pidgin_values.csv',
+            'tests/pidgin_annotations.csv',
             '--iqrs', '1.5',
             '--up_or_down', 'up',
             '--output_prefix', 'tests/output/pipeline_test',
@@ -60,8 +60,8 @@ def test_cli_pipeline():
 
 def test_cli_pipeline_with_figures():
     args = ['outliers',
-            'tests/sample_endo.csv',
-            'tests/sample_annotations.csv',
+            'tests/pidgin_values.csv',
+            'tests/pidgin_annotations.csv',
             '--iqrs', '1.5',
             '--up_or_down', 'up',
             '--output_prefix', 'tests/output/pipeline_figs_test',
