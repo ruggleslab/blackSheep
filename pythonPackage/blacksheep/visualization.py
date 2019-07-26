@@ -7,17 +7,17 @@ import matplotlib.patches as mpatch
 import seaborn as sns
 
 
-def getSampleOrder(annotations: DataFrame, col_of_interest: str):
+def get_sample_order(annotations: DataFrame, col_of_interest: str):
     sort_by = [col for col in annotations.index if col != col_of_interest]
     annotations = annotations.sort_values([col_of_interest] + sort_by, axis=1)
     return annotations.columns
 
 
-def getGenes(qvals: DataFrame, fdr: float, col: str) -> list:
+def get_genes(qvals: DataFrame, fdr: float, col: str) -> list:
     return list(qvals.loc[(qvals[col] < fdr), :].index)
 
 
-def pickColor(red_or_blue: str):
+def pick_color(red_or_blue: str):
     if red_or_blue == "red":
         cmap = sns.cubehelix_palette(
             start=0.857,
@@ -48,7 +48,7 @@ def pickColor(red_or_blue: str):
     return cmap
 
 
-def checkColors(colors: dict) -> dict:
+def check_colors(colors: dict) -> dict:
     for lab, color in colors.items():
         try:
             mpatch.Patch(color=color)
@@ -59,7 +59,7 @@ def checkColors(colors: dict) -> dict:
     return colors
 
 
-def _gen_colors(pal, n: int):
+def gen_colors(pal, n: int):
     """ Generate colours from provided palette.
     """
 
@@ -93,7 +93,7 @@ def _gen_colors(pal, n: int):
     return colors
 
 
-def listToFile(lis: list, filename: str):
+def list_to_file(lis: list, filename: str):
     with open(filename, "w") as fh:
         for x in lis:
             fh.write("%s\n" % x)
@@ -105,20 +105,20 @@ def assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
     n_unique = len(unique_values)
 
     missing_entries = [v for v in unique_values if v not in cmap.keys()]
-    colors = _gen_colors(palette, len(missing_entries))
+    colors = gen_colors(palette, len(missing_entries))
 
     cmap.update({v: colors[i] for i, v in enumerate(missing_entries)})
     return cmap
 
 
-def parseColors(path: str, annotations: DataFrame) -> dict:
+def parse_colors(path: str, annotations: DataFrame) -> dict:
     if path is None:
         colors = {}
     else:
         try:
             with open(path, "r") as fh:
                 colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
-            colors = checkColors(colors)
+            colors = check_colors(colors)
 
         except FileNotFoundError:
             # TODO log
@@ -159,8 +159,8 @@ def plot_heatmap(
 
     # Get orders
     annot_label = col_of_interest.split("_", 1)[1].rsplit("_", 1)[0]
-    sample_order = getSampleOrder(annotations, annot_label)
-    genes = getGenes(qvals, fdr, col_of_interest)
+    sample_order = get_sample_order(annotations, annot_label)
+    genes = get_genes(qvals, fdr, col_of_interest)
     if len(genes) == 0:
         # TODO logging, add a error here
         print("No signficant genes at %s" % fdr)
@@ -170,16 +170,19 @@ def plot_heatmap(
     vis_table = vis_table.reindex(genes).reindex(sample_order, axis=1)
 
     # Get colors
-    cmap = pickColor(red_or_blue)
-    colors = parseColors(colors, annotations)
+    cmap = pick_color(red_or_blue)
+    colors = parse_colors(colors, annotations)
 
     # Get label
     label = col_of_interest[10:]
 
     # Set up figure
-    sns.set(font="arial", style="white", color_codes=True, font_scale=0.60)
-    plot_height = min(max(0.1 * (len(annotations) + len(genes)), 1), 15)
-    plot_width = 0.05 * len(annotations.columns)
+    sns.set(font="arial", style="white", color_codes=True, font_scale=0.5)
+    plot_height = min(max(0.1 * (len(annotations) + len(genes)), 1), 20)
+    proportion_height_for_axs = min((len(annotations) + len(genes))*0.08, 0.9)/2
+
+    plot_width = min(max(0.05*len(annotations.columns), 3), 10)
+    proportion_width_for_axs = min((0.01 * len(annotations.columns)), 0.65)/2
 
     fig = plt.figure(figsize=(plot_width, plot_height))
     gs = plt.GridSpec(
@@ -190,11 +193,12 @@ def plot_heatmap(
         height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
         wspace=0.01,
         hspace=0.01,
-        left=0.20,
-        right=0.80,
-        top=0.88,
-        bottom=0.05,
+        left=0.5-proportion_width_for_axs,
+        right=0.5+proportion_width_for_axs,
+        top=0.49+proportion_height_for_axs,
+        bottom=0.49-proportion_height_for_axs,
     )
+
 
     annot_ax = plt.subplot(gs[0, 0])
     vals_ax = plt.subplot(gs[1:, 0])
@@ -212,8 +216,10 @@ def plot_heatmap(
         yticklabels=annotations.index,
     )
 
-    annot_ax.set_title("Outliers in %s" % col_of_interest, va="top")
+    annot_ax.set_title("Outliers in %s" % col_of_interest)
     annot_ax.set_yticklabels(annotations.index, rotation=0)
+    annot_ax.set_xlabel('')
+    annot_ax.set_ylabel('')
 
     # Values
     sns.heatmap(
@@ -241,13 +247,13 @@ def plot_heatmap(
         labelspacing=0,
     )
     if savefig:
-        plt.savefig("%s.%s.heatmap.pdf" % (output_prefix, label), dpi=200)
+        plt.savefig("%s.%s.fdr%s.heatmap.pdf" % (output_prefix, label, fdr), dpi=200)
 
     return [annot_ax, vals_ax, cbar_ax, leg_ax]
 
 
 def write_genes(qvals: DataFrame, fdr: float, output_prefix: str):
     for col in qvals.columns:
-        genes = getGenes(qvals, fdr, col)
+        genes = get_genes(qvals, fdr, col)
         if genes:
-            listToFile(genes, "%s.fdr%s.%s.txt" % (output_prefix, fdr, col))
+            list_to_file(genes, "%s.fdr%s.%s.txt" % (output_prefix, fdr, col))

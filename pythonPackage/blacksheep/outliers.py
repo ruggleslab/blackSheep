@@ -1,19 +1,18 @@
 from typing import List, Optional, Tuple
-
 import pandas as pd
 from pandas import DataFrame
 from .classes import OutlierTable, qValues
-from .outlierTable import convertToOutliers
-from .outlierTable import convertToCounts
-from .outlierTable import makeFracTable
-from .comparisons import compareGroups
-from .comparisons import getSampleLists
+from .outlierTable import convert_to_outliers
+from .outlierTable import convert_to_counts
+from .outlierTable import make_frac_table
+from .comparisons import compare_groups
+from .comparisons import get_sample_lists
 
 
 SampleList = List[str]
 
 
-def renameFisherTable(string, labelmap):
+def rename_fisher_table(string, labelmap):
     for orig, out in labelmap.items():
         string = string.replace(orig, out)
     return string
@@ -55,11 +54,11 @@ def make_outliers_table(
     df = df.transpose()
     samples = df.columns
 
-    df = convertToOutliers(df, samples, iqrs, up_or_down)
+    df = convert_to_outliers(df, samples, iqrs, up_or_down)
 
-    df = convertToCounts(df, samples, aggregate, ind_sep).transpose()
+    df = convert_to_counts(df, samples, aggregate, ind_sep).transpose()
 
-    fracTable = makeFracTable(df, samples).dropna(how="all")
+    fracTable = make_frac_table(df, samples).dropna(how="all")
     if save_frac_table:
         fracTable.to_csv(
             "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
@@ -102,7 +101,7 @@ def compare_groups_outliers(
     results_df = pd.DataFrame(index=df.index)
     for comp in annotations.columns:
 
-        group0_label, group0, group1_label, group1 = getSampleLists(annotations, comp)
+        group0_label, group0, group1_label, group1 = get_sample_lists(annotations, comp)
         # Checking everything is in place
         if group0 is None:
             print("Number of categories in %s is not 2, skipping %s" % (comp, comp))
@@ -126,12 +125,12 @@ def compare_groups_outliers(
 
         # doing tests
         label0 = "fisherFDR_%s_%s" % (comp, group0_label)
-        results_df, fisher_info0 = compareGroups(
+        results_df, fisher_info0 = compare_groups(
             results_df, df, group0, group1, frac_filter, label0
         )
 
         label1 = "fisherFDR_%s_%s" % (comp, group1_label)
-        results_df, fisher_info1 = compareGroups(
+        results_df, fisher_info1 = compare_groups(
             results_df, df, group1, group0, frac_filter, label1
         )
 
@@ -142,7 +141,7 @@ def compare_groups_outliers(
                 "fisherp": "enrichment_fisherp_%s_%s" % (comp, group0_label),
             }
             fisher_info0.columns = [
-                renameFisherTable(col, label_map) for col in fisher_info0.columns
+                rename_fisher_table(col, label_map) for col in fisher_info0.columns
             ]
 
             label_map = {
@@ -151,7 +150,7 @@ def compare_groups_outliers(
                 "fisherp": "enrichment_fisherp_%s_%s" % (comp, group1_label),
             }
             fisher_info1.columns = [
-                renameFisherTable(col, label_map) for col in fisher_info1.columns
+                rename_fisher_table(col, label_map) for col in fisher_info1.columns
             ]
 
             comp_df = pd.concat(

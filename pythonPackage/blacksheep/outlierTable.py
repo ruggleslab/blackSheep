@@ -7,7 +7,7 @@ from typing import List
 SampleList = List[str]
 
 
-def convertToOutliers(
+def convert_to_outliers(
     df: DataFrame, samples: SampleList, NUM_IQRs: float, up_or_down: str
 ) -> DataFrame:
     """
@@ -40,7 +40,7 @@ def convertToOutliers(
     return outlier_df
 
 
-def convertToCounts(
+def convert_to_counts(
     df: DataFrame, samples: SampleList, aggregate: bool, ind_sep: str
 ) -> DataFrame:
     """
@@ -77,7 +77,7 @@ def convertToCounts(
     return output_df
 
 
-def makeFracTable(df: DataFrame, samples: SampleList):
+def make_frac_table(df: DataFrame, samples: SampleList):
     """
 
     :param df: The outlier table that is output from convertToCounts

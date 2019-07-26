@@ -1,5 +1,6 @@
 from typing import Optional, List
 import sys
+import logging
 import argparse
 import os.path
 import matplotlib.pyplot as plt
@@ -45,7 +46,7 @@ def bn0and1(arg):
     return arg
 
 
-def colsFileOrList(arg):
+def cols_file_or_list(arg):
     arg = arg.split()
 
     if len(arg) > 1:
@@ -118,6 +119,11 @@ def parse_args(args):
         "written by default. Useful for visualization. ",
     )
 
+    binarize = subparsers.add_parser("binarize")
+    binarize.add_argument("annotation_table", type=is_valid_file)
+    binarize.add_argument("--new_file_prefix", type=check_output_prefix,
+                          default="binarized_annotations")
+
     comparisons = subparsers.add_parser("compare_groups")
     comparisons.add_argument("outliers_table", type=is_valid_file)
     comparisons.add_argument("annotations_table", type=is_valid_file)
@@ -146,7 +152,7 @@ def parse_args(args):
     figures.add_argument("fraction_table", type=is_valid_file)
     figures.add_argument("comparison_of_interest", type=str)
     figures.add_argument(
-        "--annotations_to_show", type=colsFileOrList, default=None, nargs="+"
+        "--annotations_to_show", type=cols_file_or_list, default=None, nargs="+"
     )
     figures.add_argument("--fdr", type=bn0and1, default=0.05)
     figures.add_argument(
@@ -238,7 +244,7 @@ def main(args: Optional[List[str]] = None):
     args = parse_args(args)
 
     if args.which == "outliers_table":
-        df = parsers.parseValues(args.values)
+        df = parsers.parse_values(args.values)
         make_outliers_table(
             df,
             args.iqrs,
@@ -250,12 +256,17 @@ def main(args: Optional[List[str]] = None):
             ind_sep=args.ind_sep,
         )
 
+    elif args.which == "binarize":
+        annotations = parsers.parse_values(args.annotation_table)
+        annotations = parsers.binarize_annotations(annotations)
+        annotations.to_csv('%s.tsv' % args.output, sep='\t')
+
     elif args.which == "compare_groups":
-        outliers = parsers.parseOutliers(
+        outliers = parsers.parse_outliers(
             args.outliers_table, args.up_or_down, args.iqrs
         )
 
-        annotations = parsers.parseAnnotations(args.annotations_table)
+        annotations = parsers.parse_values(args.annotations_table)
         qVals = compare_groups_outliers(
             outliers,
             annotations,
@@ -283,9 +294,9 @@ def main(args: Optional[List[str]] = None):
                 plt.close()
 
     elif args.which == "visualize":
-        qvals = parsers.parseValues(args.comparison_qvalues)
-        annotations = parsers.parseValues(args.annotation_header)
-        frac_table = parsers.parseValues(args.fraction_table)
+        qvals = parsers.parse_values(args.comparison_qvalues)
+        annotations = parsers.parse_values(args.annotation_header)
+        frac_table = parsers.parse_values(args.fraction_table)
         col_of_interest = args.comparison_of_interest
         annot_cols = args.annotations_to_show[0]
 
@@ -315,8 +326,8 @@ def main(args: Optional[List[str]] = None):
             write_genes(qvals[[col_of_interest]], args.fdr, args.output_prefix)
 
     elif args.which == "outliers":
-        df = parsers.parseValues(args.values)
-        annotations = parsers.parseAnnotations(args.annotations)
+        df = parsers.parse_values(args.values)
+        annotations = parsers.parse_values(args.annotations)
         outLiers, qVals = run_outliers(
             df,
             annotations,

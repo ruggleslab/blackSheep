@@ -1,5 +1,6 @@
-import blacksheep as bsh
 import pickle
+import pandas as pd
+import blacksheep as bsh
 
 
 def test_outliers_table():
@@ -10,6 +11,7 @@ def test_outliers_table():
     test_df = test_outliers.df.sort_index().sort_index(axis=1)
     outliers = outliers.sort_index().sort_index(axis=1)
     assert outliers.equals(test_df)
+
 
 def test_frac_table():
     with open("tests/pidgin_example.pickle", "rb") as fh:
@@ -82,3 +84,12 @@ def test_run_outliers_comps():
     test_outliers, test_qvals = bsh.run_outliers(df, annotations)
 
     assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values())==0
+
+
+def test_larger_comps():
+    annotations = pd.read_csv('tests/sample_annotations.csv', index_col=0)
+    outliers = pd.read_csv('tests/sample_endo_outliers_table.csv', index_col=0)
+    vis_table = pd.read_csv('tests/sample_endo.up.fraction_table.tsv', sep='\t', index_col=0)
+    outliers = bsh.classes.OutlierTable(outliers, 'up', 1.5, vis_table.index, vis_table)
+    test_qvals = bsh.compare_groups_outliers(outliers, annotations,
+                                             output_prefix='tests/sample_endo', save_qvalues=True)

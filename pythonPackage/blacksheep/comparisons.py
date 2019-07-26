@@ -8,7 +8,7 @@ from typing import List, Tuple, Iterable, Optional
 SampleList = List[str]
 
 
-def multHypothCorrect(
+def multi_hyp_correct(
     pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
 ) -> Iterable[float]:
     """
@@ -51,7 +51,7 @@ def multHypothCorrect(
     return new_pvalues
 
 
-def getSampleLists(
+def get_sample_lists(
     annotations: DataFrame, col: str
 ) -> Tuple[Optional[str], Optional[SampleList], Optional[str], Optional[SampleList]]:
     """
@@ -71,7 +71,7 @@ def getSampleLists(
     return groups[0], group0, groups[1], group1
 
 
-def filterOutliers(
+def filter_outliers(
     df: DataFrame,
     group0_list: SampleList,
     group1_list: SampleList,
@@ -116,7 +116,7 @@ def filterOutliers(
     return df
 
 
-def testDifferentGroupsOutliers(
+def fisher_test_groups(
     group0_list: SampleList,
     group1_list: SampleList,
     outlier_table: DataFrame,
@@ -149,7 +149,7 @@ def testDifferentGroupsOutliers(
         axis=1,
     )
 
-    outlier_table["fisherFDR"] = multHypothCorrect(
+    outlier_table["fisherFDR"] = multi_hyp_correct(
         list(outlier_table["fisherp"]), correction_type
     )
     fisher_info = outlier_table[
@@ -158,7 +158,7 @@ def testDifferentGroupsOutliers(
     return outlier_table["fisherFDR"], fisher_info
 
 
-def compareGroups(
+def compare_groups(
     results_df: DataFrame,
     outliers: DataFrame,
     group0: SampleList,
@@ -166,9 +166,9 @@ def compareGroups(
     frac_filter: Optional[float],
     label: str,
 ) -> Tuple[DataFrame, Optional[DataFrame]]:
-    df = filterOutliers(outliers, group0, group1, frac_filter)
+    df = filter_outliers(outliers, group0, group1, frac_filter)
     if len(df) > 0:
-        col, fisher_info = testDifferentGroupsOutliers(group0, group1, df)
+        col, fisher_info = fisher_test_groups(group0, group1, df)
         col = pd.DataFrame(col)
         col.columns = [label]
         results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
