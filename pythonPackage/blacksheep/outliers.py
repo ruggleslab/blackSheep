@@ -4,9 +4,9 @@ from pandas import DataFrame
 from .classes import OutlierTable, qValues
 from .outlierTable import convert_to_outliers
 from .outlierTable import convert_to_counts
-from .outlierTable import make_frac_table
 from .comparisons import compare_groups
 from .comparisons import get_sample_lists
+from .constants import *
 
 
 SampleList = List[str]
@@ -57,17 +57,15 @@ def make_outliers_table(
     df = convert_to_outliers(df, samples, iqrs, up_or_down)
 
     df = convert_to_counts(df, samples, aggregate, ind_sep).transpose()
+    outliers = OutlierTable(df, up_or_down, iqrs, samples, None)
+    frac_table = outliers.make_frac_table()
 
-    fracTable = make_frac_table(df, samples).dropna(how="all")
     if save_frac_table:
-        fracTable.to_csv(
-            "%s.%s.fraction_table.tsv" % (output_prefix, up_or_down), sep="\t"
-        )
+        frac_table.to_csv(frac_table_file_name % (output_prefix, up_or_down), sep="\t")
 
     if save_outlier_table:
-        df.to_csv("%s.%s.count_table.tsv" % (output_prefix, up_or_down), sep="\t")
+        df.to_csv(outlier_table_file_name % (output_prefix, up_or_down), sep="\t")
 
-    outliers = OutlierTable(df, up_or_down, iqrs, samples, fracTable)
     return outliers
 
 
@@ -96,9 +94,9 @@ def compare_groups_outliers(
     """
     # TODO convert prints to logging
     df = outliers.df.transpose()
-    outlier_samples = outliers.samples
+    samples = outliers.samples
     up_or_down = outliers.up_or_down
-    results_df = pd.DataFrame(index=df.index)
+    results_df = DataFrame(index=df.index)
     for comp in annotations.columns:
 
         group0_label, group0, group1_label, group1 = get_sample_lists(annotations, comp)
@@ -106,11 +104,11 @@ def compare_groups_outliers(
         if group0 is None:
             print("Number of categories in %s is not 2, skipping %s" % (comp, comp))
             continue
-        not_there = [samp for samp in group0 if not samp in outlier_samples] + [
-            samp for samp in group1 if not samp in outlier_samples
+        not_there = [samp for samp in group0 if samp not in samples] + [
+            samp for samp in group1 if samp not in samples
         ]
-        group0 = [samp for samp in group0 if samp in outlier_samples]
-        group1 = [samp for samp in group1 if samp in outlier_samples]
+        group0 = [samp for samp in group0 if samp in samples]
+        group1 = [samp for samp in group1 if samp in samples]
         if (len(group0) < 2) or (len(group1) < 2):
             print(
                 "Number of categories in %s is not 2, or too few samples in each category, "
@@ -124,30 +122,30 @@ def compare_groups_outliers(
             )
 
         # doing tests
-        label0 = "fisherFDR_%s_%s" % (comp, group0_label)
+        label0 = fdr_col_label % (comp, group0_label)
         results_df, fisher_info0 = compare_groups(
             results_df, df, group0, group1, frac_filter, label0
         )
 
-        label1 = "fisherFDR_%s_%s" % (comp, group1_label)
+        label1 = fdr_col_label % (comp, group1_label)
         results_df, fisher_info1 = compare_groups(
             results_df, df, group1, group0, frac_filter, label1
         )
 
         if output_comparison_summaries:
             label_map = {
-                "0": "_%s_%s" % (comp, group0_label),
-                "1": "_%s_%s" % (comp, group1_label),
-                "fisherp": "enrichment_fisherp_%s_%s" % (comp, group0_label),
+                general_group_label_0: comp_group_suffix % (comp, group0_label),
+                general_group_label_1: comp_group_suffix % (comp, group1_label),
+                general_fisher_p: specific_fisher_p % (comp, group0_label),
             }
             fisher_info0.columns = [
                 rename_fisher_table(col, label_map) for col in fisher_info0.columns
             ]
 
             label_map = {
-                "0": "_%s_%s" % (comp, group1_label),
-                "1": "_%s_%s" % (comp, group0_label),
-                "fisherp": "enrichment_fisherp_%s_%s" % (comp, group1_label),
+                general_group_label_0: comp_group_suffix % (comp, group1_label),
+                general_group_label_1: comp_group_suffix % (comp, group0_label),
+                general_fisher_p: specific_fisher_p % (comp, group1_label),
             }
             fisher_info1.columns = [
                 rename_fisher_table(col, label_map) for col in fisher_info1.columns
@@ -157,11 +155,11 @@ def compare_groups_outliers(
                 [fisher_info0, fisher_info1], axis=0, join="outer", sort=True
             ).merge(results_df[[label0, label1]], left_index=True, right_index=True)
             comp_df.to_csv(
-                "%s.%s.%s.qvalues.tsv" % (output_prefix, up_or_down, comp), sep="\t"
+                ind_comparison_file_name % (output_prefix, up_or_down, comp), sep="\t"
             )
     results_df = results_df.dropna(how="all", axis=0)
     if save_qvalues:
-        results_df.to_csv("%s.%s.qvalues.tsv" % (output_prefix, up_or_down), sep="\t")
+        results_df.to_csv(qvalues_file_name % (output_prefix, up_or_down), sep="\t")
     qvals = qValues(results_df, annotations.columns, frac_filter)
     return qvals
 

@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Iterable
 import sys
 import logging
 import argparse
@@ -8,12 +8,14 @@ from .outliers import run_outliers
 from .outliers import make_outliers_table
 from .outliers import compare_groups_outliers
 from . import parsers
+from .parsers import is_valid_file, check_output_prefix
+from .classes import qValues
 from .visualization import plot_heatmap
-from .visualization import write_genes
+from .constants import *
 
 
 # File checkers
-def check_positive(arg):
+def check_positive(arg: str) -> float:
     try:
         arg = float(arg)
     except TypeError:
@@ -23,20 +25,8 @@ def check_positive(arg):
     return arg
 
 
-def is_valid_file(arg):
-    if not os.path.exists(arg):
-        raise argparse.ArgumentTypeError("%s does not exist" % arg)
-    return arg
 
-
-def check_output_prefix(arg):
-    if "/" in arg:
-        prefix = arg.rsplit("/", 1)[0]
-        is_valid_file(prefix)
-    return arg
-
-
-def bn0and1(arg):
+def bn0and1(arg: str) -> float:
     try:
         arg = float(arg)
     except TypeError:
@@ -46,43 +36,34 @@ def bn0and1(arg):
     return arg
 
 
-def cols_file_or_list(arg):
-    arg = arg.split()
-
-    if len(arg) > 1:
-        return arg
-    if len(arg) != 1:
-        raise argparse.ArgumentTypeError("Cannot read %s as list or file" % arg)
-    try:
-        with open(arg[0], "r") as fh:
-            return [x for x in fh.readlines()]
-    except TypeError:
-        raise argparse.ArgumentTypeError("Cannot read %s as list or file" % arg)
-
 # Argparser
-def parse_args(args):
+def parse_args(args: List):
     # TODO finish helps
-    parser = argparse.ArgumentParser(prog="BlackSheep")
-    parser.add_argument("--version", action="version", version="%(prog)s 0.0.1")
+    parser = argparse.ArgumentParser(prog="BlackSheep", description="")
+    parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
     subparsers = parser.add_subparsers(dest="which")
     subparsers.required = True
 
-    mk_out_table = subparsers.add_parser("outliers_table")
-    mk_out_table.add_argument(
+    outliers_table = subparsers.add_parser(
+        "outliers_table",
+        description="Takes a table of values and converts to a "
+        "table of outlier counts.",
+    )
+    outliers_table.add_argument(
         "values",
         type=is_valid_file,
         help="File path to input values. First column must be sample names, "
         "header must be site labels. Only .tsv and .csv accepted.",
     )
-    mk_out_table.add_argument(
+    outliers_table.add_argument(
         "--iqrs",
         type=check_positive,
         default=1.5,
         help="Number of interquartile ranges (IQRs) above or below the "
         "median to consider a value an outlier. Default is 1.5 IQRs.",
     )
-    mk_out_table.add_argument(
+    outliers_table.add_argument(
         "--up_or_down",
         type=str,
         default="true",
@@ -90,13 +71,13 @@ def parse_args(args):
         help="Whether to look for up or down outliers. Choices are up or "
         "down. Default up.",
     )
-    mk_out_table.add_argument(
+    outliers_table.add_argument(
         "--output_prefix",
         type=check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
-    mk_out_table.add_argument(
+    outliers_table.add_argument(
         "--ind_sep",
         type=str,
         default="-",
@@ -104,13 +85,13 @@ def parse_args(args):
         "as ATM) and a site identifier (e.g. S365) this is the "
         "delimiter between the two elements. Default is -",
     )
-    mk_out_table.add_argument(
+    outliers_table.add_argument(
         "--do_not_aggregate",
         default=False,
         action="store_true",
         help="Use flag if you do not want to sum outliers based on site " "prefixes.",
     )
-    mk_out_table.add_argument(
+    outliers_table.add_argument(
         "--write_frac_table",
         default=False,
         action="store_true",
@@ -119,72 +100,179 @@ def parse_args(args):
         "written by default. Useful for visualization. ",
     )
 
-    binarize = subparsers.add_parser("binarize")
-    binarize.add_argument("annotation_table", type=is_valid_file)
-    binarize.add_argument("--new_file_prefix", type=check_output_prefix,
-                          default="binarized_annotations")
-
-    comparisons = subparsers.add_parser("compare_groups")
-    comparisons.add_argument("outliers_table", type=is_valid_file)
-    comparisons.add_argument("annotations_table", type=is_valid_file)
-    comparisons.add_argument("--frac_filter", type=bn0and1, default=0.3)
-    comparisons.add_argument(
-        "--output_prefix", type=check_output_prefix, default="outliers"
+    binarize = subparsers.add_parser(
+        "binarize",
+        description="Takes an annotation table where some columns "
+        "may have more than 2 possible values (not "
+        "including empty/null values) and outputs an "
+        "annotation table with only two values per "
+        "annotation. Propagates null values. ",
     )
-    comparisons.add_argument(
-        "--write_comparison_summaries", default=False, action="store_true"
-    )
-    comparisons.add_argument(
-        "--iqrs", type=check_positive, default=1.5, help="Number of IQRs in "
-    )
-    comparisons.add_argument("--up_or_down", type=str, choices=["up", "down"])
-    comparisons.add_argument("--fdr", type=bn0and1, default=0.05)
-    comparisons.add_argument("--write_gene_list", default=False, action="store_true")
-    comparisons.add_argument("--make_heatmaps", default=False, action="store_true")
-    comparisons.add_argument(
-        "--red_or_blue", type=str, choices=["red", "blue"], default="red"
-    )
-    comparisons.add_argument("--annotation_colors", type=is_valid_file, default=None)
-
-    figures = subparsers.add_parser("visualize")
-    figures.add_argument("comparison_qvalues", type=is_valid_file)
-    figures.add_argument("annotation_header", type=is_valid_file)
-    figures.add_argument("fraction_table", type=is_valid_file)
-    figures.add_argument("comparison_of_interest", type=str)
-    figures.add_argument(
-        "--annotations_to_show", type=cols_file_or_list, default=None, nargs="+"
-    )
-    figures.add_argument("--fdr", type=bn0and1, default=0.05)
-    figures.add_argument(
-        "--red_or_blue", type=str, choices=["red", "blue"], default="red"
-    )
-    figures.add_argument(
-        "--output_prefix", type=check_output_prefix, default="outliers"
-    )
-    figures.add_argument("--annotation_colors", type=is_valid_file, default=None)
-    figures.add_argument("--write_gene_list", default=False, action="store_true")
-
-    pipeline = subparsers.add_parser("outliers")
-    pipeline.add_argument(
-        "values",
-        type=is_valid_file,
-        help="File path to input values. First column must be sample names, "
-        "header must be site labels. Only .tsv and .csv accepted.",
-    )
-    pipeline.add_argument(
+    binarize.add_argument(
         "annotations",
         type=is_valid_file,
-        help="File path to annotation values. First column must be sample "
-        "names, header is different annotations. e.g. mutation status.",
+        help="Annotation table with "
+        "samples as rows and "
+        "annotation labels as "
+        "columns. ",
     )
-    pipeline.add_argument(
+    binarize.add_argument(
+        "--new_file_prefix",
+        type=check_output_prefix,
+        default="binarized_annotations",
+        help="Prefix for new annotation file",
+    )
+
+    compare_groups = subparsers.add_parser(
+        "compare_groups",
+        description="Takes an annotation table and outlier count "
+        "table (output of outliers_table) and outputs "
+        "qvalues from a statistical test that looks "
+        "for enrichment of outlier values in each "
+        "group in the annotation table. For each value in each comparison, the qvalue table will "
+        "have 1 column, if there are any genes in that comparison. ",
+    )
+    compare_groups.add_argument(
+        "outliers_table",
+        type=is_valid_file,
+        help="Table of outlier counts (output of outliers_table). Must be "
+        ".tsv or .csv file, with outlier and non-outlier counts as rows, and genes/sites as "
+        "columns. ",
+    )
+    compare_groups.add_argument(
+        "annotations",
+        type=is_valid_file,
+        help="Table of annotations. Must be .csv or .tsv. Samples as rows "
+        "and comparisons as columns. Comparisons must have only  "
+        "unique values (not including missing values). If there are "
+        "more options than that, you can use binarize to prepare the "
+        "table. ",
+    )
+    compare_groups.add_argument(
+        "--frac_filter",
+        type=bn0and1,
+        default=0.3,
+        help="The minimum fraction of samples per group that must have an outlier in a gene to"
+        "consider that gene in the analysis. This is used to prevent a high number of outlier "
+        "values in 1 sample from driving a low qvalue. Default 0.3",
+    )
+    compare_groups.add_argument(
+        "--output_prefix",
+        type=check_output_prefix,
+        default="outliers",
+        help="File prefix for qvalues table and other optional outputs. Default outliers",
+    )
+    compare_groups.add_argument(
+        "--write_comparison_summaries", default=False, action="store_true",
+        help="Use flag to write a separate file for each column in the annotations table, "
+             "with outlier counts in each group, p-values and q-values in each group. "
+    )
+    compare_groups.add_argument(
+        "--iqrs", type=check_positive, default=None,
+        help="Number of IQRs used to define outliers in the input count table. Optional."
+    )
+    compare_groups.add_argument(
+        "--up_or_down", type=str, choices=["up", "down"],
+        help="Whether input outlier table represents up or down outliers. Needed for "
+             "output file labels. Default up"
+    )
+    compare_groups.add_argument(
+        "--write_gene_list", default=False, action="store_true",
+        help="Use flag to write a list of significantly enriched genes for each value in each "
+             "comparison. If used, need an fdr threshold as well. "
+    )
+    compare_groups.add_argument(
+        "--make_heatmaps", default=False, action="store_true",
+        help="Use flag to draw a heatmap of signficantly enriched genes for each value in each "
+             "comparison. If used, need an fdr threshold as well. "
+    )
+    compare_groups.add_argument(
+        "--fdr", type=bn0and1, default=0.05,
+        help="FDR cut off to use for signficantly enriched gene lists and heatmaps. Default 0.05"
+    )
+    compare_groups.add_argument(
+        "--red_or_blue", type=str, choices=["red", "blue"], default="red",
+        help="If --make_heatmaps is called, color of values to draw on heatmap. Default red. "
+    )
+    compare_groups.add_argument(
+        "--annotation_colors", type=is_valid_file, default=None,
+        help="File with color map to use for annotation header if --make_heatmaps is used. Must "
+             "have a 'value    color' format for each value in annotations. Any value not "
+             "represented will be assigned a new color. "
+    )
+
+    visualize = subparsers.add_parser("visualize",
+                                      description="Used to make custom heatmaps from significant "
+                                                "genes. ")
+    visualize.add_argument(
+        "comparison_qvalues", type=is_valid_file,
+        help="Table of qvalues, output from compare_groups. Must be .csv or .tsv. Has genes/sites "
+             "as rows and comparison values as columns. "
+    )
+    visualize.add_argument(
+        "annotations", type=is_valid_file, help="Table of annotations used to generate qvalues. "
+    )
+    visualize.add_argument(
+        "visualization_table", type=is_valid_file,
+        help="Values to visualize in heatmap. Samples as rows and "
+             "genes/sites as columns. Using outlier fraction table is recommended, but original "
+             "values can also be used if no aggregation was used. "
+    )
+    visualize.add_argument(
+        "comparison_of_interest", type=str,
+        help="Name of column in qvalues table from which to visualize significant genes. "
+    )
+    visualize.add_argument(
+        "--annotations_to_show", type=str, default=None, nargs="+",
+        help="Names of columns from the annotation table to show in the header of the heatmap. "
+             "Default is all columns. "
+    )
+    visualize.add_argument("--fdr", type=bn0and1, default=0.05,
+                           help="FDR threshold to use to select genes to visualize. Default 0.05")
+    visualize.add_argument(
+        "--red_or_blue", type=str, choices=["red", "blue"], default="red",
+        help="Color of values to draw on heatmap. Default red. "
+    )
+    visualize.add_argument(
+        "--output_prefix", type=check_output_prefix, default="outliers",
+        help="Output prefix for writing files. Default outliers. "
+    )
+    visualize.add_argument(
+        "--annotation_colors", type=is_valid_file, default=None,
+        help="File with color map to use for annotation header. Must "
+             "have a line with 'value    color' format for each value in annotations. Any value "
+             "not represented will be assigned a new color. "
+    )
+    visualize.add_argument(
+        "--write_gene_list", default=False, action="store_true",
+        help="Use flag to write a list of significantly enriched genes for each value in each "
+             "comparison."
+    )
+
+    outliers = subparsers.add_parser(
+        "outliers", description="Runs whole outliers pipeline. Has options to output every "
+                                "possible output. "
+    )
+    outliers.add_argument(
+        "values",
+        type=is_valid_file,
+        help="File path to input values. Rows are sample names, "
+        "columns are gene/site labels. Only .tsv and .csv accepted.",
+    )
+    outliers.add_argument(
+        "annotations",
+        type=is_valid_file,
+        help="File path to annotation values. Rows are sample names, "
+             "header is different annotations. e.g. mutation status.",
+    )
+    outliers.add_argument(
         "--iqrs",
         type=check_positive,
         default=1.5,
         help="Number of inter-quartile ranges (IQRs) above or below the "
-        "median to consider a value an outlier. Default is 1.5 IQRs.",
+             "median to consider a value an outlier. Default is 1.5.",
     )
-    pipeline.add_argument(
+    outliers.add_argument(
         "--up_or_down",
         type=str,
         default="true",
@@ -192,48 +280,70 @@ def parse_args(args):
         help="Whether to look for up or down outliers. Choices are up or "
         "down. Default up.",
     )
-    pipeline.add_argument(
+    outliers.add_argument(
         "--do_not_aggregate",
         default=False,
         action="store_true",
-        help="Use flag if you do not want to sum outliers based on site " "prefixes.",
+        help="Use flag if you do not want to sum outliers based on site prefixes."
     )
-    pipeline.add_argument(
+    outliers.add_argument(
         "--output_prefix",
         type=check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
-    pipeline.add_argument(
+    outliers.add_argument(
+        "--write_outlier_table", default=False, action="store_true",
+        help="Use flag to write a table of outlier counts."
+    )
+    outliers.add_argument(
         "--write_frac_table",
         default=False,
         action="store_true",
         help="Use flag if you want to write a table with fraction of "
-        "values per site, per sample that are outliers. Will not be "
-        "written by default. Useful for visualization. ",
+        "values per site per sample that are outliers. Useful for custom visualization."
     )
-    pipeline.add_argument(
-        "--write_outlier_table", default=False, action="store_true", help=""
-    )
-    pipeline.add_argument(
+    outliers.add_argument(
         "--ind_sep",
         type=str,
         default="-",
         help="If site labels have a parent molecule (e.g. a gene name such "
         "as ATM) and a site identifier (e.g. S365) this is the "
-        "delimiter between the two elements. Default is -",
+        "delimiter between the two elements. Default is -"
     )
-    pipeline.add_argument("--frac_filter", type=bn0and1, default=0.3)
-    pipeline.add_argument(
-        "--write_comparison_summaries", default=False, action="store_true"
+    outliers.add_argument(
+        "--frac_filter", type=bn0and1, default=0.3,
+        help="The minimum fraction of samples per group that must have an outlier in a gene to"
+             "consider that gene in the analysis. This is used to prevent a high number of outlier "
+             "values in 1 sample from driving a low qvalue. Default 0.3"
     )
-    pipeline.add_argument("--fdr", type=bn0and1, default=0.05)
-    pipeline.add_argument("--write_gene_list", default=False, action="store_true")
-    pipeline.add_argument("--make_heatmaps", default=False, action="store_true")
-    pipeline.add_argument(
-        "--red_or_blue", type=str, choices=["red", "blue"], default="red"
+    outliers.add_argument(
+        "--write_comparison_summaries", default=False, action="store_true",
+        help="Use flag to write a separate file for each column in the annotations table, "
+             "with outlier counts in each group, p-values and q-values in each group. "
     )
-    pipeline.add_argument("--annotation_colors", type=is_valid_file, default=None)
+    outliers.add_argument("--fdr", type=bn0and1, default=0.05,
+                           help="FDR threshold to use to select genes to visualize. Default 0.05")
+    outliers.add_argument(
+        "--write_gene_list", default=False, action="store_true",
+        help="Use flag to write a list of significantly enriched genes for each value in each "
+             "comparison."
+    )
+    outliers.add_argument(
+        "--make_heatmaps", default=False, action="store_true",
+        help="Use flag to draw a heatmap of signficantly enriched genes for each value in each "
+             "comparison. If used, need an fdr threshold as well. "
+    )
+    outliers.add_argument(
+        "--red_or_blue", type=str, choices=["red", "blue"], default="red",
+        help="Color of values to draw on heatmap. Default red. "
+    )
+    outliers.add_argument(
+        "--annotation_colors", type=is_valid_file, default=None,
+        help="File with color map to use for annotation header. Must "
+             "have a line with 'value    color' format for each value in annotations. Any value "
+             "not represented will be assigned a new color. "
+    )
     return parser.parse_args(args)
 
 
@@ -257,16 +367,16 @@ def main(args: Optional[List[str]] = None):
         )
 
     elif args.which == "binarize":
-        annotations = parsers.parse_values(args.annotation_table)
+        annotations = parsers.parse_values(args.annotations)
         annotations = parsers.binarize_annotations(annotations)
-        annotations.to_csv('%s.tsv' % args.output, sep='\t')
+        annotations.to_csv("%s.tsv" % args.output, sep="\t")
 
     elif args.which == "compare_groups":
         outliers = parsers.parse_outliers(
             args.outliers_table, args.up_or_down, args.iqrs
         )
 
-        annotations = parsers.parse_values(args.annotations_table)
+        annotations = parsers.parse_values(args.annotations)
         qVals = compare_groups_outliers(
             outliers,
             annotations,
@@ -295,16 +405,15 @@ def main(args: Optional[List[str]] = None):
 
     elif args.which == "visualize":
         qvals = parsers.parse_values(args.comparison_qvalues)
-        annotations = parsers.parse_values(args.annotation_header)
-        frac_table = parsers.parse_values(args.fraction_table)
+        annotations = parsers.parse_values(args.annotations)
+        frac_table = parsers.parse_values(args.visualization_table)
         col_of_interest = args.comparison_of_interest
-        annot_cols = args.annotations_to_show[0]
+        annot_cols = args.annotations_to_show[0].split()
 
         try:
             annotations = annotations[annot_cols]
         except KeyError:
-            print(annotations.columns, annotations.index, annotations.head())
-            raise ValueError("Some cols not in annotations: %s" % annot_cols)
+            raise ValueError("Some of %s not in annotations" % annot_cols)
 
         annot_label = col_of_interest.split("_", 1)[1].rsplit("_", 1)[0]
         if annot_label not in annot_cols:
@@ -323,7 +432,9 @@ def main(args: Optional[List[str]] = None):
         )
         plt.close()
         if args.write_gene_list:
-            write_genes(qvals[[col_of_interest]], args.fdr, args.output_prefix)
+            qValues(qvals[[col_of_interest]], [], None).write_gene_lists(
+                args.fdr, args.output_prefix
+            )
 
     elif args.which == "outliers":
         df = parsers.parse_values(args.values)
@@ -360,7 +471,7 @@ def main(args: Optional[List[str]] = None):
                 )
                 plt.close()
 
-    with open("%s.parameters.txt" % args.output_prefix, "w") as fh:
+    with open(parameters_file_name % args.output_prefix, "w") as fh:
         for arg in vars(args):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
 

@@ -28,7 +28,7 @@ def test_frac_table():
 def test_compare_groups_qvals():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
-    outliers = bsh.classes.OutlierTable(outliers, 'up', 1.5, df.index, fractable)
+    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, df.index, fractable)
     test_qvals = bsh.compare_groups_outliers(outliers, annotations)
 
     test_qvals.df = test_qvals.df.sort_index().sort_index(axis=1)
@@ -40,7 +40,7 @@ def test_compare_groups_comps():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
-    outliers = bsh.classes.OutlierTable(outliers, 'up', 1.5, df.index, fractable)
+    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, df.index, fractable)
     test_qvals = bsh.compare_groups_outliers(outliers, annotations)
 
     assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values()) == 0
@@ -82,14 +82,16 @@ def test_run_outliers_comps():
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
     test_outliers, test_qvals = bsh.run_outliers(df, annotations)
-
-    assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values())==0
+    assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values()) == 0
 
 
 def test_larger_comps():
-    annotations = pd.read_csv('tests/sample_annotations.csv', index_col=0)
-    outliers = pd.read_csv('tests/sample_endo_outliers_table.csv', index_col=0)
-    vis_table = pd.read_csv('tests/sample_endo.up.fraction_table.tsv', sep='\t', index_col=0)
-    outliers = bsh.classes.OutlierTable(outliers, 'up', 1.5, vis_table.index, vis_table)
-    test_qvals = bsh.compare_groups_outliers(outliers, annotations,
-                                             output_prefix='tests/sample_endo', save_qvalues=True)
+    annotations = pd.read_csv("tests/sample_annotations.csv", index_col=0)
+    outliers = pd.read_csv("tests/sample_endo_outliers_table.csv", index_col=0)
+    vis_table = pd.read_csv(
+        "tests/sample_endo.up.fraction_table.tsv", sep="\t", index_col=0
+    )
+    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, vis_table.index, vis_table)
+    bsh.compare_groups_outliers(
+        outliers, annotations, output_prefix="tests/sample_endo", save_qvalues=True
+    )

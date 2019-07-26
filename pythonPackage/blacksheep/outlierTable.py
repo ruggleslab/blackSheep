@@ -3,6 +3,7 @@ import numpy as np
 import scipy.stats
 from pandas import DataFrame
 from typing import List
+from blacksheep.constants import *
 
 SampleList = List[str]
 
@@ -22,18 +23,22 @@ def convert_to_outliers(
     is an outlier.Missing values are propagated.
     """
     # TODO add threshold outputs
-    df["row_iqr"] = scipy.stats.iqr(df[samples], axis=1, nan_policy="omit")
-    df["row_median"] = np.nanquantile(df[samples], q=0.5, axis=1)
+    df[row_iqr_name] = scipy.stats.iqr(df[samples], axis=1, nan_policy="omit")
+    df[row_median_name] = np.nanquantile(df[samples], q=0.5, axis=1)
 
     outlier_df = pd.DataFrame()
 
     if up_or_down == "up":
-        df["row_medPlus"] = df["row_median"] + (NUM_IQRs * df["row_iqr"])
-        outlier_df[samples] = df[samples].gt(df["row_medPlus"], axis=0).astype(int)
+        df[row_upper_bound_name] = df[row_median_name] + (NUM_IQRs * df[row_iqr_name])
+        outlier_df[samples] = (
+            df[samples].gt(df[row_upper_bound_name], axis=0).astype(int)
+        )
 
     elif up_or_down == "down":
-        df["row_medMinus"] = df["row_median"] - (NUM_IQRs * df["row_iqr"])
-        outlier_df[samples] = df[samples].lt(df["row_medMinus"], axis=0).astype(int)
+        df[row_lower_bound_name] = df[row_median_name] - (NUM_IQRs * df[row_iqr_name])
+        outlier_df[samples] = (
+            df[samples].lt(df[row_lower_bound_name], axis=0).astype(int)
+        )
 
     outlier_df[df[samples].isnull()] = np.nan
 
@@ -57,11 +62,10 @@ def convert_to_counts(
     with aggregation).
     This table is the input for the comparison function.
     """
-    not_outlier_cols = [x + "_notOutliers" for x in samples]
-    outlier_cols = [x + "_outliers" for x in samples]
+    not_outlier_cols = [x + col_seps + col_not_outlier_suffix for x in samples]
+    outlier_cols = [x + col_seps + col_outlier_suffix for x in samples]
 
     if aggregate:
-        agg_col = "gene"
         df[agg_col] = [ind.split(ind_sep)[0] for ind in df.index]
         output_df = pd.DataFrame()
         output_df[not_outlier_cols] = df.groupby(by=agg_col)[samples].agg(
@@ -75,26 +79,3 @@ def convert_to_counts(
         output_df[outlier_cols] = df[samples]
         output_df[not_outlier_cols] = 1 - df[samples]
     return output_df
-
-
-def make_frac_table(df: DataFrame, samples: SampleList):
-    """
-
-    :param df: The outlier table that is output from convertToCounts
-    :param samples: List of samples input to convertToOutliers and convertToCounts
-    :return: A table with one column per sample with the fraction of sites in each row
-    that are outliers per each sample. This table is useful for visualization but not statistics.
-    """
-    df = df.transpose()
-    cols_outliers = [x + "_outliers" for x in samples]
-    cols_notOutliers = [x + "_notOutliers" for x in samples]
-    df = df.fillna(0)
-    num_total_psites = df[cols_notOutliers].values + df[cols_outliers].values
-    with np.errstate(divide="ignore", invalid="ignore"):
-        frac_outliers = df[cols_outliers].values / num_total_psites
-
-    frac_outliers = pd.DataFrame(
-        frac_outliers, index=df.index, columns=samples
-    ).transpose()
-
-    return frac_outliers

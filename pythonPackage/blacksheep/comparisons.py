@@ -4,6 +4,8 @@ import scipy.stats
 from pandas import DataFrame
 from pandas import Series
 from typing import List, Tuple, Iterable, Optional
+from .constants import *
+
 
 SampleList = List[str]
 
@@ -12,7 +14,7 @@ def multi_hyp_correct(
     pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
 ) -> Iterable[float]:
     """
-
+    Corrects p-values for multiple hypothesis testing
     :param pvalues: Array of p-values to correct
     :param correction_type: Which procedure to use. Options are "Benjamini-Hochberg" or
     "Bonferroni"; Default is "Benjamini-Hochberg"
@@ -55,7 +57,7 @@ def get_sample_lists(
     annotations: DataFrame, col: str
 ) -> Tuple[Optional[str], Optional[SampleList], Optional[str], Optional[SampleList]]:
     """
-
+    Finds groupings of samples from an annotation dataframe column.
     :param annotations: A DataFrame with samples as the index and annotations as columns. Each
     column must contain exactly 2 different values, and optionally missing values. Columns with
     less or more than 2 options will be ignored.
@@ -78,7 +80,8 @@ def filter_outliers(
     frac_filter: Optional[float],
 ) -> DataFrame:
     """
-
+    Filters an outlier count table for rows that are enriched for outliers in group0 and that
+    have more than a frac_filter fraction of samples of group0 with an outlier.
     :param df: Outliers count table, output from convertToCounts. Samples are columns,
     genes/sites are the index.
     :param group0_list: List of samples in the group of interest.
@@ -89,10 +92,10 @@ def filter_outliers(
     rows without enough outliers in group0 are also removed.
     """
 
-    group0_outliers = [x + "_outliers" for x in group0_list]
-    group0_notOutliers = [x + "_notOutliers" for x in group0_list]
-    group1_outliers = [x + "_outliers" for x in group1_list]
-    group1_notOutliers = [x + "_notOutliers" for x in group1_list]
+    group0_outliers = [x + col_seps + col_outlier_suffix for x in group0_list]
+    group0_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group0_list]
+    group1_outliers = [x + col_seps + col_outlier_suffix for x in group1_list]
+    group1_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group1_list]
 
     if frac_filter != None:
         min_num_outlier_samps = len(group0_list) * frac_filter
@@ -120,42 +123,70 @@ def fisher_test_groups(
     group0_list: SampleList,
     group1_list: SampleList,
     outlier_table: DataFrame,
-    correction_type: str = "Benjamini-Hochberg",
+    correction_type: str = mult_hypoth_method,
 ) -> Tuple[Series, DataFrame]:
     """
-
+    Performs fishers test by counting outlier and not outlier sites in two groups. Corrects for
+    multiple hypothesis testing too.
     :param group0_list: List of samples in group of interest
     :param group1_list: List of samples in outgroup
     :param outlier_table: Outlier count table, like output of convertToCounts
     :return: Series of qvalues with index matching filtered rows.
     """
 
-    outliers_group0_list = [x + "_outliers" for x in group0_list]
-    notOutliers_group0_list = [x + "_notOutliers" for x in group0_list]
-    outliers_group1_list = [x + "_outliers" for x in group1_list]
-    notOutliers_group1_list = [x + "_notOutliers" for x in group1_list]
+    outliers_group0_list = [x + col_seps + col_outlier_suffix for x in group0_list]
+    notOutliers_group0_list = [
+        x + col_seps + col_not_outlier_suffix for x in group0_list
+    ]
+    outliers_group1_list = [x + col_seps + col_outlier_suffix for x in group1_list]
+    notOutliers_group1_list = [
+        x + col_seps + col_not_outlier_suffix for x in group1_list
+    ]
 
-    outlier_table["Outlier0"] = outlier_table[outliers_group0_list].sum(axis=1)
-    outlier_table["NotOutlier0"] = outlier_table[notOutliers_group0_list].sum(axis=1)
-    outlier_table["Outlier1"] = outlier_table[outliers_group1_list].sum(axis=1)
-    outlier_table["NotOutlier1"] = outlier_table[notOutliers_group1_list].sum(axis=1)
+    outlier_table[outlier_count_lab + general_group_label_0] = outlier_table[
+        outliers_group0_list
+    ].sum(axis=1)
+    outlier_table[not_outlier_count_lab + general_group_label_0] = outlier_table[
+        notOutliers_group0_list
+    ].sum(axis=1)
+    outlier_table[outlier_count_lab + general_group_label_1] = outlier_table[
+        outliers_group1_list
+    ].sum(axis=1)
+    outlier_table[not_outlier_count_lab + general_group_label_1] = outlier_table[
+        notOutliers_group1_list
+    ].sum(axis=1)
 
-    outlier_table["fisherp"] = outlier_table.apply(
+    outlier_table[fisherp_col] = outlier_table.apply(
         (
             lambda r: scipy.stats.fisher_exact(
-                [[r["Outlier0"], r["Outlier1"]], [r["NotOutlier0"], r["NotOutlier1"]]]
+                [
+                    [
+                        r[outlier_count_lab + general_group_label_0],
+                        r[outlier_count_lab + general_group_label_1],
+                    ],
+                    [
+                        r[not_outlier_count_lab + general_group_label_0],
+                        r[not_outlier_count_lab + general_group_label_1],
+                    ],
+                ]
             )[1]
         ),
         axis=1,
     )
 
-    outlier_table["fisherFDR"] = multi_hyp_correct(
-        list(outlier_table["fisherp"]), correction_type
+    outlier_table[fisherfdr_col] = multi_hyp_correct(
+        list(outlier_table[fisherp_col]), correction_type
     )
     fisher_info = outlier_table[
-        ["Outlier0", "NotOutlier0", "Outlier1", "NotOutlier1", "fisherp"]
+        [
+            outlier_count_lab + general_group_label_0,
+            outlier_count_lab + general_group_label_1,
+            not_outlier_count_lab + general_group_label_0,
+            not_outlier_count_lab + general_group_label_1,
+            fisherp_col,
+        ]
     ]
-    return outlier_table["fisherFDR"], fisher_info
+    return outlier_table[fisherfdr_col], fisher_info
 
 
 def compare_groups(
@@ -166,12 +197,21 @@ def compare_groups(
     frac_filter: Optional[float],
     label: str,
 ) -> Tuple[DataFrame, Optional[DataFrame]]:
+    """
+    Performs fisher test and cleans up a fisher infor table for making output for each comparison
+    :param results_df: Accumulating qvalues DataFrame
+    :param outliers: Outliers count DataFrame
+    :param group0: List of samples in group of interest
+    :param group1: List of samples in outgroup
+    :param frac_filter: Fraction of samples in group of interest require to have an outlier per
+    site to be considered in analysis
+    :param label: What to call the FDR output column on the qvalues DataFrame
+    :return: Concatenated qvalues DataFrame and a table of info about the comparison
+    """
     df = filter_outliers(outliers, group0, group1, frac_filter)
     if len(df) > 0:
         col, fisher_info = fisher_test_groups(group0, group1, df)
-        col = pd.DataFrame(col)
-        col.columns = [label]
-        results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
+        results_df = pd.concat([results_df, pd.DataFrame(col, columns=[label])], axis=1, join="outer", sort=False)
     else:
         # TODO add a logging error here
         fisher_info = DataFrame(columns=[label])
