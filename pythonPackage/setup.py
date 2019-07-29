@@ -6,8 +6,8 @@ with open("README.md", "r") as fh:
 files = ["*.csv", "*.tsv"]
 
 setuptools.setup(
-    name="blacksheep-outliers",
-    version="0.0.1",
+    name="blacksheep-outliers-test",
+    version="0.0.2",
     author="Ruggles Lab",
     author_email="lmb529@nyumc.org",
     description="A package for differential expression analysis using outlier values.",
@@ -31,7 +31,6 @@ setuptools.setup(
         'scipy >= 1.2.1',
         'matplotlib >= 3.1.0',
         'seaborn >= 0.9.0',
-        'pickle',
         'catheat'
     ],
     dependency_links =[
