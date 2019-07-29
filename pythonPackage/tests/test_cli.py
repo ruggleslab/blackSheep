@@ -36,7 +36,7 @@ def test_cli_compare_groups_with_heatmaps():
         "--make_heatmaps",
         "--write_gene_list",
         "--fdr",
-        "0.5",
+        "0.6",
         "--red_or_blue",
         "red",
     ]
@@ -113,3 +113,4 @@ def test_cli_pipeline_with_figures():
     ]
 
     main(args)
+    assert False

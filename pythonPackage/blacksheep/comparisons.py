@@ -1,9 +1,10 @@
+import logging
+from typing import List, Tuple, Iterable, Optional
 import pandas as pd
-import numpy as np
-import scipy.stats
 from pandas import DataFrame
 from pandas import Series
-from typing import List, Tuple, Iterable, Optional
+import numpy as np
+import scipy.stats
 from .constants import *
 
 
@@ -209,10 +210,13 @@ def compare_groups(
     :return: Concatenated qvalues DataFrame and a table of info about the comparison
     """
     df = filter_outliers(outliers, group0, group1, frac_filter)
+    logging.info("Calculating enrichment in %s rows for %s" % (len(df), label))
     if len(df) > 0:
         col, fisher_info = fisher_test_groups(group0, group1, df)
-        results_df = pd.concat([results_df, pd.DataFrame(col, columns=[label])], axis=1, join="outer", sort=False)
+        col = DataFrame(col)
+        col.columns = [label]
+        results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
     else:
-        # TODO add a logging error here
+        logging.warning("No rows tested for %s" % label)
         fisher_info = DataFrame(columns=[label])
     return results_df, fisher_info

@@ -1,4 +1,5 @@
 from typing import Optional, Iterable
+import logging
 from pandas import DataFrame
 import numpy as np
 import catheat
@@ -194,9 +195,8 @@ def plot_heatmap(
     annot_label = col_of_interest.split("_", 1)[1].rsplit("_", 1)[0]
     sample_order = get_sample_order(annotations, annot_label)
     genes = get_genes(qvals, fdr, col_of_interest)
-    if len(genes) == 0:
-        # TODO logging, add a error here
-        print("No signficant genes at %s" % fdr)
+    if not genes:
+        logging.error("No significant genes at FDR %s in %s" % (fdr, col_of_interest))
         return None
 
     annotations = annotations.reindex(sample_order, axis=1)
@@ -211,12 +211,10 @@ def plot_heatmap(
 
     # Set up figure
     sns.set(font="arial", style="white", color_codes=True, font_scale=0.5)
-    plot_height = min(max(0.1 * (len(annotations) + len(genes)), 1), 20)
-    proportion_height_for_axs = min((len(annotations) + len(genes)) * 0.08, 0.9) / 2
-
-    plot_width = min(max(0.05 * len(annotations.columns), 3), 10)
-    proportion_width_for_axs = min((0.01 * len(annotations.columns)), 0.65) / 2
-
+    plot_height = min(max((0.1 * (len(annotations) + len(genes))), 1), 10)
+    plot_width = min(max((0.04 * len(annotations.columns)), 2.5), 10)
+    margin_sizeLR = 0.75
+    margin_sizeTB = 0.2
     fig = plt.figure(figsize=(plot_width, plot_height))
     gs = plt.GridSpec(
         figure=fig,
@@ -226,10 +224,10 @@ def plot_heatmap(
         height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
         wspace=0.01,
         hspace=0.01,
-        left=0.5 - proportion_width_for_axs,
-        right=0.5 + proportion_width_for_axs,
-        top=0.49 + proportion_height_for_axs,
-        bottom=0.49 - proportion_height_for_axs,
+        bottom=(margin_sizeTB/plot_height),
+        top=1 - (margin_sizeTB / plot_height),
+        left=(margin_sizeLR / plot_width),
+        right=1.0 - (margin_sizeLR / plot_width),
     )
 
     annot_ax = plt.subplot(gs[0, 0])
@@ -278,7 +276,10 @@ def plot_heatmap(
         edgecolor="white",
         labelspacing=0,
     )
+
     if savefig:
-        plt.savefig(figure_file_name % (output_prefix, label, fdr), dpi=200)
+        fig_path = figure_file_name % (output_prefix, label, fdr)
+        logging.info("Saving figure to %(fig_path)s")
+        plt.savefig(fig_path, dpi=200)
 
     return [annot_ax, vals_ax, cbar_ax, leg_ax]

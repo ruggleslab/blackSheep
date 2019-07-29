@@ -1,20 +1,30 @@
 from typing import Optional, List, Iterable
 import sys
+import os.path
 import logging
 import argparse
-import os.path
 import matplotlib.pyplot as plt
-from .outliers import run_outliers
-from .outliers import make_outliers_table
-from .outliers import compare_groups_outliers
-from . import parsers
-from .parsers import is_valid_file, check_output_prefix
-from .classes import qValues
-from .visualization import plot_heatmap
-from .constants import *
+from blacksheep.outliers import run_outliers
+from blacksheep.outliers import make_outliers_table
+from blacksheep.outliers import compare_groups_outliers
+from blacksheep import parsers
+from blacksheep.parsers import is_valid_file, check_output_prefix
+from blacksheep.classes import qValues
+from blacksheep.visualization import plot_heatmap
+from blacksheep.constants import *
 
 
-# File checkers
+def set_up_logger(path):
+    fmt = '%(asctime)s:%(levelname)s:%(message)s'
+    logging.basicConfig(
+        filename='test.log',
+        format=fmt,
+        level=logging.INFO,
+        datefmt='%m/%d/%Y %H:%M:%S'
+    )
+
+
+# arg checkers
 def check_positive(arg: str) -> float:
     try:
         arg = float(arg)
@@ -23,7 +33,6 @@ def check_positive(arg: str) -> float:
     if arg < 0:
         raise argparse.ArgumentTypeError("%s is not a positive number" % arg)
     return arg
-
 
 
 def bn0and1(arg: str) -> float:
@@ -38,7 +47,6 @@ def bn0and1(arg: str) -> float:
 
 # Argparser
 def parse_args(args: List):
-    # TODO finish helps
     parser = argparse.ArgumentParser(prog="BlackSheep", description="")
     parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
@@ -74,7 +82,7 @@ def parse_args(args: List):
     outliers_table.add_argument(
         "--output_prefix",
         type=check_output_prefix,
-        default="outliers",
+        default="outliers_table",
         help="Output prefix for writing files. Default outliers. ",
     )
     outliers_table.add_argument(
@@ -117,7 +125,7 @@ def parse_args(args: List):
         "columns. ",
     )
     binarize.add_argument(
-        "--new_file_prefix",
+        "--output_prefix",
         type=check_output_prefix,
         default="binarized_annotations",
         help="Prefix for new annotation file",
@@ -159,7 +167,7 @@ def parse_args(args: List):
     compare_groups.add_argument(
         "--output_prefix",
         type=check_output_prefix,
-        default="outliers",
+        default="compare_groups",
         help="File prefix for qvalues table and other optional outputs. Default outliers",
     )
     compare_groups.add_argument(
@@ -234,7 +242,7 @@ def parse_args(args: List):
         help="Color of values to draw on heatmap. Default red. "
     )
     visualize.add_argument(
-        "--output_prefix", type=check_output_prefix, default="outliers",
+        "--output_prefix", type=check_output_prefix, default="visualization",
         help="Output prefix for writing files. Default outliers. "
     )
     visualize.add_argument(
@@ -289,7 +297,7 @@ def parse_args(args: List):
     outliers.add_argument(
         "--output_prefix",
         type=check_output_prefix,
-        default="outliers",
+        default="outliers_pipeline",
         help="Output prefix for writing files. Default outliers. ",
     )
     outliers.add_argument(
@@ -331,7 +339,7 @@ def parse_args(args: List):
     )
     outliers.add_argument(
         "--make_heatmaps", default=False, action="store_true",
-        help="Use flag to draw a heatmap of signficantly enriched genes for each value in each "
+        help="Use flag to draw a heatmap of significantly enriched genes for each value in each "
              "comparison. If used, need an fdr threshold as well. "
     )
     outliers.add_argument(
@@ -353,6 +361,11 @@ def main(args: Optional[List[str]] = None):
         args = sys.argv[1:]
     args = parse_args(args)
 
+    set_up_logger(args.output_prefix)
+    logging.info('Running BlackSheep in %s mode' % args.which)
+    for arg in vars(args):
+        logging.info("Parameter\n%s: %s" % (arg, getattr(args, arg)))
+
     if args.which == "outliers_table":
         df = parsers.parse_values(args.values)
         make_outliers_table(
@@ -369,7 +382,7 @@ def main(args: Optional[List[str]] = None):
     elif args.which == "binarize":
         annotations = parsers.parse_values(args.annotations)
         annotations = parsers.binarize_annotations(annotations)
-        annotations.to_csv("%s.tsv" % args.output, sep="\t")
+        annotations.to_csv("%s.tsv" % args.output_prefix, sep="\t")
 
     elif args.which == "compare_groups":
         outliers = parsers.parse_outliers(
