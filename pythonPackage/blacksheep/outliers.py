@@ -47,12 +47,11 @@ def make_outliers_table(
     samples as rows and genes/sites as columns. If frac_table is set to True, also returns a
     table of fractions of outliers with samples as rows, and genes/sites as columns.
     """
-    df = df.transpose()
     samples = df.columns
     logging.info("Calling outliers for %s samples" % len(samples))
 
     df = convert_to_outliers(df, samples, iqrs, up_or_down)
-    df = convert_to_counts(df, samples, aggregate, ind_sep).transpose()
+    df = convert_to_counts(df, samples, aggregate, ind_sep)
     outliers = OutlierTable(df, up_or_down, iqrs, samples, None)
     frac_table = outliers.make_frac_table()
 
@@ -92,7 +91,7 @@ def compare_groups_outliers(
     counts in the fisher table, pvalues and q values per row. Default False.
     :return:
     """
-    df = outliers.df.transpose()
+    df = outliers.df
     samples = outliers.samples
     up_or_down = outliers.up_or_down
     results_df = pd.DataFrame(index=df.index)
@@ -221,6 +220,7 @@ def run_outliers(
         output_prefix,
         ind_sep,
     )
+
     logging.info("Performing group comparisons")
     qvals = compare_groups_outliers(
         outliers,
