@@ -22,7 +22,6 @@ def convert_to_outliers(
     :return: A DataFrame with outlier calls for each value. 0 means not an outlier; 1 means there
     is an outlier.Missing values are propagated.
     """
-    # TODO add threshold outputs
     df[row_iqr_name] = scipy.stats.iqr(df[samples], axis=1, nan_policy="omit")
     df[row_median_name] = np.nanquantile(df[samples], q=0.5, axis=1)
 

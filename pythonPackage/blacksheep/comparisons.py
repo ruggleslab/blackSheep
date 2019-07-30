@@ -5,11 +5,11 @@ from pandas import DataFrame
 from pandas import Series
 import numpy as np
 import scipy.stats
-from .constants import *
+from blacksheep.constants import *
 
 
 SampleList = List[str]
-
+logger = logging.getLogger("cli")
 
 def multi_hyp_correct(
     pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
@@ -210,13 +210,13 @@ def compare_groups(
     :return: Concatenated qvalues DataFrame and a table of info about the comparison
     """
     df = filter_outliers(outliers, group0, group1, frac_filter)
-    logging.info("Calculating enrichment in %s rows for %s" % (len(df), label))
+    logger.info("Calculating enrichment in %s rows for %s" % (len(df), label))
     if len(df) > 0:
         col, fisher_info = fisher_test_groups(group0, group1, df)
         col = DataFrame(col)
         col.columns = [label]
         results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
     else:
-        logging.warning("No rows tested for %s" % label)
+        logger.warning("No rows tested for %s" % label)
         fisher_info = DataFrame(columns=[label])
     return results_df, fisher_info

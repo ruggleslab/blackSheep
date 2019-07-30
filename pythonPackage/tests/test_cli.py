@@ -113,4 +113,3 @@ def test_cli_pipeline_with_figures():
     ]
 
     main(args)
-    assert False

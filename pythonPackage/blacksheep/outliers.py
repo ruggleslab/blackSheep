@@ -12,6 +12,7 @@ from .constants import *
 
 
 SampleList = List[str]
+# logger = logging.getLogger('cli')
 
 
 def make_outliers_table(
@@ -157,7 +158,7 @@ def compare_groups_outliers(
     results_df = results_df.dropna(how="all", axis=0)
     if save_qvalues:
         qval_path = os.path.abspath(qvalues_file_name % (output_prefix, up_or_down))
-        logging.info("Saving qvalues to %(qval_path)s")
+        logging.info("Saving qvalues to %s" % qval_path)
         results_df.to_csv(qval_path, sep="\t")
     qvals = qValues(results_df, annotations.columns, frac_filter)
     return qvals

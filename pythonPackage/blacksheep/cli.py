@@ -1,6 +1,5 @@
 from typing import Optional, List, Iterable
 import sys
-import os.path
 import logging
 import argparse
 import matplotlib.pyplot as plt
@@ -14,14 +13,26 @@ from blacksheep.visualization import plot_heatmap
 from blacksheep.constants import *
 
 
-def set_up_logger(path):
-    fmt = '%(asctime)s:%(levelname)s:%(message)s'
-    logging.basicConfig(
-        filename='test.log',
+fmt = '%(asctime)s:%(levelname)s:%(message)s'
+logging.basicConfig(
         format=fmt,
         level=logging.INFO,
         datefmt='%m/%d/%Y %H:%M:%S'
     )
+
+
+def set_up_logger(path):
+    logger = logging.getLogger("cli")
+    fh = logging.FileHandler('%s.log'%path)
+    fh.setLevel(logging.INFO)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.WARNING)
+    fmter = logging.Formatter(fmt)
+    fh.setFormatter(fmter)
+    ch.setFormatter(fmter)
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+    # return logger
 
 
 # arg checkers
@@ -362,9 +373,10 @@ def main(args: Optional[List[str]] = None):
     args = parse_args(args)
 
     set_up_logger(args.output_prefix)
-    logging.info('Running BlackSheep in %s mode' % args.which)
+    logger = logging.getLogger("cli")
+    logger.info('Running BlackSheep in %s mode' % args.which)
     for arg in vars(args):
-        logging.info("Parameter\n%s: %s" % (arg, getattr(args, arg)))
+        logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))
 
     if args.which == "outliers_table":
         df = parsers.parse_values(args.values)

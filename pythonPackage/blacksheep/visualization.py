@@ -9,6 +9,9 @@ import seaborn as sns
 from .constants import *
 
 
+logger = logging.getLogger("cli")
+
+
 def get_sample_order(annotations: DataFrame, col_of_interest: str) -> Iterable:
     """
     Orders the samples using annotations
@@ -61,7 +64,6 @@ def pick_color(red_or_blue: str):
             as_cmap=True,
         )
     else:
-        # TODO log error here
         raise ValueError("Invalid color choice, must be red or blue, setting to red.")
 
     cmap.set_bad("#BDBDBD")
@@ -78,8 +80,7 @@ def check_colors(colors: dict) -> dict:
         try:
             mpatch.Patch(color=color)
         except ValueError:
-            # TODO change to log
-            print("%s is not a valid color" % color)
+            logger.warning("%s is not a valid color" % color)
             colors.pop(lab)
     return colors
 
@@ -151,10 +152,8 @@ def determine_colors(path: str, annotations: DataFrame) -> dict:
             with open(path, "r") as fh:
                 colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
             colors = check_colors(colors)
-
         except FileNotFoundError:
-            # TODO log
-            print("%s is not a valid file" % path)
+            logger.warning("%s is not a valid file, generating colors" % path)
             colors = {}
 
     colors = assign_colors(annotations, colors, default_palette)
@@ -196,7 +195,7 @@ def plot_heatmap(
     sample_order = get_sample_order(annotations, annot_label)
     genes = get_genes(qvals, fdr, col_of_interest)
     if not genes:
-        logging.error("No significant genes at FDR %s in %s" % (fdr, col_of_interest))
+        logger.warning("No significant genes at FDR %s in %s" % (fdr, col_of_interest))
         return None
 
     annotations = annotations.reindex(sample_order, axis=1)
@@ -279,7 +278,7 @@ def plot_heatmap(
 
     if savefig:
         fig_path = figure_file_name % (output_prefix, label, fdr)
-        logging.info("Saving figure to %(fig_path)s")
+        logger.info("Saving figure to %s" % fig_path)
         plt.savefig(fig_path, dpi=200)
 
     return [annot_ax, vals_ax, cbar_ax, leg_ax]
