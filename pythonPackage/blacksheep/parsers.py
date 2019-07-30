@@ -66,7 +66,7 @@ def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
     """
     sep = check_suffix(path)
     df = pd.read_csv(is_valid_file(path), sep=sep, index_col=0)
-    samples = sorted(list(set([ind.rsplit(col_seps, 1)[0] for ind in df.index])))
+    samples = sorted(list(set([ind.rsplit(col_seps, 1)[0] for ind in df.columns])))
     outliers = OutlierTable(df, updown, iqrs, samples, None)
     outliers.make_frac_table()
     return outliers

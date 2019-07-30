@@ -32,7 +32,7 @@ def set_up_logger(path):
     ch.setFormatter(fmter)
     logger.addHandler(fh)
     logger.addHandler(ch)
-    # return logger
+    return logger
 
 
 # arg checkers
@@ -72,8 +72,8 @@ def parse_args(args: List):
     outliers_table.add_argument(
         "values",
         type=is_valid_file,
-        help="File path to input values. First column must be sample names, "
-        "header must be site labels. Only .tsv and .csv accepted.",
+        help="File path to input values. Columns must be samples, "
+        "genes must be sites or genes. Only .tsv and .csv accepted.",
     )
     outliers_table.add_argument(
         "--iqrs",
@@ -130,10 +130,8 @@ def parse_args(args: List):
     binarize.add_argument(
         "annotations",
         type=is_valid_file,
-        help="Annotation table with "
-        "samples as rows and "
-        "annotation labels as "
-        "columns. ",
+        help="Annotation table with samples as rows and "
+        "annotation labels as columns. ",
     )
     binarize.add_argument(
         "--output_prefix",
@@ -145,9 +143,8 @@ def parse_args(args: List):
     compare_groups = subparsers.add_parser(
         "compare_groups",
         description="Takes an annotation table and outlier count "
-        "table (output of outliers_table) and outputs "
-        "qvalues from a statistical test that looks "
-        "for enrichment of outlier values in each "
+        "table (output of outliers_table) and outputs qvalues from "
+        "a statistical test that looks for enrichment of outlier values in each "
         "group in the annotation table. For each value in each comparison, the qvalue table will "
         "have 1 column, if there are any genes in that comparison. ",
     )
@@ -155,8 +152,8 @@ def parse_args(args: List):
         "outliers_table",
         type=is_valid_file,
         help="Table of outlier counts (output of outliers_table). Must be "
-        ".tsv or .csv file, with outlier and non-outlier counts as rows, and genes/sites as "
-        "columns. ",
+        ".tsv or .csv file, with outlier and non-outlier counts as columns, and genes/sites as "
+        "rows. ",
     )
     compare_groups.add_argument(
         "annotations",
@@ -233,8 +230,8 @@ def parse_args(args: List):
     )
     visualize.add_argument(
         "visualization_table", type=is_valid_file,
-        help="Values to visualize in heatmap. Samples as rows and "
-             "genes/sites as columns. Using outlier fraction table is recommended, but original "
+        help="Values to visualize in heatmap. Samples as columns and "
+             "genes/sites as rows. Using outlier fraction table is recommended, but original "
              "values can also be used if no aggregation was used. "
     )
     visualize.add_argument(
@@ -246,8 +243,10 @@ def parse_args(args: List):
         help="Names of columns from the annotation table to show in the header of the heatmap. "
              "Default is all columns. "
     )
-    visualize.add_argument("--fdr", type=bn0and1, default=0.05,
-                           help="FDR threshold to use to select genes to visualize. Default 0.05")
+    visualize.add_argument(
+        "--fdr", type=bn0and1, default=0.05,
+        help="FDR threshold to use to select genes to visualize. Default 0.05"
+    )
     visualize.add_argument(
         "--red_or_blue", type=str, choices=["red", "blue"], default="red",
         help="Color of values to draw on heatmap. Default red. "
@@ -275,8 +274,8 @@ def parse_args(args: List):
     outliers.add_argument(
         "values",
         type=is_valid_file,
-        help="File path to input values. Rows are sample names, "
-        "columns are gene/site labels. Only .tsv and .csv accepted.",
+        help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
+             "and .csv accepted.",
     )
     outliers.add_argument(
         "annotations",
@@ -296,8 +295,7 @@ def parse_args(args: List):
         type=str,
         default="true",
         choices=["up", "down"],
-        help="Whether to look for up or down outliers. Choices are up or "
-        "down. Default up.",
+        help="Whether to look for up or down outliers. Choices are up or down. Default up.",
     )
     outliers.add_argument(
         "--do_not_aggregate",
@@ -372,8 +370,8 @@ def main(args: Optional[List[str]] = None):
         args = sys.argv[1:]
     args = parse_args(args)
 
-    set_up_logger(args.output_prefix)
-    logger = logging.getLogger("cli")
+    logger = set_up_logger(args.output_prefix)
+
     logger.info('Running BlackSheep in %s mode' % args.which)
     for arg in vars(args):
         logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))

@@ -28,7 +28,7 @@ def test_frac_table():
 def test_compare_groups_qvals():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
-    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, df.index, fractable)
+    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, df.columns, fractable)
     test_qvals = bsh.compare_groups_outliers(outliers, annotations)
     test_qvals.df = test_qvals.df.sort_index().sort_index(axis=1)
     qvalues = qvalues.sort_index().sort_index(axis=1)
@@ -39,7 +39,7 @@ def test_compare_groups_comps():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
-    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, df.index, fractable)
+    outliers = bsh.classes.OutlierTable(outliers, "up", 1.5, df.columns, fractable)
     test_qvals = bsh.compare_groups_outliers(outliers, annotations)
 
     assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values()) == 0
@@ -73,7 +73,7 @@ def test_run_outliers_qvals():
     _, test_qvals = bsh.run_outliers(df, annotations)
     test_qvals.df = test_qvals.df.sort_index().sort_index(axis=1)
     qvalues = qvalues.sort_index().sort_index(axis=1)
-    print(qvalues.head(), test_qvals.df.head())
+
     assert qvalues.equals(test_qvals.df)
 
 

@@ -26,7 +26,7 @@ class OutlierTable:
         :return: A table with one column per sample with the fraction of sites in each row
         that are outliers per each sample. This table is useful for visualization but not statistics.
         """
-        df = self.df.transpose()
+        df = self.df
         cols_outliers = [x + col_seps + col_outlier_suffix for x in self.samples]
         cols_notOutliers = [x + col_seps + col_not_outlier_suffix for x in self.samples]
         df = df.fillna(0)
@@ -36,7 +36,7 @@ class OutlierTable:
 
         self.frac_table = DataFrame(
             frac_table, index=df.index, columns=self.samples
-        ).transpose()
+        )
 
         return self.frac_table
 
