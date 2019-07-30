@@ -32,7 +32,7 @@ def set_up_logger(path):
     ch.setFormatter(fmter)
     logger.addHandler(fh)
     logger.addHandler(ch)
-    # return logger
+    return logger
 
 
 # arg checkers
@@ -370,8 +370,8 @@ def main(args: Optional[List[str]] = None):
         args = sys.argv[1:]
     args = parse_args(args)
 
-    set_up_logger(args.output_prefix)
-    logger = logging.getLogger("cli")
+    logger = set_up_logger(args.output_prefix)
+
     logger.info('Running BlackSheep in %s mode' % args.which)
     for arg in vars(args):
         logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))
