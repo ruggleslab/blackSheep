@@ -169,7 +169,7 @@ def plot_heatmap(
     red_or_blue: str = "red",
     output_prefix: str = "outliers",
     colors: Optional[str] = None,
-    savefig: bool = True,
+    savefig: bool = False,
 ) -> list:
     """
     Plots a heatmap of signficantly enriched values for a given comparison.
@@ -188,10 +188,9 @@ def plot_heatmap(
     """
 
     annotations = annotations.transpose()
-    vis_table = vis_table.transpose()
 
     # Get orders
-    annot_label = col_of_interest.split("_", 1)[1].rsplit("_", 1)[0]
+    annot_label = [col for col in annotations.index if col in col_of_interest][0]
     sample_order = get_sample_order(annotations, annot_label)
     genes = get_genes(qvals, fdr, col_of_interest)
     if not genes:
@@ -209,11 +208,11 @@ def plot_heatmap(
     label = col_of_interest[10:]
 
     # Set up figure
-    sns.set(font="arial", style="white", color_codes=True, font_scale=0.5)
-    plot_height = min(max((0.1 * (len(annotations) + len(genes))), 1), 10)
-    plot_width = min(max((0.04 * len(annotations.columns)), 2.5), 10)
-    margin_sizeLR = 0.75
-    margin_sizeTB = 0.2
+    sns.set(font="arial", style="white", color_codes=True, font_scale=1)
+    plot_height = min(max((0.19 * (len(annotations) + len(genes))), 2), 11)
+    plot_width = min(max((0.15 * len(annotations.columns)), 3), 8.5)
+    margin_sizeLR = 1.75
+    margin_sizeTB = 0.4
     fig = plt.figure(figsize=(plot_width, plot_height))
     gs = plt.GridSpec(
         figure=fig,
@@ -225,8 +224,8 @@ def plot_heatmap(
         hspace=0.01,
         bottom=(margin_sizeTB/plot_height),
         top=1 - (margin_sizeTB / plot_height),
-        left=(margin_sizeLR / plot_width),
-        right=1.0 - (margin_sizeLR / plot_width),
+        left=0.05 + (margin_sizeLR / plot_width),
+        right=1.05 - (margin_sizeLR / plot_width),
     )
 
     annot_ax = plt.subplot(gs[0, 0])
@@ -245,7 +244,7 @@ def plot_heatmap(
         yticklabels=annotations.index,
     )
 
-    annot_ax.set_title(plot_title % col_of_interest)
+    annot_ax.set_title(plot_title % col_of_interest, fontsize=14)
     annot_ax.set_yticklabels(annotations.index, rotation=0)
     annot_ax.set_xlabel("")
     annot_ax.set_ylabel("")

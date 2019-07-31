@@ -1,6 +1,6 @@
 # Used in parsers
 binarized_col_name = "%s_%s"  # % (col, val)
-outgroup_val = "not_%s"  # % val
+outgroup_val = "not-%s"  # % val
 
 
 # Used primarily in outlierTable
@@ -20,6 +20,7 @@ not_outlier_count_lab = "NotOutlier"
 fisherp_col = "fisherp"
 fisherfdr_col = "fisherFDR"
 mult_hypoth_method = "Benjamini-Hochberg"
+
 
 # Used in outliers
 fdr_col_label = "fisherFDR_%s_%s"  # % (comp, group_label)
