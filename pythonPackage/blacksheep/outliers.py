@@ -16,18 +16,19 @@ SampleList = List[str]
 
 
 def make_outliers_table(
-    df: DataFrame,
-    iqrs: float = 1.5,
-    up_or_down: str = "up",
-    aggregate: bool = True,
-    save_outlier_table: bool = False,
-    save_frac_table: bool = False,
-    output_prefix: str = "outliers",
-    ind_sep: str = "-",
+        df: DataFrame,
+        iqrs: float = 1.5,
+        up_or_down: str = "up",
+        aggregate: bool = True,
+        save_outlier_table: bool = False,
+        save_frac_table: bool = False,
+        output_prefix: str = "outliers",
+        ind_sep: str = "-",
 ) -> OutlierTable:
-    """
+    """Converts a DataFrame of values and converts it into an OutliersTable object,
+    which includes a DataFrame of outlier and non-outlier count values.
 
-    :param df: Input DataFrame with samples as rows and sites or genes as columns.
+    :param df: Input DataFrame with samples as columns and sites/genes as columns.
     :param iqrs: The number of IQRs above or below the median to consider a value as an outlier.
     Default 1.5.
     :param up_or_down: Whether to call up or down outliers. Up meaning above the median; down
@@ -44,10 +45,12 @@ def make_outliers_table(
     :param save_outlier_table: Whether to write a file with the outlier count table. Default False.
     :param save_frac_table: Whether to write a file with the outlier fraction table. Default False.
     :param output_prefix: If files are written, a prefix for the files.
+
     :return: Always returns a outliers count table, with outlier and non-outlier counts of
     samples as rows and genes/sites as columns. If frac_table is set to True, also returns a
     table of fractions of outliers with samples as rows, and genes/sites as columns.
     """
+
     samples = df.columns
     logging.info("Calling outliers for %s samples" % len(samples))
 
@@ -79,9 +82,11 @@ def compare_groups_outliers(
     output_prefix: str = "outliers",
     output_comparison_summaries: bool = False,
 ) -> qValues:
-    """
+    """Takes an OutliersTable object and a samples annotation file and performs comparisons for
+    all groups identified in the annotation table.
 
-    :param outliers:
+    :param outliers: An OutlierTable object, with a DataFrame of outlier and non-outlier counts,
+    as well as some metadata about how the outliers were calculated.
     :param annotations: A DataFrame with samples as the index and annotations as columns. Each
     column must contain exactly 2 different values, and optionally missing values. Columns with
     less or more than 2 options will be ignored.
@@ -92,8 +97,10 @@ def compare_groups_outliers(
     :param up_or_down: Whether the input file is up or down outliers. Default "up"
     :param output_comparison_summaries: Whether to write a table for each comparison with the
     counts in the fisher table, pvalues and q values per row. Default False.
-    :return:
+    :return: A qValues object, which includes a DataFrame of q-values for each comparison,
+    as well as some metadata about how the comparisons were performed.
     """
+
     df = outliers.df
     samples = outliers.samples
     up_or_down = outliers.up_or_down
@@ -188,8 +195,12 @@ def run_outliers(
     output_comparison_summaries: bool = False,
 ) -> Tuple[OutlierTable, qValues]:
     """
-
-    :param df: Input DataFrame with samples as rows and sites or genes as columns.
+    Takes a DataFrame of values and returns OutliersTable and qValues objects. This command runs
+    the whole outliers pipeline. The DataFrame in the OutliersTable object can be used to run more
+    comparisons in future. The qValues object can be used for visualization, or writing
+    signifcant gene lists.
+    the future
+    :param df: Input DataFrame with samples as columns and sites/genes as rows.
     :param annotations: A DataFrame with samples as the index and annotations as columns. Each
     column must contain exactly 2 different values, and optionally missing values. Columns with
     less or more than 2 options will be ignored.
@@ -220,6 +231,7 @@ def run_outliers(
     samples as rows and genes/sites as columns. If frac_table is set to True, also returns a
     table of fractions of outliers with samples as rows, and genes/sites as columns.
     """
+
     logging.info("Making outliers table")
     outliers = make_outliers_table(
         df,
