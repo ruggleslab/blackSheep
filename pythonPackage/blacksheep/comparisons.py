@@ -11,6 +11,7 @@ from blacksheep.constants import *
 SampleList = List[str]
 logger = logging.getLogger("cli")
 
+
 def multi_hyp_correct(
     pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
 ) -> Iterable[float]:

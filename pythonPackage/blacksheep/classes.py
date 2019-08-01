@@ -34,9 +34,7 @@ class OutlierTable:
         with np.errstate(divide="ignore", invalid="ignore"):
             frac_table = df[cols_outliers].values / num_total_psites
 
-        self.frac_table = DataFrame(
-            frac_table, index=df.index, columns=self.samples
-        )
+        self.frac_table = DataFrame(frac_table, index=df.index, columns=self.samples)
 
         return self.frac_table
 
@@ -73,5 +71,6 @@ class qValues:
 
         for comp in comparisons:
             sig_genes = list(self.df.loc[(self.df[comp] < fdr_cut_off), :].index)
-            bsh.parsers.list_to_file(sig_genes, gene_list_file_name % (output_prefix, comp,
-                                                                   fdr_cut_off))
+            bsh.parsers.list_to_file(
+                sig_genes, gene_list_file_name % (output_prefix, comp, fdr_cut_off)
+            )

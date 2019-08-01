@@ -13,17 +13,13 @@ from blacksheep.visualization import plot_heatmap
 from blacksheep.constants import *
 
 
-fmt = '%(asctime)s:%(levelname)s:%(message)s'
-logging.basicConfig(
-        format=fmt,
-        level=logging.INFO,
-        datefmt='%m/%d/%Y %H:%M:%S'
-    )
+fmt = "%(asctime)s:%(levelname)s:%(message)s"
+logging.basicConfig(format=fmt, level=logging.INFO, datefmt="%m/%d/%Y %H:%M:%S")
 
 
 def set_up_logger(path):
     logger = logging.getLogger("cli")
-    fh = logging.FileHandler('%s.log'%path)
+    fh = logging.FileHandler("%s.log" % path)
     fh.setLevel(logging.INFO)
     ch = logging.StreamHandler()
     ch.setLevel(logging.WARNING)
@@ -179,116 +175,154 @@ def parse_args(args: List):
         help="File prefix for qvalues table and other optional outputs. Default outliers",
     )
     compare_groups.add_argument(
-        "--write_comparison_summaries", default=False, action="store_true",
+        "--write_comparison_summaries",
+        default=False,
+        action="store_true",
         help="Use flag to write a separate file for each column in the annotations table, "
-             "with outlier counts in each group, p-values and q-values in each group. "
+        "with outlier counts in each group, p-values and q-values in each group. ",
     )
     compare_groups.add_argument(
-        "--iqrs", type=check_positive, default=None,
-        help="Number of IQRs used to define outliers in the input count table. Optional."
+        "--iqrs",
+        type=check_positive,
+        default=None,
+        help="Number of IQRs used to define outliers in the input count table. Optional.",
     )
     compare_groups.add_argument(
-        "--up_or_down", type=str, choices=["up", "down"],
+        "--up_or_down",
+        type=str,
+        choices=["up", "down"],
         help="Whether input outlier table represents up or down outliers. Needed for "
-             "output file labels. Default up"
+        "output file labels. Default up",
     )
     compare_groups.add_argument(
-        "--write_gene_list", default=False, action="store_true",
+        "--write_gene_list",
+        default=False,
+        action="store_true",
         help="Use flag to write a list of significantly enriched genes for each value in each "
-             "comparison. If used, need an fdr threshold as well. "
+        "comparison. If used, need an fdr threshold as well. ",
     )
     compare_groups.add_argument(
-        "--make_heatmaps", default=False, action="store_true",
+        "--make_heatmaps",
+        default=False,
+        action="store_true",
         help="Use flag to draw a heatmap of signficantly enriched genes for each value in each "
-             "comparison. If used, need an fdr threshold as well. "
+        "comparison. If used, need an fdr threshold as well. ",
     )
     compare_groups.add_argument(
-        "--fdr", type=bn0and1, default=0.05,
-        help="FDR cut off to use for signficantly enriched gene lists and heatmaps. Default 0.05"
+        "--fdr",
+        type=bn0and1,
+        default=0.05,
+        help="FDR cut off to use for signficantly enriched gene lists and heatmaps. Default 0.05",
     )
     compare_groups.add_argument(
-        "--red_or_blue", type=str, choices=["red", "blue"], default="red",
-        help="If --make_heatmaps is called, color of values to draw on heatmap. Default red. "
+        "--red_or_blue",
+        type=str,
+        choices=["red", "blue"],
+        default="red",
+        help="If --make_heatmaps is called, color of values to draw on heatmap. Default red. ",
     )
     compare_groups.add_argument(
-        "--annotation_colors", type=is_valid_file, default=None,
+        "--annotation_colors",
+        type=is_valid_file,
+        default=None,
         help="File with color map to use for annotation header if --make_heatmaps is used. Must "
-             "have a 'value    color' format for each value in annotations. Any value not "
-             "represented will be assigned a new color. "
+        "have a 'value    color' format for each value in annotations. Any value not "
+        "represented will be assigned a new color. ",
     )
 
-    visualize = subparsers.add_parser("visualize",
-                                      description="Used to make custom heatmaps from significant "
-                                                "genes. ")
+    visualize = subparsers.add_parser(
+        "visualize",
+        description="Used to make custom heatmaps from significant " "genes. ",
+    )
     visualize.add_argument(
-        "comparison_qvalues", type=is_valid_file,
+        "comparison_qvalues",
+        type=is_valid_file,
         help="Table of qvalues, output from compare_groups. Must be .csv or .tsv. Has genes/sites "
-             "as rows and comparison values as columns. "
+        "as rows and comparison values as columns. ",
     )
     visualize.add_argument(
-        "annotations", type=is_valid_file, help="Table of annotations used to generate qvalues. "
+        "annotations",
+        type=is_valid_file,
+        help="Table of annotations used to generate qvalues. ",
     )
     visualize.add_argument(
-        "visualization_table", type=is_valid_file,
+        "visualization_table",
+        type=is_valid_file,
         help="Values to visualize in heatmap. Samples as columns and "
-             "genes/sites as rows. Using outlier fraction table is recommended, but original "
-             "values can also be used if no aggregation was used. "
+        "genes/sites as rows. Using outlier fraction table is recommended, but original "
+        "values can also be used if no aggregation was used. ",
     )
     visualize.add_argument(
-        "comparison_of_interest", type=str,
-        help="Name of column in qvalues table from which to visualize significant genes. "
+        "comparison_of_interest",
+        type=str,
+        help="Name of column in qvalues table from which to visualize significant genes. ",
     )
     visualize.add_argument(
-        "--annotations_to_show", type=str, default=None, nargs="+",
+        "--annotations_to_show",
+        type=str,
+        default=None,
+        nargs="+",
         help="Names of columns from the annotation table to show in the header of the heatmap. "
-             "Default is all columns. "
+        "Default is all columns. ",
     )
     visualize.add_argument(
-        "--fdr", type=bn0and1, default=0.05,
-        help="FDR threshold to use to select genes to visualize. Default 0.05"
+        "--fdr",
+        type=bn0and1,
+        default=0.05,
+        help="FDR threshold to use to select genes to visualize. Default 0.05",
     )
     visualize.add_argument(
-        "--red_or_blue", type=str, choices=["red", "blue"], default="red",
-        help="Color of values to draw on heatmap. Default red. "
+        "--red_or_blue",
+        type=str,
+        choices=["red", "blue"],
+        default="red",
+        help="Color of values to draw on heatmap. Default red. ",
     )
     visualize.add_argument(
-        "--output_prefix", type=check_output_prefix, default="visualization",
-        help="Output prefix for writing files. Default outliers. "
+        "--output_prefix",
+        type=check_output_prefix,
+        default="visualization",
+        help="Output prefix for writing files. Default outliers. ",
     )
     visualize.add_argument(
-        "--annotation_colors", type=is_valid_file, default=None,
+        "--annotation_colors",
+        type=is_valid_file,
+        default=None,
         help="File with color map to use for annotation header. Must "
-             "have a line with 'value    color' format for each value in annotations. Any value "
-             "not represented will be assigned a new color. "
+        "have a line with 'value    color' format for each value in annotations. Any value "
+        "not represented will be assigned a new color. ",
     )
     visualize.add_argument(
-        "--write_gene_list", default=False, action="store_true",
+        "--write_gene_list",
+        default=False,
+        action="store_true",
         help="Use flag to write a list of significantly enriched genes for each value in each "
-             "comparison."
+        "comparison.",
     )
 
     outliers = subparsers.add_parser(
-        "outliers", description="Runs whole outliers pipeline. Has options to output every "
-                                "possible output. "
+        "outliers",
+        description="Runs whole outliers pipeline. Has options to output every "
+        "possible output. ",
     )
     outliers.add_argument(
         "values",
         type=is_valid_file,
         help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
-             "and .csv accepted.",
+        "and .csv accepted.",
     )
     outliers.add_argument(
         "annotations",
         type=is_valid_file,
         help="File path to annotation values. Rows are sample names, "
-             "header is different annotations. e.g. mutation status.",
+        "header is different annotations. e.g. mutation status.",
     )
     outliers.add_argument(
         "--iqrs",
         type=check_positive,
         default=1.5,
         help="Number of inter-quartile ranges (IQRs) above or below the "
-             "median to consider a value an outlier. Default is 1.5.",
+        "median to consider a value an outlier. Default is 1.5.",
     )
     outliers.add_argument(
         "--up_or_down",
@@ -301,7 +335,7 @@ def parse_args(args: List):
         "--do_not_aggregate",
         default=False,
         action="store_true",
-        help="Use flag if you do not want to sum outliers based on site prefixes."
+        help="Use flag if you do not want to sum outliers based on site prefixes.",
     )
     outliers.add_argument(
         "--output_prefix",
@@ -310,15 +344,17 @@ def parse_args(args: List):
         help="Output prefix for writing files. Default outliers. ",
     )
     outliers.add_argument(
-        "--write_outlier_table", default=False, action="store_true",
-        help="Use flag to write a table of outlier counts."
+        "--write_outlier_table",
+        default=False,
+        action="store_true",
+        help="Use flag to write a table of outlier counts.",
     )
     outliers.add_argument(
         "--write_frac_table",
         default=False,
         action="store_true",
         help="Use flag if you want to write a table with fraction of "
-        "values per site per sample that are outliers. Useful for custom visualization."
+        "values per site per sample that are outliers. Useful for custom visualization.",
     )
     outliers.add_argument(
         "--ind_sep",
@@ -326,40 +362,57 @@ def parse_args(args: List):
         default="-",
         help="If site labels have a parent molecule (e.g. a gene name such "
         "as ATM) and a site identifier (e.g. S365) this is the "
-        "delimiter between the two elements. Default is -"
+        "delimiter between the two elements. Default is -",
     )
     outliers.add_argument(
-        "--frac_filter", type=bn0and1, default=0.3,
+        "--frac_filter",
+        type=bn0and1,
+        default=0.3,
         help="The minimum fraction of samples per group that must have an outlier in a gene to"
-             "consider that gene in the analysis. This is used to prevent a high number of outlier "
-             "values in 1 sample from driving a low qvalue. Default 0.3"
+        "consider that gene in the analysis. This is used to prevent a high number of outlier "
+        "values in 1 sample from driving a low qvalue. Default 0.3",
     )
     outliers.add_argument(
-        "--write_comparison_summaries", default=False, action="store_true",
+        "--write_comparison_summaries",
+        default=False,
+        action="store_true",
         help="Use flag to write a separate file for each column in the annotations table, "
-             "with outlier counts in each group, p-values and q-values in each group. "
+        "with outlier counts in each group, p-values and q-values in each group. ",
     )
-    outliers.add_argument("--fdr", type=bn0and1, default=0.05,
-                           help="FDR threshold to use to select genes to visualize. Default 0.05")
     outliers.add_argument(
-        "--write_gene_list", default=False, action="store_true",
+        "--fdr",
+        type=bn0and1,
+        default=0.05,
+        help="FDR threshold to use to select genes to visualize. Default 0.05",
+    )
+    outliers.add_argument(
+        "--write_gene_list",
+        default=False,
+        action="store_true",
         help="Use flag to write a list of significantly enriched genes for each value in each "
-             "comparison."
+        "comparison.",
     )
     outliers.add_argument(
-        "--make_heatmaps", default=False, action="store_true",
+        "--make_heatmaps",
+        default=False,
+        action="store_true",
         help="Use flag to draw a heatmap of significantly enriched genes for each value in each "
-             "comparison. If used, need an fdr threshold as well. "
+        "comparison. If used, need an fdr threshold as well. ",
     )
     outliers.add_argument(
-        "--red_or_blue", type=str, choices=["red", "blue"], default="red",
-        help="Color of values to draw on heatmap. Default red. "
+        "--red_or_blue",
+        type=str,
+        choices=["red", "blue"],
+        default="red",
+        help="Color of values to draw on heatmap. Default red. ",
     )
     outliers.add_argument(
-        "--annotation_colors", type=is_valid_file, default=None,
+        "--annotation_colors",
+        type=is_valid_file,
+        default=None,
         help="File with color map to use for annotation header. Must "
-             "have a line with 'value    color' format for each value in annotations. Any value "
-             "not represented will be assigned a new color. "
+        "have a line with 'value    color' format for each value in annotations. Any value "
+        "not represented will be assigned a new color. ",
     )
     return parser.parse_args(args)
 
@@ -372,7 +425,7 @@ def main(args: Optional[List[str]] = None):
 
     logger = set_up_logger(args.output_prefix)
 
-    logger.info('Running BlackSheep in %s mode' % args.which)
+    logger.info("Running BlackSheep in %s mode" % args.which)
     for arg in vars(args):
         logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))
 

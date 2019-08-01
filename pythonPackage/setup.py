@@ -26,17 +26,17 @@ setuptools.setup(
         "Operating System :: Unix",
     ],
     install_requires=[
-        'pandas >= 0.24.2',
-        'numpy >= 1.16.4',
-        'scipy >= 1.2.1',
-        'matplotlib >= 3.1.0',
-        'seaborn >= 0.9.0',
-        'catheat'
+        "pandas >= 0.24.2",
+        "numpy >= 1.16.4",
+        "scipy >= 1.2.1",
+        "matplotlib >= 3.1.0",
+        "seaborn >= 0.9.0",
+        "catheat",
     ],
-    dependency_links =[
-        'git+git://github.com/schlegelp/catheat@master'
-    ],
-    packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
+    dependency_links=["git+git://github.com/schlegelp/catheat@master"],
+    packages=setuptools.find_packages(
+        exclude=["*.tests", "*.tests.*", "tests.*", "tests"]
+    ),
     package_data={"tests": files},
     entry_points={"console_scripts": ["BlackSheep = blacksheep.cli:main"]},
 )

@@ -62,7 +62,9 @@ def make_outliers_table(
         frac_table.to_csv(frac_path, sep="\t")
 
     if save_outlier_table:
-        out_path = os.path.abspath(outlier_table_file_name % (output_prefix, up_or_down))
+        out_path = os.path.abspath(
+            outlier_table_file_name % (output_prefix, up_or_down)
+        )
         logging.info("Saving outlier table to %s" % out_path)
         df.to_csv(out_path, sep="\t")
 
@@ -102,23 +104,31 @@ def compare_groups_outliers(
         group0_label, group0, group1_label, group1 = get_sample_lists(annotations, comp)
         # Checking everything is in place
         if group0 is None:
-            logging.error("There are not exactly 2 groups of samples, skipping %s" % comp)
+            logging.error(
+                "There are not exactly 2 groups of samples, skipping %s" % comp
+            )
             continue
         not_there = [samp for samp in group0 if samp not in samples] + [
             samp for samp in group1 if samp not in samples
         ]
         if not_there:
-            logging.warning("These samples were not found in outliers table: "
-                            "%s, continuing without them. " % ", ".join(not_there))
+            logging.warning(
+                "These samples were not found in outliers table: "
+                "%s, continuing without them. " % ", ".join(not_there)
+            )
         group0 = [samp for samp in group0 if samp in samples]
         group1 = [samp for samp in group1 if samp in samples]
-        if (len(group0) < 2):
-            logging.error('Group %s does not have at least two samples, '
-                            'skipping comparison %s. '% (group0_label, comp))
+        if len(group0) < 2:
+            logging.error(
+                "Group %s does not have at least two samples, "
+                "skipping comparison %s. " % (group0_label, comp)
+            )
             continue
-        if (len(group1) < 2):
-            logging.error('Group %s does not have at least two samples, '
-                            'skipping comparison%s. ' % (group1_label, comp))
+        if len(group1) < 2:
+            logging.error(
+                "Group %s does not have at least two samples, "
+                "skipping comparison%s. " % (group1_label, comp)
+            )
             continue
 
         # doing tests

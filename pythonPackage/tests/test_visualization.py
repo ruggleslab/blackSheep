@@ -22,6 +22,7 @@ def test_heatmap_small():
         red_or_blue,
         output_prefix,
         colors,
+        savefig=True,
     )
 
 
@@ -45,6 +46,7 @@ def test_comps_heatmap_large():
             red_or_blue,
             output_prefix,
             colors,
+            savefig=True,
         )
 
 
@@ -68,4 +70,5 @@ def test_comps_heatmap_medium():
             red_or_blue,
             output_prefix,
             colors,
+            savefig=True,
         )

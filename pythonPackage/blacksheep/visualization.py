@@ -130,7 +130,7 @@ def assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
     """
 
     unique_values = sorted(np.unique(data.values.astype(str)))
-    cmap = {v:c for v,c in cmap.items() if v in unique_values}
+    cmap = {v: c for v, c in cmap.items() if v in unique_values}
     missing_entries = [v for v in unique_values if v not in cmap.keys()]
     colors = gen_colors(palette, len(missing_entries))
     cmap.update({v: colors[i] for i, v in enumerate(missing_entries)})
@@ -210,7 +210,7 @@ def plot_heatmap(
     # Set up figure
     sns.set(font="arial", style="white", color_codes=True, font_scale=1)
     plot_height = min(max((0.19 * (len(annotations) + len(genes))), 2), 11)
-    plot_width = min(max((0.15 * len(annotations.columns)), 3), 8.5)
+    plot_width = min(max((0.15 * len(annotations.columns)), 4), 8.5)
     margin_sizeLR = 1.75
     margin_sizeTB = 0.4
     fig = plt.figure(figsize=(plot_width, plot_height))
@@ -222,7 +222,7 @@ def plot_heatmap(
         height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
         wspace=0.01,
         hspace=0.01,
-        bottom=(margin_sizeTB/plot_height),
+        bottom=(margin_sizeTB / plot_height),
         top=1 - (margin_sizeTB / plot_height),
         left=0.05 + (margin_sizeLR / plot_width),
         right=1.05 - (margin_sizeLR / plot_width),
