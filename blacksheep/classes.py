@@ -17,11 +17,12 @@ class OutlierTable:
     ):
         """Instantiate an OutlierTable
 
-        :param df: DataFrame with outlier and non-outlier columns, and genes/sites as rows.
-        :param updown: Whether the outliers are above or below the median. Options are "up" or "down"
-        :param iqrs: The IQR threshold used to call outliers.
-        :param samples: The samples included in the analysis to define median and IQR.
-        :param frac_table: DataFrame with samples as columns and genes/sites as rows indicating
+        Args:
+            df: DataFrame with outlier and non-outlier columns, and genes/sites as rows.
+            updown: Whether the outliers are above or below the median. Options are "up" or "down"
+            iqrs: The IQR threshold used to call outliers.
+            samples: The samples included in the analysis to define median and IQR.
+            frac_table: DataFrame with samples as columns and genes/sites as rows indicating
             what fraction of sites per sample were called as outliers. Useful for visualization.
         """
 
@@ -32,10 +33,11 @@ class OutlierTable:
         self.frac_table = frac_table
 
     def make_frac_table(self):
-        """
-        Constructs the fraction table from the outliers table
-        :return: A table with one column per sample with the fraction of sites in each row
-            that are outliers per each sample. This table is useful for visualization but not statistics.
+        """Constructs the fraction table from the outliers table
+
+        Returns: A DataFrame with one column per sample, with the fraction of outliers per row
+        per sample. This table is useful for visualization but not statistics.
+
         """
 
         df = self.df
@@ -56,9 +58,10 @@ class qValues:
     def __init__(self, df: DataFrame, comps: list, frac_filter: Optional[float]):
         """Instantiates a qValues object.
 
-        :param df: DataFrame with genes/sites as rows and comparison_group as columns.
-        :param comps: List of comparisons used to populate table.
-        :param frac_filter: What fraction of samples in group of interest were required to have
+        Args:
+            df: DataFrame with genes/sites as rows and comparison_group as columns.
+            comps: List of comparisons used to populate table.
+            frac_filter: What fraction of samples in group of interest were required to have
             an outliers for any given row to be considered for analysis.
         """
 
@@ -72,13 +75,16 @@ class qValues:
         output_prefix: str = "outliers",
         comparisons: Optional[List] = None,
     ):
-        """
-        Writes signficant gene list files for every column in a qvalue table
-        :param fdr_cut_off: FDR threshold for signficance
-        :param output_prefix: Output prefix for files
-        :param comparisons: which subset of qvalue columns to write gene lists for. Default will
-        write for all columns
-        :return: None
+        """ Writes significant gene list files for every column in a qvalue table
+
+        Args:
+            fdr_cut_off: FDR threshold for significance
+            output_prefix: Output prefix for files
+            comparisons: which subset of qvalue columns to write gene lists for. Default will
+            write for all columns
+
+        Returns:
+
         """
 
         if comparisons is None:

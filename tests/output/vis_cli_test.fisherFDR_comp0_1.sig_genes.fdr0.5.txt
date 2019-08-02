@@ -1,3 +1,0 @@
-geneC
-geneH
-geneI

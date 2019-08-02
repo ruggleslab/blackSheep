@@ -2,6 +2,7 @@ from typing import Optional, List, Iterable
 import sys
 import logging
 import argparse
+import argdown
 import matplotlib.pyplot as plt
 from blacksheep.outliers import run_outliers
 from blacksheep.outliers import make_outliers_table
@@ -17,7 +18,7 @@ fmt = "%(asctime)s:%(levelname)s:%(message)s"
 logging.basicConfig(format=fmt, level=logging.INFO, datefmt="%m/%d/%Y %H:%M:%S")
 
 
-def set_up_logger(path):
+def _set_up_logger(path):
     logger = logging.getLogger("cli")
     fh = logging.FileHandler("%s.log" % path)
     fh.setLevel(logging.INFO)
@@ -32,7 +33,7 @@ def set_up_logger(path):
 
 
 # arg checkers
-def check_positive(arg: str) -> float:
+def _check_positive(arg: str) -> float:
     try:
         arg = float(arg)
     except TypeError:
@@ -42,7 +43,7 @@ def check_positive(arg: str) -> float:
     return arg
 
 
-def bn0and1(arg: str) -> float:
+def _bn0and1(arg: str) -> float:
     try:
         arg = float(arg)
     except TypeError:
@@ -53,8 +54,10 @@ def bn0and1(arg: str) -> float:
 
 
 # Argparser
-def make_parser():
-    parser = argparse.ArgumentParser(prog="BlackSheep", description="")
+def _make_parser():
+    parser = argparse.ArgumentParser(
+        prog="blacksheep", description='',
+    )
     parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
     subparsers = parser.add_subparsers(dest="which")
@@ -72,8 +75,14 @@ def make_parser():
         "genes must be sites or genes. Only .tsv and .csv accepted.",
     )
     outliers_table.add_argument(
+        "--output_prefix",
+        type=check_output_prefix,
+        default="outliers",
+        help="Output prefix for writing files. Default outliers. ",
+    )
+    outliers_table.add_argument(
         "--iqrs",
-        type=check_positive,
+        type=_check_positive,
         default=1.5,
         help="Number of interquartile ranges (IQRs) above or below the "
         "median to consider a value an outlier. Default is 1.5 IQRs.",
@@ -85,12 +94,6 @@ def make_parser():
         choices=["up", "down"],
         help="Whether to look for up or down outliers. Choices are up or "
         "down. Default up.",
-    )
-    outliers_table.add_argument(
-        "--output_prefix",
-        type=check_output_prefix,
-        default="outliers_table",
-        help="Output prefix for writing files. Default outliers. ",
     )
     outliers_table.add_argument(
         "--ind_sep",
@@ -132,8 +135,8 @@ def make_parser():
     binarize.add_argument(
         "--output_prefix",
         type=check_output_prefix,
-        default="binarized_annotations",
-        help="Prefix for new annotation file",
+        default="outliers",
+        help="Output prefix for writing files. Default outliers. ",
     )
 
     compare_groups = subparsers.add_parser(
@@ -161,18 +164,18 @@ def make_parser():
         "table. ",
     )
     compare_groups.add_argument(
+        "--output_prefix",
+        type=check_output_prefix,
+        default="outliers",
+        help="Output prefix for writing files. Default outliers. ",
+    )
+    compare_groups.add_argument(
         "--frac_filter",
-        type=bn0and1,
+        type=_bn0and1,
         default=0.3,
         help="The minimum fraction of samples per group that must have an outlier in a gene to"
         "consider that gene in the analysis. This is used to prevent a high number of outlier "
         "values in 1 sample from driving a low qvalue. Default 0.3",
-    )
-    compare_groups.add_argument(
-        "--output_prefix",
-        type=check_output_prefix,
-        default="compare_groups",
-        help="File prefix for qvalues table and other optional outputs. Default outliers",
     )
     compare_groups.add_argument(
         "--write_comparison_summaries",
@@ -183,7 +186,7 @@ def make_parser():
     )
     compare_groups.add_argument(
         "--iqrs",
-        type=check_positive,
+        type=_check_positive,
         default=None,
         help="Number of IQRs used to define outliers in the input count table. Optional.",
     )
@@ -210,7 +213,7 @@ def make_parser():
     )
     compare_groups.add_argument(
         "--fdr",
-        type=bn0and1,
+        type=_bn0and1,
         default=0.05,
         help="FDR cut off to use for signficantly enriched gene lists and heatmaps. Default 0.05",
     )
@@ -258,6 +261,12 @@ def make_parser():
         help="Name of column in qvalues table from which to visualize significant genes. ",
     )
     visualize.add_argument(
+        "--output_prefix",
+        type=check_output_prefix,
+        default="outliers",
+        help="Output prefix for writing files. Default outliers. ",
+    )
+    visualize.add_argument(
         "--annotations_to_show",
         type=str,
         default=None,
@@ -267,7 +276,7 @@ def make_parser():
     )
     visualize.add_argument(
         "--fdr",
-        type=bn0and1,
+        type=_bn0and1,
         default=0.05,
         help="FDR threshold to use to select genes to visualize. Default 0.05",
     )
@@ -277,12 +286,6 @@ def make_parser():
         choices=["red", "blue"],
         default="red",
         help="Color of values to draw on heatmap. Default red. ",
-    )
-    visualize.add_argument(
-        "--output_prefix",
-        type=check_output_prefix,
-        default="visualization",
-        help="Output prefix for writing files. Default outliers. ",
     )
     visualize.add_argument(
         "--annotation_colors",
@@ -318,8 +321,14 @@ def make_parser():
         "header is different annotations. e.g. mutation status.",
     )
     outliers.add_argument(
+        "--output_prefix",
+        type=check_output_prefix,
+        default="outliers",
+        help="Output prefix for writing files. Default outliers. ",
+    )
+    outliers.add_argument(
         "--iqrs",
-        type=check_positive,
+        type=_check_positive,
         default=1.5,
         help="Number of inter-quartile ranges (IQRs) above or below the "
         "median to consider a value an outlier. Default is 1.5.",
@@ -336,12 +345,6 @@ def make_parser():
         default=False,
         action="store_true",
         help="Use flag if you do not want to sum outliers based on site prefixes.",
-    )
-    outliers.add_argument(
-        "--output_prefix",
-        type=check_output_prefix,
-        default="outliers_pipeline",
-        help="Output prefix for writing files. Default outliers. ",
     )
     outliers.add_argument(
         "--write_outlier_table",
@@ -366,7 +369,7 @@ def make_parser():
     )
     outliers.add_argument(
         "--frac_filter",
-        type=bn0and1,
+        type=_bn0and1,
         default=0.3,
         help="The minimum fraction of samples per group that must have an outlier in a gene to"
         "consider that gene in the analysis. This is used to prevent a high number of outlier "
@@ -381,7 +384,7 @@ def make_parser():
     )
     outliers.add_argument(
         "--fdr",
-        type=bn0and1,
+        type=_bn0and1,
         default=0.05,
         help="FDR threshold to use to select genes to visualize. Default 0.05",
     )
@@ -414,16 +417,20 @@ def make_parser():
         "have a line with 'value    color' format for each value in annotations. Any value "
         "not represented will be assigned a new color. ",
     )
+    # argparsers = [outliers, compare_groups, visualize, outliers_table, binarize, parser]
+    # helps = {par.prog: argdown.md_help(par) for par in argparsers}
+
     return parser
 
 
+
 # Module runner
-def main(args: Optional[List[str]] = None):
+def _main(args: Optional[List[str]] = None):
     if args is None:
         args = sys.argv[1:]
-    args = make_parser().parse_args(args)
+    args = _make_parser().parse_args(args)
 
-    logger = set_up_logger(args.output_prefix)
+    logger = _set_up_logger(args.output_prefix)
 
     logger.info("Running BlackSheep in %s mode" % args.which)
     for arg in vars(args):
@@ -551,6 +558,19 @@ def main(args: Optional[List[str]] = None):
         for arg in vars(args):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
 
+parser = _make_parser()
+subparsers_actions = [
+    action.choices for action in parser._actions if isinstance(action, argparse._SubParsersAction)
+]
+helps = {}
+for choices in subparsers_actions:
+    for choice, subparser in choices.items():
+        helps[choice] = argdown.md_help(subparser)
+
+doc = []
+for k, v in helps.items():
+    doc.extend(['# blacksheep %s' % k, v])
+__doc__ = '\n'.join(doc)
 
 if __name__ == "__main__":
-    main()
+    _main()

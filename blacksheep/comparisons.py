@@ -16,10 +16,14 @@ def multi_hyp_correct(
     pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
 ) -> Iterable[float]:
     """Corrects p-values for multiple hypothesis testing
-    :param pvalues: Array of p-values to correct
-    :param correction_type: Which procedure to use. Options are "Benjamini-Hochberg" or
+
+    Args:
+        pvalues:  Array of p-values to correct
+        correction_type: correction_type: Which procedure to use. Options are "Benjamini-Hochberg" or
         "Bonferroni"
-    :return: Array of p-values corrected for multiple hypothesis testing (aka q-values).
+
+    Returns: rray of p-values corrected for multiple hypothesis testing (aka q-values).
+
     """
 
     pvalues = np.array(pvalues)
@@ -59,12 +63,16 @@ def get_sample_lists(
     annotations: DataFrame, col: str
 ) -> Tuple[Optional[str], Optional[SampleList], Optional[str], Optional[SampleList]]:
     """Finds groupings of samples from an annotation DataFrame column.
-    :param annotations: A DataFrame with samples as the index and annotations as columns. Each
+
+    Args:
+        annotations: A DataFrame with samples as the index and annotations as columns. Each
         column must contain exactly 2 different values, and optionally missing values. Columns with
         less or more than 2 options will be ignored.
-    :param col: Which column for which to define groups.
-    :return: A label for group0, the list of samples in group0, a label for group1 and the list
+        col: Which column for which to define groups.
+
+    Returns: A label for group0, the list of samples in group0, a label for group1 and the list
         of samples in group1.
+
     """
 
     groups = list(pd.Series(annotations[col].value_counts().keys()).dropna())
@@ -84,15 +92,17 @@ def filter_outliers(
     """Filters an outlier count table for rows that are enriched for outliers in group0 and that
     have more than a frac_filter fraction of samples of group0 with an outlier.
 
-    :param df: Outliers count table, output from convertToCounts. Samples are columns,
+    Args:
+        df: Outliers count table, output from convertToCounts. Samples are columns,
         genes/sites are the index.
-    :param group0_list: List of samples in the group of interest.
-    :param group1_list: List of samples in the outgroup.
-    :param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
+        group0_list: List of samples in the group of interest.
+        group1_list: List of samples in the outgroup.
+        frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
 
-    :return: A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
+    Returns:A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
     rows without enough outliers in group0 are also removed.
+
     """
 
     group0_outliers = [x + col_seps + col_outlier_suffix for x in group0_list]
@@ -129,13 +139,16 @@ def fisher_test_groups(
     correction_type: str = mult_hypoth_method,
 ) -> Tuple[Series, DataFrame]:
     """Performs fishers test by counting outlier and not outlier sites in two groups. Corrects for
-    multiple hypothesis testing too.
+    multiple hypothesis testing.
 
-    :param group0_list: List of samples in group of interest
-    :param group1_list: List of samples in outgroup
-    :param outlier_table: Outlier count table, like output of convertToCounts
+    Args:
+        group0_list: List of samples in group of interest
+        group1_list: List of samples in outgroup
+        outlier_table: Outlier count table, like output of convertToCounts
+        correction_type: Method to use for multiple hypothesis correction.
 
-    :return: Series of qvalues with index matching filtered rows.
+    Returns: Series of qvalues with index matching filtered rows.
+
     """
 
     outliers_group0_list = [x + col_seps + col_outlier_suffix for x in group0_list]
@@ -202,15 +215,18 @@ def compare_groups(
     label: str,
 ) -> Tuple[DataFrame, Optional[DataFrame]]:
     """Performs fisher test and cleans up a fisher infor table for making output for each comparison
-    :param results_df: Accumulating qvalues DataFrame
-    :param outliers: Outliers count DataFrame
-    :param group0: List of samples in group of interest
-    :param group1: List of samples in outgroup
-    :param frac_filter: Fraction of samples in group of interest require to have an outlier per
-    site to be considered in analysis
-    :param label: What to call the FDR output column on the qvalues DataFrame
 
-    :return: Concatenated qvalues DataFrame and a table of info about the comparison
+    Args:
+        results_df: Accumulating qvalues DataFrame
+        outliers: Outliers count DataFrame
+        group0: List of samples in group of interest
+        group1: List of samples in outgroup
+        frac_filter: Fraction of samples in group of interest require to have an outlier per
+    site to be considered in analysis
+        label: What to call the FDR output column on the qvalues DataFrame
+
+    Returns: Concatenated qvalues DataFrame and a table of info about the comparison
+
     """
 
     df = filter_outliers(outliers, group0, group1, frac_filter)

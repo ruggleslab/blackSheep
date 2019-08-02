@@ -1,4 +1,4 @@
-from blacksheep.cli import main
+from blacksheep.cli import _main
 
 
 def test_cli_outliers_table():
@@ -16,7 +16,7 @@ def test_cli_outliers_table():
         "--write_frac_table",
     ]
 
-    main(args)
+    _main(args)
 
 
 def test_cli_compare_groups_with_heatmaps():
@@ -41,7 +41,7 @@ def test_cli_compare_groups_with_heatmaps():
         "red",
     ]
 
-    main(args)
+    _main(args)
 
 
 def test_vis():
@@ -62,7 +62,7 @@ def test_vis():
         "red",
     ]
 
-    main(args)
+    _main(args)
 
 
 def test_cli_pipeline():
@@ -85,7 +85,7 @@ def test_cli_pipeline():
         "--write_comparison_summaries",
     ]
 
-    main(args)
+    _main(args)
 
 
 def test_cli_pipeline_with_figures():
@@ -105,4 +105,4 @@ def test_cli_pipeline_with_figures():
         "--red_or_blue","blue",
     ]
 
-    main(args)
+    _main(args)

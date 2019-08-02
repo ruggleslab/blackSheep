@@ -24,26 +24,29 @@ def make_outliers_table(
         output_prefix: str = "outliers",
         ind_sep: str = "-",
 ) -> OutlierTable:
-    """Converts a DataFrame of values into an OutliersTable object, which includes a DataFrame
+    """Converts a DataFrame of values into an OutlierTable object, which includes a DataFrame
     of outlier and non-outlier count values.
 
-    :param df: Input DataFrame with samples as columns and sites/genes as columns.
-    :param iqrs: The number of inter-quartile ranges (IQRs) above or below the median to consider a
+    Args:
+        df: Input DataFrame with samples as columns and sites/genes as columns.
+        iqrs: The number of inter-quartile ranges (IQRs) above or below the median to consider a \
         value as an outlier.
-    :param up_or_down: Whether to call up or down outliers. Up is above the median; down
+        up_or_down: Whether to call up or down outliers. Up is above the median; down \
         is below the median. Options "up" or "down".
-    :param aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual
-        sites. For instance if columns indicate phosphosites on proteins, with the format
-        "RAG2-S365", output will show counts of outliers per protein (e.g. RAG2) rather than on
+        aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual \
+        sites. For instance if columns indicate phosphosites on proteins, with the format \
+        "RAG2-S365", output will show counts of outliers per protein (e.g. RAG2) rather than on \
         individual sites (e.g. RAG2-S365).
-    :param save_outlier_table: Whether to write a file with the outlier count table. Default False.
-    :param save_frac_table: Whether to write a file with the outlier fraction table. Default False.
-    :param output_prefix: If files are written, a prefix for the files.
-    :param ind_sep: The separator used in sites, for instance, to separate a gene and site.
+        save_outlier_table: Whether to write a file with the outlier count table.
+        save_frac_table: Whether to write a file with the outlier fraction table.
+        output_prefix: If files are written, a prefix for the files.
+        ind_sep: The separator used in sites, for instance, to separate a gene and site. \
         If just using genes (i.e. no separator), or not aggregating this parameter has no effect.
 
-    :return: Returns an OutlierTable object, with outlier and non-outlier counts and metadata
+    Returns: outliers
+        Returns an OutlierTable object, with outlier and non-outlier counts and metadata
         about how the outliers were called.
+
     """
 
     samples = df.columns
@@ -82,20 +85,24 @@ def compare_groups_outliers(
     DataFrame, this function will calculate the q-values of enrichment of outliers for each row in
     each group.
 
-    :param outliers: An OutlierTable, with a DataFrame of outlier and non-outlier counts,
-        as well as metadata about how the outliers were calculated.
-    :param annotations: A DataFrame with samples as rows and annotations as columns. Each
-        column must contain exactly 2 different categories, not counting missing values. Columns
+    Args:
+        outliers: An OutlierTable, with a DataFrame of outlier and non-outlier counts, \
+        as well as parameters for how outliers were calculated.
+        annotations: A DataFrame with samples as rows and annotations as columns. Each \
+        column must contain exactly 2 different categories, not counting missing values. Columns \
         without 2 options will be ignored.
-    :param frac_filter: The fraction of samples in the group of interest that must
+        frac_filter: The fraction of samples in the group of interest that must \
         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
-    :param save_qvalues: Whether to write a file with a table of qvalues.
-    :param output_prefix: If files are written, a prefix for the files.
-    :param up_or_down: Whether the input OutlierTable is up or down outliers.
-    :param output_comparison_summaries: Whether to write a file for each annotation column with the
+        save_qvalues: Whether to write a file with a table of qvalues.
+        output_prefix: If files are written, a prefix for the files.
+        output_comparison_summaries: Whether to write a file for each annotation column with the \
         counts in the fisher table, pvalues and q values per row.
-    :return: A qValues object, which includes a DataFrame of q-values for each comparison,
+
+    Returns: qvals
+        A qValues object, which includes a DataFrame of q-values for each comparison, \
         as well as some metadata about how the comparisons were performed.
+
+
     """
 
     df = outliers.df
@@ -191,36 +198,39 @@ def run_outliers(
     ind_sep: str = "-",
     output_comparison_summaries: bool = False,
 ) -> Tuple[OutlierTable, qValues]:
-    """Takes a DataFrame of values and returns OutliersTable and qValues objects. This command runs
-    the whole outliers pipeline. The DataFrame in the OutliersTable object can be used to run more
+    """Takes a DataFrame of values and returns OutlierTable and qValues objects. This command runs
+    the whole outliers pipeline. The DataFrame in the OutlierTable object can be used to run more
     comparisons in future. The qValues object can be used for visualization, or writing
     significant gene lists.
 
-    :param df: Input DataFrame with samples as columns and sites/genes as rows.
-    :param annotations: A DataFrame with samples as rows and annotations as columns. Each
-        column must contain exactly 2 different values, not counting missing
+    Args:
+        df: Input DataFrame with samples as columns and sites/genes as rows.
+        annotations: A DataFrame with samples as rows and annotations as columns. Each \
+        column must contain exactly 2 different values, not counting missing \
         values. Other columns will be ignored.
-    :param iqrs: The number of interquartile ranges (IQRs) above or below the median to consider a
+        iqrs: The number of interquartile ranges (IQRs) above or below the median to consider a \
         value as an outlier.
-    :param up_or_down: Whether to call up or down outliers. Up is above the median; down
+        up_or_down: Whether to call up or down outliers. Up is above the median; down \
         is below the median. Options "up" or "down".
-    :param aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual
-        sites. For instance if columns indicate phosphosites on proteins, with the format
-        "RAG2-S365", output will show counts of outliers per protein (e.g. RAG2) rather than on
+        aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual \
+        sites. For instance if columns indicate phosphosites on proteins, with the format \
+        "RAG2-S365", output will show counts of outliers per protein (e.g. RAG2) rather than on \
         individual sites (e.g. RAG2-S365).
-    :param save_outlier_table: Whether to write a file with the outlier count table.
-    :param save_frac_table: Whether to write a file of the fraction of outliers.
-    :param frac_filter: The fraction of samples in the group of interest that must
+        save_outlier_table: Whether to write a file with the outlier count table.
+        save_frac_table: Whether to write a file of the fraction of outliers.
+        frac_filter: The fraction of samples in the group of interest that must \
         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
-    :param save_qvalues: Whether to output a table of qvalues.
-    :param output_prefix: If files are written, a prefix for the files.
-    :param ind_sep: The separator used in the columns, for instance, to separate a gene and site.
-        If just using genes (i.e. no separator), or not aggregating this parameter
+        save_qvalues: Whether to write a file of qvalues.
+        output_prefix: If files are written, a prefix for the files.
+        ind_sep: The separator used in the columns, for instance, to separate a gene and site. \
+        If just using genes (i.e. no separator), or not aggregating this parameter \
         has no effect.
-    :param output_comparison_summaries: Whether to write a table for each comparison with the
-        counts in the fisher table, pvalues and q values per row.
+        output_comparison_summaries: Whether to write a table for each comparison with the \
+        counts in the fisher table, pvalues and qvalues per row.
 
-    :return: Returns an OutliersTable object and qValues object.
+    Returns: outliers, qvals
+        Returns an OutlierTable object and qValues object.
+
     """
 
     logging.info("Making outliers table")

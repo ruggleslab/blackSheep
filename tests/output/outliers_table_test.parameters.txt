@@ -1,8 +1,0 @@
-which: outliers_table
-values: tests/pidgin_values.csv
-iqrs: 1.5
-up_or_down: up
-output_prefix: tests/output/outliers_table_test
-ind_sep: -
-do_not_aggregate: False
-write_frac_table: True

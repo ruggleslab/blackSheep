@@ -8,10 +8,14 @@ from .constants import *
 
 
 def is_valid_file(arg: str) -> str:
-    """
-    Checks if file exists (probably pretty redundant except as a type checker in argparse)
-    :param arg: File path
-    :return: Validated file path
+    """Checks if file exists (probably pretty redundant except as a type checker in argparse)
+
+    Args:
+        arg: File path
+
+    Returns: arg
+        Validated file path
+
     """
     if not os.path.exists(arg):
         raise FileNotFoundError("%s does not exist" % arg)
@@ -20,8 +24,13 @@ def is_valid_file(arg: str) -> str:
 
 def check_output_prefix(arg: str) -> str:
     """Checks if output prefix is valid
-    :param arg: Output prefix
-    :return: Validation output prefix
+
+    Args:
+        arg: Output prefix
+
+    Returns: arg
+        Validation output prefix
+
     """
 
     if "/" in arg:
@@ -32,8 +41,13 @@ def check_output_prefix(arg: str) -> str:
 
 def check_suffix(path: str) -> str:
     """Checks that file is a .csv or .tsv file, and returns which sep to use
-    :param path: File path
-    :return: Sep to use for parsing
+
+    Args:
+        path: File path
+
+    Returns: sep
+        Sep to use for parsing
+
     """
 
     if path[-4:] == ".tsv":
@@ -46,10 +60,14 @@ def check_suffix(path: str) -> str:
 
 
 def parse_values(path: str) -> DataFrame:
-    """
-    Figures out sep and parsing file into dataframe.
-    :param path: File path
-    :return: DataFrame from table in file
+    """Figures out sep and parsing file into dataframe.
+
+    Args:
+        path: File path
+
+    Returns: df
+        DataFrame from table in file
+
     """
     sep = check_suffix(path)
     df = pd.read_csv(is_valid_file(path), sep=sep, index_col=0)
@@ -58,10 +76,15 @@ def parse_values(path: str) -> DataFrame:
 
 def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
     """Parses a file into an OutlierTable object.
-    :param path: File path
-    :param updown: Whether the outliers represent up or down outliers
-    :param iqrs: How many IQRs were used to define an outlier
-    :return: OutlierTable object
+
+    Args:
+        path: File path
+        updown: Whether the outliers represent up or down outliers
+        iqrs: How many IQRs were used to define an outlier
+
+    Returns: outliers
+        OutlierTable object
+
     """
 
     sep = check_suffix(path)
@@ -74,11 +97,17 @@ def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
 
 def binarize_annotations(df: DataFrame) -> DataFrame:
     """Takes an annotation DataFrame, checks each column for the number of possible values,
-        and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
-        possible values are retained as-is. Cols with more than 2 values are expanded. For each
-        value in that column, a new column is created with val and not_val options.
-    :param df: Annotations DataFrame.
-    :return: Refactored annotations DataFrame.
+    and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
+    possible values are retained as-is. Cols with more than 2 values are expanded. For each
+    value in that column, a new column is created with val and not_val options.
+
+    Args:
+        df: Annotations DataFrame.
+
+    Returns: new_df
+        Refactored annotations DataFrame.
+
+
     """
 
     new_df = pd.DataFrame(index=df.index)
@@ -99,9 +128,14 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
 def list_to_file(lis: Iterable, filename: str):
     """Takes an iterable and a file path and writes a value per line from the iterable into the new
     file.
-    :param lis: Iterable to write to file
-    :param filename: Filename to write to.
-    :return: None
+
+    Args:
+        lis: Iterable to write to file
+        filename: Filename to write to.
+
+    Returns:
+        None
+
     """
 
     with open(check_output_prefix(filename), "w") as fh:
