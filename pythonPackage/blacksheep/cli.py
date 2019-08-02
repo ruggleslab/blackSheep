@@ -53,7 +53,7 @@ def bn0and1(arg: str) -> float:
 
 
 # Argparser
-def parse_args(args: List):
+def make_parser():
     parser = argparse.ArgumentParser(prog="BlackSheep", description="")
     parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
@@ -414,14 +414,14 @@ def parse_args(args: List):
         "have a line with 'value    color' format for each value in annotations. Any value "
         "not represented will be assigned a new color. ",
     )
-    return parser.parse_args(args)
+    return parser
 
 
 # Module runner
 def main(args: Optional[List[str]] = None):
     if args is None:
         args = sys.argv[1:]
-    args = parse_args(args)
+    args = make_parser().parse_args(args)
 
     logger = set_up_logger(args.output_prefix)
 

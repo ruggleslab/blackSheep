@@ -19,11 +19,11 @@ def is_valid_file(arg: str) -> str:
 
 
 def check_output_prefix(arg: str) -> str:
-    """
-    Checks if output prefix is valid
+    """Checks if output prefix is valid
     :param arg: Output prefix
     :return: Validation output prefix
     """
+
     if "/" in arg:
         prefix = arg.rsplit("/", 1)[0]
         is_valid_file(prefix)
@@ -31,11 +31,11 @@ def check_output_prefix(arg: str) -> str:
 
 
 def check_suffix(path: str) -> str:
-    """
-    Checks that file is a .csv or .tsv file, and returns which sep to use
+    """Checks that file is a .csv or .tsv file, and returns which sep to use
     :param path: File path
     :return: Sep to use for parsing
     """
+
     if path[-4:] == ".tsv":
         sep = "\t"
     elif path[-4:] == ".csv":
@@ -57,13 +57,13 @@ def parse_values(path: str) -> DataFrame:
 
 
 def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
-    """
-    Parses a file into an OutlierTable object.
+    """Parses a file into an OutlierTable object.
     :param path: File path
     :param updown: Whether the outliers represent up or down outliers
     :param iqrs: How many IQRs were used to define an outlier
     :return: OutlierTable object
     """
+
     sep = check_suffix(path)
     df = pd.read_csv(is_valid_file(path), sep=sep, index_col=0)
     samples = sorted(list(set([ind.rsplit(col_seps, 1)[0] for ind in df.columns])))
@@ -73,14 +73,14 @@ def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
 
 
 def binarize_annotations(df: DataFrame) -> DataFrame:
-    """
-    Takes an annotation DataFrame, checks each column for the number of possible values,
-    and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
-    possible values are retained as-is. Cols with more than 2 values are expanded. For each
-    value in that column, a new column is created with val and not_val options.
+    """Takes an annotation DataFrame, checks each column for the number of possible values,
+        and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
+        possible values are retained as-is. Cols with more than 2 values are expanded. For each
+        value in that column, a new column is created with val and not_val options.
     :param df: Annotations DataFrame.
     :return: Refactored annotations DataFrame.
     """
+
     new_df = pd.DataFrame(index=df.index)
     for col in df.columns:
         if len(df[col].dropna().value_counts().keys()) == 2:
@@ -97,13 +97,13 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
 
 
 def list_to_file(lis: Iterable, filename: str):
-    """
-    Takes an iterable and a file path and writes a value per line from the iterable into the new
+    """Takes an iterable and a file path and writes a value per line from the iterable into the new
     file.
     :param lis: Iterable to write to file
     :param filename: Filename to write to.
     :return: None
     """
+
     with open(check_output_prefix(filename), "w") as fh:
         for x in lis:
             fh.write("%s\n" % x)
