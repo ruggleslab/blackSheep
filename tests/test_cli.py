@@ -102,7 +102,7 @@ def test_cli_pipeline_with_figures():
         "--fdr", "0.5",
         "--write_gene_list",
         "--make_heatmaps",
-        "--red_or_blue","blue",
+        "--red_or_blue", "blue",
     ]
 
     _main(args)
