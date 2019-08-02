@@ -1,0 +1,1537 @@
+2019-07-30 10:25:51,656:INFO:Running BlackSheep in outliers_table mode
+2019-07-30 10:25:51,656:INFO:Parameter which: outliers_table
+2019-07-30 10:25:51,656:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 10:25:51,656:INFO:Parameter iqrs: 1.5
+2019-07-30 10:25:51,656:INFO:Parameter up_or_down: up
+2019-07-30 10:25:51,656:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-07-30 10:25:51,657:INFO:Parameter ind_sep: -
+2019-07-30 10:25:51,657:INFO:Parameter do_not_aggregate: False
+2019-07-30 10:25:51,657:INFO:Parameter write_frac_table: True
+2019-07-30 10:25:52,092:INFO:Running BlackSheep in compare_groups mode
+2019-07-30 10:25:52,092:INFO:Parameter which: compare_groups
+2019-07-30 10:25:52,092:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-07-30 10:25:52,092:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 10:25:52,092:INFO:Parameter frac_filter: 0.1
+2019-07-30 10:25:52,092:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-07-30 10:25:52,092:INFO:Parameter write_comparison_summaries: True
+2019-07-30 10:25:52,093:INFO:Parameter iqrs: 1.5
+2019-07-30 10:25:52,093:INFO:Parameter up_or_down: up
+2019-07-30 10:25:52,093:INFO:Parameter write_gene_list: True
+2019-07-30 10:25:52,093:INFO:Parameter make_heatmaps: True
+2019-07-30 10:25:52,093:INFO:Parameter fdr: 0.6
+2019-07-30 10:25:52,093:INFO:Parameter red_or_blue: red
+2019-07-30 10:25:52,093:INFO:Parameter annotation_colors: None
+2019-07-30 10:25:52,139:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 10:25:52,209:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 10:25:52,252:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 10:25:52,314:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 10:25:52,386:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 10:25:52,442:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 10:25:52,508:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 10:25:52,576:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 10:25:52,649:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 10:25:52,710:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 10:25:53,349:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-07-30 10:25:53,846:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-07-30 10:25:54,169:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-07-30 10:25:54,442:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-07-30 10:25:54,540:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-07-30 10:25:54,771:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-07-30 10:25:54,883:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-07-30 10:25:54,887:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-07-30 10:25:54,892:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-07-30 10:25:54,898:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-07-30 10:25:54,904:INFO:Running BlackSheep in visualize mode
+2019-07-30 10:25:54,904:INFO:Parameter which: visualize
+2019-07-30 10:25:54,904:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-07-30 10:25:54,904:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 10:25:54,904:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-07-30 10:25:54,904:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-07-30 10:25:54,905:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-07-30 10:25:54,905:INFO:Parameter fdr: 0.5
+2019-07-30 10:25:54,905:INFO:Parameter red_or_blue: red
+2019-07-30 10:25:54,905:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-07-30 10:25:54,905:INFO:Parameter annotation_colors: None
+2019-07-30 10:25:54,905:INFO:Parameter write_gene_list: True
+2019-07-30 10:25:55,200:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 10:25:55,330:INFO:Running BlackSheep in outliers mode
+2019-07-30 10:25:55,330:INFO:Parameter which: outliers
+2019-07-30 10:25:55,330:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 10:25:55,330:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 10:25:55,330:INFO:Parameter iqrs: 1.5
+2019-07-30 10:25:55,331:INFO:Parameter up_or_down: up
+2019-07-30 10:25:55,331:INFO:Parameter do_not_aggregate: False
+2019-07-30 10:25:55,331:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-07-30 10:25:55,331:INFO:Parameter write_outlier_table: True
+2019-07-30 10:25:55,331:INFO:Parameter write_frac_table: True
+2019-07-30 10:25:55,331:INFO:Parameter ind_sep: -
+2019-07-30 10:25:55,332:INFO:Parameter frac_filter: 0.1
+2019-07-30 10:25:55,332:INFO:Parameter write_comparison_summaries: True
+2019-07-30 10:25:55,332:INFO:Parameter fdr: 0.05
+2019-07-30 10:25:55,332:INFO:Parameter write_gene_list: False
+2019-07-30 10:25:55,332:INFO:Parameter make_heatmaps: False
+2019-07-30 10:25:55,332:INFO:Parameter red_or_blue: red
+2019-07-30 10:25:55,333:INFO:Parameter annotation_colors: None
+2019-07-30 10:25:55,711:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 10:25:55,789:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 10:25:55,837:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 10:25:55,902:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 10:25:55,959:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 10:25:56,009:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 10:25:56,062:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 10:25:56,108:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 10:25:56,159:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 10:25:56,204:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 10:25:56,256:INFO:Running BlackSheep in outliers mode
+2019-07-30 10:25:56,256:INFO:Parameter which: outliers
+2019-07-30 10:25:56,256:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 10:25:56,256:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 10:25:56,256:INFO:Parameter iqrs: 1.5
+2019-07-30 10:25:56,256:INFO:Parameter up_or_down: up
+2019-07-30 10:25:56,257:INFO:Parameter do_not_aggregate: False
+2019-07-30 10:25:56,257:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-07-30 10:25:56,257:INFO:Parameter write_outlier_table: False
+2019-07-30 10:25:56,257:INFO:Parameter write_frac_table: False
+2019-07-30 10:25:56,257:INFO:Parameter ind_sep: -
+2019-07-30 10:25:56,257:INFO:Parameter frac_filter: 0.1
+2019-07-30 10:25:56,258:INFO:Parameter write_comparison_summaries: True
+2019-07-30 10:25:56,258:INFO:Parameter fdr: 0.5
+2019-07-30 10:25:56,258:INFO:Parameter write_gene_list: True
+2019-07-30 10:25:56,258:INFO:Parameter make_heatmaps: True
+2019-07-30 10:25:56,258:INFO:Parameter red_or_blue: blue
+2019-07-30 10:25:56,259:INFO:Parameter annotation_colors: None
+2019-07-30 10:25:56,566:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 10:25:56,639:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 10:25:56,678:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 10:25:56,731:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 10:25:56,797:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 10:25:56,847:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 10:25:56,905:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 10:25:56,960:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 10:25:57,031:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 10:25:57,087:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 10:25:57,149:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-07-30 10:25:57,380:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 10:25:57,729:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-07-30 10:25:58,120:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-07-30 10:25:58,287:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-07-30 10:25:58,604:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-07-30 10:25:58,737:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-07-30 10:25:58,743:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-07-30 10:25:58,748:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-07-30 10:25:58,754:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-07-30 13:58:03,190:INFO:Running BlackSheep in outliers_table mode
+2019-07-30 13:58:03,191:INFO:Parameter which: outliers_table
+2019-07-30 13:58:03,191:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 13:58:03,191:INFO:Parameter iqrs: 1.5
+2019-07-30 13:58:03,191:INFO:Parameter up_or_down: up
+2019-07-30 13:58:03,191:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-07-30 13:58:03,191:INFO:Parameter ind_sep: -
+2019-07-30 13:58:03,191:INFO:Parameter do_not_aggregate: False
+2019-07-30 13:58:03,191:INFO:Parameter write_frac_table: True
+2019-07-30 13:58:03,451:INFO:Running BlackSheep in compare_groups mode
+2019-07-30 13:58:03,451:INFO:Parameter which: compare_groups
+2019-07-30 13:58:03,451:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-07-30 13:58:03,451:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 13:58:03,451:INFO:Parameter frac_filter: 0.1
+2019-07-30 13:58:03,451:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-07-30 13:58:03,451:INFO:Parameter write_comparison_summaries: True
+2019-07-30 13:58:03,452:INFO:Parameter iqrs: 1.5
+2019-07-30 13:58:03,452:INFO:Parameter up_or_down: up
+2019-07-30 13:58:03,452:INFO:Parameter write_gene_list: True
+2019-07-30 13:58:03,452:INFO:Parameter make_heatmaps: True
+2019-07-30 13:58:03,452:INFO:Parameter fdr: 0.6
+2019-07-30 13:58:03,452:INFO:Parameter red_or_blue: red
+2019-07-30 13:58:03,452:INFO:Parameter annotation_colors: None
+2019-07-30 13:58:03,794:INFO:Running BlackSheep in visualize mode
+2019-07-30 13:58:03,794:INFO:Parameter which: visualize
+2019-07-30 13:58:03,795:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-07-30 13:58:03,795:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 13:58:03,795:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-07-30 13:58:03,795:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-07-30 13:58:03,795:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-07-30 13:58:03,795:INFO:Parameter fdr: 0.5
+2019-07-30 13:58:03,795:INFO:Parameter red_or_blue: red
+2019-07-30 13:58:03,796:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-07-30 13:58:03,796:INFO:Parameter annotation_colors: None
+2019-07-30 13:58:03,796:INFO:Parameter write_gene_list: True
+2019-07-30 13:58:04,217:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 13:58:04,367:INFO:Running BlackSheep in outliers mode
+2019-07-30 13:58:04,368:INFO:Parameter which: outliers
+2019-07-30 13:58:04,368:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 13:58:04,368:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 13:58:04,368:INFO:Parameter iqrs: 1.5
+2019-07-30 13:58:04,369:INFO:Parameter up_or_down: up
+2019-07-30 13:58:04,369:INFO:Parameter do_not_aggregate: False
+2019-07-30 13:58:04,369:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-07-30 13:58:04,369:INFO:Parameter write_outlier_table: True
+2019-07-30 13:58:04,369:INFO:Parameter write_frac_table: True
+2019-07-30 13:58:04,370:INFO:Parameter ind_sep: -
+2019-07-30 13:58:04,370:INFO:Parameter frac_filter: 0.1
+2019-07-30 13:58:04,370:INFO:Parameter write_comparison_summaries: True
+2019-07-30 13:58:04,370:INFO:Parameter fdr: 0.05
+2019-07-30 13:58:04,370:INFO:Parameter write_gene_list: False
+2019-07-30 13:58:04,371:INFO:Parameter make_heatmaps: False
+2019-07-30 13:58:04,371:INFO:Parameter red_or_blue: red
+2019-07-30 13:58:04,371:INFO:Parameter annotation_colors: None
+2019-07-30 13:58:04,681:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 13:58:04,735:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 13:58:04,763:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 13:58:04,809:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 13:58:04,860:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 13:58:04,906:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 13:58:04,959:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 13:58:05,003:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 13:58:05,054:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 13:58:05,100:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 13:58:05,156:INFO:Running BlackSheep in outliers mode
+2019-07-30 13:58:05,156:INFO:Parameter which: outliers
+2019-07-30 13:58:05,156:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 13:58:05,157:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 13:58:05,157:INFO:Parameter iqrs: 1.5
+2019-07-30 13:58:05,157:INFO:Parameter up_or_down: up
+2019-07-30 13:58:05,157:INFO:Parameter do_not_aggregate: False
+2019-07-30 13:58:05,157:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-07-30 13:58:05,157:INFO:Parameter write_outlier_table: False
+2019-07-30 13:58:05,157:INFO:Parameter write_frac_table: False
+2019-07-30 13:58:05,157:INFO:Parameter ind_sep: -
+2019-07-30 13:58:05,158:INFO:Parameter frac_filter: 0.1
+2019-07-30 13:58:05,158:INFO:Parameter write_comparison_summaries: True
+2019-07-30 13:58:05,158:INFO:Parameter fdr: 0.5
+2019-07-30 13:58:05,158:INFO:Parameter write_gene_list: True
+2019-07-30 13:58:05,158:INFO:Parameter make_heatmaps: True
+2019-07-30 13:58:05,159:INFO:Parameter red_or_blue: blue
+2019-07-30 13:58:05,159:INFO:Parameter annotation_colors: None
+2019-07-30 13:58:05,440:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 13:58:05,517:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 13:58:05,565:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 13:58:05,633:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 13:58:05,693:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 13:58:05,739:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 13:58:05,789:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 13:58:05,834:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 13:58:05,884:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 13:58:05,929:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 13:58:05,983:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-07-30 13:58:06,179:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 13:58:06,579:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-07-30 13:58:06,884:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-07-30 13:58:06,989:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-07-30 13:58:07,183:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-07-30 13:58:07,452:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-07-30 13:58:07,462:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-07-30 13:58:07,469:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-07-30 13:58:07,477:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-07-30 13:58:08,365:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 13:58:08,398:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 13:58:08,425:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 13:58:08,453:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 13:58:08,481:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 13:58:08,502:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 13:58:08,523:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 13:58:08,523:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 13:58:08,541:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 13:58:08,580:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 13:58:08,580:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 13:58:08,598:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 13:58:08,987:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 13:58:09,017:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 13:58:09,040:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 13:58:09,064:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 13:58:09,088:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 13:58:09,107:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 13:58:09,130:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 13:58:09,130:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 13:58:09,140:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 13:58:09,171:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 13:58:09,171:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 13:58:09,183:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 13:58:09,461:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 13:58:09,493:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 13:58:09,532:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 13:58:09,569:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 13:58:09,611:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 13:58:09,642:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 13:58:09,678:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 13:58:09,678:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 13:58:09,690:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 13:58:09,721:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 13:58:09,721:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 13:58:09,734:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 13:58:10,051:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 13:58:10,071:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 13:58:10,095:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 13:58:10,118:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 13:58:10,144:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 13:58:10,163:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 13:58:10,185:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 13:58:10,185:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 13:58:10,197:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 13:58:10,221:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 13:58:10,221:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 13:58:10,233:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 13:58:10,451:INFO:Saving figure to tests/output/vis_test_small.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 13:58:11,494:INFO:Saving figure to tests/output/vis_test_large.POLE_subtype_Yes.fdr0.6.heatmap.pdf
+2019-07-30 13:58:13,870:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-07-30 13:58:14,241:INFO:Saving figure to tests/output/vis_test_medium.MSI_status_MSI-H.fdr0.6.heatmap.pdf
+2019-07-30 13:58:15,122:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H
+2019-07-30 14:12:47,734:INFO:Running BlackSheep in outliers_table mode
+2019-07-30 14:12:47,735:INFO:Parameter which: outliers_table
+2019-07-30 14:12:47,735:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 14:12:47,735:INFO:Parameter iqrs: 1.5
+2019-07-30 14:12:47,735:INFO:Parameter up_or_down: up
+2019-07-30 14:12:47,736:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-07-30 14:12:47,736:INFO:Parameter ind_sep: -
+2019-07-30 14:12:47,736:INFO:Parameter do_not_aggregate: False
+2019-07-30 14:12:47,736:INFO:Parameter write_frac_table: True
+2019-07-30 14:12:48,072:INFO:Running BlackSheep in compare_groups mode
+2019-07-30 14:12:48,072:INFO:Parameter which: compare_groups
+2019-07-30 14:12:48,072:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-07-30 14:12:48,072:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 14:12:48,073:INFO:Parameter frac_filter: 0.1
+2019-07-30 14:12:48,073:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-07-30 14:12:48,073:INFO:Parameter write_comparison_summaries: True
+2019-07-30 14:12:48,073:INFO:Parameter iqrs: 1.5
+2019-07-30 14:12:48,073:INFO:Parameter up_or_down: up
+2019-07-30 14:12:48,073:INFO:Parameter write_gene_list: True
+2019-07-30 14:12:48,073:INFO:Parameter make_heatmaps: True
+2019-07-30 14:12:48,073:INFO:Parameter fdr: 0.6
+2019-07-30 14:12:48,073:INFO:Parameter red_or_blue: red
+2019-07-30 14:12:48,073:INFO:Parameter annotation_colors: None
+2019-07-30 14:12:48,106:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 14:12:48,156:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 14:12:48,184:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:48,230:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:48,303:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 14:12:48,353:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 14:12:48,409:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 14:12:48,457:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 14:12:48,514:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 14:12:48,566:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 14:12:49,051:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-07-30 14:12:49,458:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-07-30 14:12:49,788:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-07-30 14:12:50,116:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-07-30 14:12:50,209:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-07-30 14:12:50,403:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-07-30 14:12:50,493:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-07-30 14:12:50,497:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-07-30 14:12:50,501:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-07-30 14:12:50,504:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-07-30 14:12:50,509:INFO:Running BlackSheep in visualize mode
+2019-07-30 14:12:50,509:INFO:Parameter which: visualize
+2019-07-30 14:12:50,510:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-07-30 14:12:50,510:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 14:12:50,510:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-07-30 14:12:50,510:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-07-30 14:12:50,510:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-07-30 14:12:50,510:INFO:Parameter fdr: 0.5
+2019-07-30 14:12:50,510:INFO:Parameter red_or_blue: red
+2019-07-30 14:12:50,510:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-07-30 14:12:50,510:INFO:Parameter annotation_colors: None
+2019-07-30 14:12:50,511:INFO:Parameter write_gene_list: True
+2019-07-30 14:12:50,755:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 14:12:50,872:INFO:Running BlackSheep in outliers mode
+2019-07-30 14:12:50,873:INFO:Parameter which: outliers
+2019-07-30 14:12:50,873:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 14:12:50,873:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 14:12:50,873:INFO:Parameter iqrs: 1.5
+2019-07-30 14:12:50,873:INFO:Parameter up_or_down: up
+2019-07-30 14:12:50,874:INFO:Parameter do_not_aggregate: False
+2019-07-30 14:12:50,874:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-07-30 14:12:50,874:INFO:Parameter write_outlier_table: True
+2019-07-30 14:12:50,874:INFO:Parameter write_frac_table: True
+2019-07-30 14:12:50,874:INFO:Parameter ind_sep: -
+2019-07-30 14:12:50,874:INFO:Parameter frac_filter: 0.1
+2019-07-30 14:12:50,875:INFO:Parameter write_comparison_summaries: True
+2019-07-30 14:12:50,875:INFO:Parameter fdr: 0.05
+2019-07-30 14:12:50,875:INFO:Parameter write_gene_list: False
+2019-07-30 14:12:50,875:INFO:Parameter make_heatmaps: False
+2019-07-30 14:12:50,875:INFO:Parameter red_or_blue: red
+2019-07-30 14:12:50,876:INFO:Parameter annotation_colors: None
+2019-07-30 14:12:51,130:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 14:12:51,187:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 14:12:51,215:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:51,264:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:51,325:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 14:12:51,369:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 14:12:51,420:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 14:12:51,468:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 14:12:51,518:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 14:12:51,563:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 14:12:51,615:INFO:Running BlackSheep in outliers mode
+2019-07-30 14:12:51,616:INFO:Parameter which: outliers
+2019-07-30 14:12:51,616:INFO:Parameter values: tests/pidgin_values.csv
+2019-07-30 14:12:51,616:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-07-30 14:12:51,616:INFO:Parameter iqrs: 1.5
+2019-07-30 14:12:51,616:INFO:Parameter up_or_down: up
+2019-07-30 14:12:51,616:INFO:Parameter do_not_aggregate: False
+2019-07-30 14:12:51,616:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-07-30 14:12:51,616:INFO:Parameter write_outlier_table: False
+2019-07-30 14:12:51,617:INFO:Parameter write_frac_table: False
+2019-07-30 14:12:51,617:INFO:Parameter ind_sep: -
+2019-07-30 14:12:51,617:INFO:Parameter frac_filter: 0.1
+2019-07-30 14:12:51,617:INFO:Parameter write_comparison_summaries: True
+2019-07-30 14:12:51,617:INFO:Parameter fdr: 0.5
+2019-07-30 14:12:51,618:INFO:Parameter write_gene_list: True
+2019-07-30 14:12:51,618:INFO:Parameter make_heatmaps: True
+2019-07-30 14:12:51,618:INFO:Parameter red_or_blue: blue
+2019-07-30 14:12:51,618:INFO:Parameter annotation_colors: None
+2019-07-30 14:12:52,142:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-07-30 14:12:52,362:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-07-30 14:12:52,429:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:52,496:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:52,565:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-07-30 14:12:52,616:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-07-30 14:12:52,682:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-07-30 14:12:52,728:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-07-30 14:12:52,779:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-07-30 14:12:52,827:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-07-30 14:12:52,882:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-07-30 14:12:53,081:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 14:12:53,462:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-07-30 14:12:53,920:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-07-30 14:12:54,045:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-07-30 14:12:54,261:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-07-30 14:12:54,366:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-07-30 14:12:54,370:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-07-30 14:12:54,373:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-07-30 14:12:54,378:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-07-30 14:12:54,999:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 14:12:55,032:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 14:12:55,073:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:55,110:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:55,149:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 14:12:55,173:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 14:12:55,194:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 14:12:55,194:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 14:12:55,206:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 14:12:55,229:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 14:12:55,229:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 14:12:55,239:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 14:12:55,267:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 14:12:55,286:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 14:12:55,312:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:55,333:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:55,359:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 14:12:55,378:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 14:12:55,410:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 14:12:55,410:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 14:12:55,422:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 14:12:55,448:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 14:12:55,448:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 14:12:55,459:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 14:12:55,694:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 14:12:55,720:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 14:12:55,753:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:55,784:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:55,827:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 14:12:55,853:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 14:12:55,883:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 14:12:55,883:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 14:12:55,895:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 14:12:55,935:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 14:12:55,935:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 14:12:55,953:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 14:12:56,226:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 14:12:56,246:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 14:12:56,269:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:56,290:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:56,316:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 14:12:56,334:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 14:12:56,356:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 14:12:56,357:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 14:12:56,370:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 14:12:56,399:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 14:12:56,400:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 14:12:56,411:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 14:12:56,647:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 14:12:56,665:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 14:12:56,689:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:56,712:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:56,738:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 14:12:56,756:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 14:12:56,777:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 14:12:56,778:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 14:12:56,790:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 14:12:56,814:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 14:12:56,814:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 14:12:56,825:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 14:12:57,079:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-07-30 14:12:57,099:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-07-30 14:12:57,122:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-07-30 14:12:57,143:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-07-30 14:12:57,167:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-07-30 14:12:57,184:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-07-30 14:12:57,207:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-07-30 14:12:57,207:WARNING:No rows tested for fisherFDR_comp3_1
+2019-07-30 14:12:57,217:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-07-30 14:12:57,241:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-07-30 14:12:57,241:WARNING:No rows tested for fisherFDR_comp4_1
+2019-07-30 14:12:57,251:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-07-30 14:12:57,452:INFO:Saving figure to tests/output/vis_test_small.comp0_1.fdr0.5.heatmap.pdf
+2019-07-30 14:12:58,375:INFO:Saving figure to tests/output/vis_test_large.POLE_subtype_Yes.fdr0.6.heatmap.pdf
+2019-07-30 14:13:00,569:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-07-30 14:13:00,928:INFO:Saving figure to tests/output/vis_test_medium.MSI_status_MSI-H.fdr0.6.heatmap.pdf
+2019-07-30 14:13:01,544:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H
+2019-08-01 16:05:40,146:INFO:Running BlackSheep in outliers_table mode
+2019-08-01 16:05:40,147:INFO:Parameter which: outliers_table
+2019-08-01 16:05:40,147:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:05:40,147:INFO:Parameter iqrs: 1.5
+2019-08-01 16:05:40,147:INFO:Parameter up_or_down: up
+2019-08-01 16:05:40,148:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-08-01 16:05:40,148:INFO:Parameter ind_sep: -
+2019-08-01 16:05:40,148:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:05:40,148:INFO:Parameter write_frac_table: True
+2019-08-01 16:05:40,422:INFO:Running BlackSheep in compare_groups mode
+2019-08-01 16:05:40,422:INFO:Parameter which: compare_groups
+2019-08-01 16:05:40,423:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-08-01 16:05:40,423:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:05:40,423:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:05:40,423:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-08-01 16:05:40,423:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:05:40,423:INFO:Parameter iqrs: 1.5
+2019-08-01 16:05:40,423:INFO:Parameter up_or_down: up
+2019-08-01 16:05:40,423:INFO:Parameter write_gene_list: True
+2019-08-01 16:05:40,423:INFO:Parameter make_heatmaps: True
+2019-08-01 16:05:40,423:INFO:Parameter fdr: 0.6
+2019-08-01 16:05:40,423:INFO:Parameter red_or_blue: red
+2019-08-01 16:05:40,424:INFO:Parameter annotation_colors: None
+2019-08-01 16:05:40,455:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:05:40,515:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:05:40,546:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:40,600:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:40,657:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:05:40,703:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:05:40,759:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:05:40,817:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:05:40,892:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:05:40,956:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:05:41,525:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-08-01 16:05:42,047:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-08-01 16:05:42,367:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-08-01 16:05:42,734:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-08-01 16:05:42,960:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-08-01 16:05:43,323:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-08-01 16:05:43,657:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-08-01 16:05:43,666:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-08-01 16:05:43,675:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-08-01 16:05:43,694:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-08-01 16:05:43,706:INFO:Running BlackSheep in visualize mode
+2019-08-01 16:05:43,707:INFO:Parameter which: visualize
+2019-08-01 16:05:43,707:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-08-01 16:05:43,707:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:05:43,708:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-08-01 16:05:43,708:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-08-01 16:05:43,708:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-08-01 16:05:43,708:INFO:Parameter fdr: 0.5
+2019-08-01 16:05:43,709:INFO:Parameter red_or_blue: red
+2019-08-01 16:05:43,709:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-08-01 16:05:43,710:INFO:Parameter annotation_colors: None
+2019-08-01 16:05:43,710:INFO:Parameter write_gene_list: True
+2019-08-01 16:05:44,394:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 16:05:44,615:INFO:Running BlackSheep in outliers mode
+2019-08-01 16:05:44,616:INFO:Parameter which: outliers
+2019-08-01 16:05:44,617:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:05:44,617:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:05:44,617:INFO:Parameter iqrs: 1.5
+2019-08-01 16:05:44,618:INFO:Parameter up_or_down: up
+2019-08-01 16:05:44,618:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:05:44,618:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-08-01 16:05:44,619:INFO:Parameter write_outlier_table: True
+2019-08-01 16:05:44,619:INFO:Parameter write_frac_table: True
+2019-08-01 16:05:44,619:INFO:Parameter ind_sep: -
+2019-08-01 16:05:44,619:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:05:44,619:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:05:44,620:INFO:Parameter fdr: 0.05
+2019-08-01 16:05:44,620:INFO:Parameter write_gene_list: False
+2019-08-01 16:05:44,620:INFO:Parameter make_heatmaps: False
+2019-08-01 16:05:44,620:INFO:Parameter red_or_blue: red
+2019-08-01 16:05:44,621:INFO:Parameter annotation_colors: None
+2019-08-01 16:05:44,978:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:05:45,032:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:05:45,061:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:45,109:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:45,179:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:05:45,240:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:05:45,301:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:05:45,365:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:05:45,444:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:05:45,493:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:05:45,539:INFO:Running BlackSheep in outliers mode
+2019-08-01 16:05:45,540:INFO:Parameter which: outliers
+2019-08-01 16:05:45,540:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:05:45,541:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:05:45,541:INFO:Parameter iqrs: 1.5
+2019-08-01 16:05:45,541:INFO:Parameter up_or_down: up
+2019-08-01 16:05:45,541:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:05:45,541:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-08-01 16:05:45,541:INFO:Parameter write_outlier_table: False
+2019-08-01 16:05:45,541:INFO:Parameter write_frac_table: False
+2019-08-01 16:05:45,542:INFO:Parameter ind_sep: -
+2019-08-01 16:05:45,542:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:05:45,542:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:05:45,542:INFO:Parameter fdr: 0.5
+2019-08-01 16:05:45,542:INFO:Parameter write_gene_list: True
+2019-08-01 16:05:45,542:INFO:Parameter make_heatmaps: True
+2019-08-01 16:05:45,542:INFO:Parameter red_or_blue: blue
+2019-08-01 16:05:45,543:INFO:Parameter annotation_colors: None
+2019-08-01 16:05:45,818:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:05:45,870:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:05:45,913:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:45,986:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:46,072:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:05:46,243:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:05:46,350:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:05:46,435:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:05:46,546:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:05:46,665:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:05:46,775:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-08-01 16:05:47,049:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 16:05:47,353:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-08-01 16:05:47,643:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-08-01 16:05:47,736:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-08-01 16:05:47,929:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-08-01 16:05:48,019:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-08-01 16:05:48,025:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-08-01 16:05:48,032:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-08-01 16:05:48,039:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-08-01 16:05:48,597:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:05:48,618:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:05:48,642:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:48,669:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:48,694:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:05:48,717:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:05:48,749:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:05:48,749:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:05:48,767:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:05:48,806:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:05:48,806:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:05:48,825:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:05:48,869:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:05:48,901:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:05:48,933:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:48,964:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:48,990:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:05:49,009:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:05:49,032:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:05:49,032:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:05:49,043:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:05:49,066:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:05:49,066:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:05:49,076:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:05:49,319:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:05:49,343:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:05:49,366:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:49,386:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:49,409:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:05:49,426:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:05:49,451:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:05:49,452:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:05:49,462:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:05:49,484:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:05:49,485:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:05:49,495:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:05:49,726:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:05:49,746:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:05:49,769:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:49,789:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:49,812:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:05:49,831:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:05:49,855:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:05:49,856:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:05:49,868:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:05:49,893:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:05:49,893:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:05:49,906:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:05:50,186:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:05:50,207:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:05:50,239:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:50,263:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:50,288:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:05:50,308:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:05:50,340:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:05:50,340:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:05:50,356:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:05:50,385:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:05:50,385:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:05:50,396:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:05:50,642:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:05:50,660:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:05:50,682:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:05:50,703:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:05:50,728:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:05:50,745:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:05:50,767:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:05:50,767:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:05:50,778:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:05:50,802:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:05:50,803:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:05:50,813:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:05:51,103:INFO:Saving figure to tests/output/vis_test_small.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 16:05:52,155:INFO:Saving figure to tests/output/vis_test_large.POLE_subtype_Yes.fdr0.6.heatmap.pdf
+2019-08-01 16:05:54,477:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-08-01 16:05:54,862:INFO:Saving figure to tests/output/vis_test_medium.MSI_status_MSI-H.fdr0.6.heatmap.pdf
+2019-08-01 16:05:55,592:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H
+2019-08-01 16:07:56,713:INFO:Running BlackSheep in outliers_table mode
+2019-08-01 16:07:56,714:INFO:Parameter which: outliers_table
+2019-08-01 16:07:56,714:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:07:56,714:INFO:Parameter iqrs: 1.5
+2019-08-01 16:07:56,714:INFO:Parameter up_or_down: up
+2019-08-01 16:07:56,714:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-08-01 16:07:56,714:INFO:Parameter ind_sep: -
+2019-08-01 16:07:56,714:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:07:56,714:INFO:Parameter write_frac_table: True
+2019-08-01 16:07:57,023:INFO:Running BlackSheep in compare_groups mode
+2019-08-01 16:07:57,023:INFO:Parameter which: compare_groups
+2019-08-01 16:07:57,023:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-08-01 16:07:57,023:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:07:57,024:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:07:57,024:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-08-01 16:07:57,024:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:07:57,024:INFO:Parameter iqrs: 1.5
+2019-08-01 16:07:57,024:INFO:Parameter up_or_down: up
+2019-08-01 16:07:57,024:INFO:Parameter write_gene_list: True
+2019-08-01 16:07:57,024:INFO:Parameter make_heatmaps: True
+2019-08-01 16:07:57,024:INFO:Parameter fdr: 0.6
+2019-08-01 16:07:57,024:INFO:Parameter red_or_blue: red
+2019-08-01 16:07:57,024:INFO:Parameter annotation_colors: None
+2019-08-01 16:07:57,085:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:07:57,149:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:07:57,189:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:07:57,261:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:07:57,334:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:07:57,385:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:07:57,449:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:07:57,506:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:07:57,575:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:07:57,638:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:07:58,413:INFO:Running BlackSheep in visualize mode
+2019-08-01 16:07:58,414:INFO:Parameter which: visualize
+2019-08-01 16:07:58,414:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-08-01 16:07:58,414:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:07:58,414:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-08-01 16:07:58,415:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-08-01 16:07:58,415:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-08-01 16:07:58,415:INFO:Parameter fdr: 0.5
+2019-08-01 16:07:58,415:INFO:Parameter red_or_blue: red
+2019-08-01 16:07:58,415:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-08-01 16:07:58,415:INFO:Parameter annotation_colors: None
+2019-08-01 16:07:58,415:INFO:Parameter write_gene_list: True
+2019-08-01 16:07:58,553:INFO:Running BlackSheep in outliers mode
+2019-08-01 16:07:58,554:INFO:Parameter which: outliers
+2019-08-01 16:07:58,554:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:07:58,554:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:07:58,554:INFO:Parameter iqrs: 1.5
+2019-08-01 16:07:58,554:INFO:Parameter up_or_down: up
+2019-08-01 16:07:58,555:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:07:58,555:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-08-01 16:07:58,555:INFO:Parameter write_outlier_table: True
+2019-08-01 16:07:58,555:INFO:Parameter write_frac_table: True
+2019-08-01 16:07:58,555:INFO:Parameter ind_sep: -
+2019-08-01 16:07:58,555:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:07:58,555:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:07:58,555:INFO:Parameter fdr: 0.05
+2019-08-01 16:07:58,556:INFO:Parameter write_gene_list: False
+2019-08-01 16:07:58,556:INFO:Parameter make_heatmaps: False
+2019-08-01 16:07:58,556:INFO:Parameter red_or_blue: red
+2019-08-01 16:07:58,556:INFO:Parameter annotation_colors: None
+2019-08-01 16:07:58,782:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:07:58,836:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:07:58,862:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:07:58,907:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:07:58,958:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:07:59,003:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:07:59,057:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:07:59,114:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:07:59,175:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:07:59,220:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:07:59,266:INFO:Running BlackSheep in outliers mode
+2019-08-01 16:07:59,266:INFO:Parameter which: outliers
+2019-08-01 16:07:59,266:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:07:59,266:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:07:59,266:INFO:Parameter iqrs: 1.5
+2019-08-01 16:07:59,267:INFO:Parameter up_or_down: up
+2019-08-01 16:07:59,267:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:07:59,267:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-08-01 16:07:59,267:INFO:Parameter write_outlier_table: False
+2019-08-01 16:07:59,267:INFO:Parameter write_frac_table: False
+2019-08-01 16:07:59,267:INFO:Parameter ind_sep: -
+2019-08-01 16:07:59,267:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:07:59,267:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:07:59,267:INFO:Parameter fdr: 0.5
+2019-08-01 16:07:59,268:INFO:Parameter write_gene_list: True
+2019-08-01 16:07:59,268:INFO:Parameter make_heatmaps: True
+2019-08-01 16:07:59,268:INFO:Parameter red_or_blue: blue
+2019-08-01 16:07:59,268:INFO:Parameter annotation_colors: None
+2019-08-01 16:07:59,488:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:07:59,537:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:07:59,563:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:07:59,613:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:07:59,669:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:07:59,717:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:07:59,778:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:07:59,833:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:07:59,898:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:07:59,946:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:08:00,005:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-08-01 16:08:00,781:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:00,802:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:00,828:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:00,849:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:00,873:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:00,890:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:00,912:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:00,913:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:00,923:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:00,948:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:00,949:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:00,961:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:01,002:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:01,031:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:01,055:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:01,082:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:01,120:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:01,140:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:01,164:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:01,164:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:01,175:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:01,201:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:01,201:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:01,213:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:01,489:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:01,515:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:01,552:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:01,591:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:01,626:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:01,654:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:01,693:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:01,693:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:01,709:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:01,744:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:01,745:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:01,756:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:01,984:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:02,003:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:02,025:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:02,047:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:02,071:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:02,090:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:02,112:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:02,112:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:02,122:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:02,146:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:02,146:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:02,156:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:02,429:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:02,454:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:02,483:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:02,507:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:02,538:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:02,560:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:02,589:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:02,589:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:02,602:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:02,631:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:02,631:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:02,644:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:02,886:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:02,906:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:02,929:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:02,953:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:02,976:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:02,993:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:03,014:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:03,014:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:03,025:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:03,048:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:03,048:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:03,059:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:03,994:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-08-01 16:08:04,348:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H
+2019-08-01 16:08:47,158:INFO:Running BlackSheep in outliers_table mode
+2019-08-01 16:08:47,158:INFO:Parameter which: outliers_table
+2019-08-01 16:08:47,158:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:08:47,158:INFO:Parameter iqrs: 1.5
+2019-08-01 16:08:47,158:INFO:Parameter up_or_down: up
+2019-08-01 16:08:47,159:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-08-01 16:08:47,159:INFO:Parameter ind_sep: -
+2019-08-01 16:08:47,159:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:08:47,159:INFO:Parameter write_frac_table: True
+2019-08-01 16:08:47,387:INFO:Running BlackSheep in compare_groups mode
+2019-08-01 16:08:47,387:INFO:Parameter which: compare_groups
+2019-08-01 16:08:47,387:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-08-01 16:08:47,387:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:08:47,387:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:08:47,387:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-08-01 16:08:47,387:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:08:47,387:INFO:Parameter iqrs: 1.5
+2019-08-01 16:08:47,387:INFO:Parameter up_or_down: up
+2019-08-01 16:08:47,387:INFO:Parameter write_gene_list: True
+2019-08-01 16:08:47,387:INFO:Parameter make_heatmaps: True
+2019-08-01 16:08:47,387:INFO:Parameter fdr: 0.6
+2019-08-01 16:08:47,388:INFO:Parameter red_or_blue: red
+2019-08-01 16:08:47,388:INFO:Parameter annotation_colors: None
+2019-08-01 16:08:47,437:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:08:47,507:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:08:47,542:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:47,607:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:47,688:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:08:47,754:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:08:47,858:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:08:47,949:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:08:48,059:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:08:48,143:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:08:48,641:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-08-01 16:08:49,034:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-08-01 16:08:49,421:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-08-01 16:08:49,702:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-08-01 16:08:49,814:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-08-01 16:08:50,020:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-08-01 16:08:50,274:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-08-01 16:08:50,285:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-08-01 16:08:50,292:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-08-01 16:08:50,298:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-08-01 16:08:50,308:INFO:Running BlackSheep in visualize mode
+2019-08-01 16:08:50,309:INFO:Parameter which: visualize
+2019-08-01 16:08:50,309:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-08-01 16:08:50,309:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:08:50,309:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-08-01 16:08:50,309:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-08-01 16:08:50,310:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-08-01 16:08:50,311:INFO:Parameter fdr: 0.5
+2019-08-01 16:08:50,311:INFO:Parameter red_or_blue: red
+2019-08-01 16:08:50,311:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-08-01 16:08:50,311:INFO:Parameter annotation_colors: None
+2019-08-01 16:08:50,312:INFO:Parameter write_gene_list: True
+2019-08-01 16:08:50,945:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 16:08:51,161:INFO:Running BlackSheep in outliers mode
+2019-08-01 16:08:51,162:INFO:Parameter which: outliers
+2019-08-01 16:08:51,162:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:08:51,162:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:08:51,162:INFO:Parameter iqrs: 1.5
+2019-08-01 16:08:51,162:INFO:Parameter up_or_down: up
+2019-08-01 16:08:51,163:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:08:51,163:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-08-01 16:08:51,163:INFO:Parameter write_outlier_table: True
+2019-08-01 16:08:51,163:INFO:Parameter write_frac_table: True
+2019-08-01 16:08:51,163:INFO:Parameter ind_sep: -
+2019-08-01 16:08:51,164:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:08:51,164:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:08:51,165:INFO:Parameter fdr: 0.05
+2019-08-01 16:08:51,166:INFO:Parameter write_gene_list: False
+2019-08-01 16:08:51,166:INFO:Parameter make_heatmaps: False
+2019-08-01 16:08:51,167:INFO:Parameter red_or_blue: red
+2019-08-01 16:08:51,167:INFO:Parameter annotation_colors: None
+2019-08-01 16:08:51,566:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:08:51,639:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:08:51,678:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:51,740:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:51,813:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:08:51,869:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:08:51,939:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:08:51,983:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:08:52,033:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:08:52,079:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:08:52,128:INFO:Running BlackSheep in outliers mode
+2019-08-01 16:08:52,129:INFO:Parameter which: outliers
+2019-08-01 16:08:52,129:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 16:08:52,129:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 16:08:52,129:INFO:Parameter iqrs: 1.5
+2019-08-01 16:08:52,129:INFO:Parameter up_or_down: up
+2019-08-01 16:08:52,129:INFO:Parameter do_not_aggregate: False
+2019-08-01 16:08:52,129:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-08-01 16:08:52,129:INFO:Parameter write_outlier_table: False
+2019-08-01 16:08:52,130:INFO:Parameter write_frac_table: False
+2019-08-01 16:08:52,130:INFO:Parameter ind_sep: -
+2019-08-01 16:08:52,130:INFO:Parameter frac_filter: 0.1
+2019-08-01 16:08:52,130:INFO:Parameter write_comparison_summaries: True
+2019-08-01 16:08:52,130:INFO:Parameter fdr: 0.5
+2019-08-01 16:08:52,130:INFO:Parameter write_gene_list: True
+2019-08-01 16:08:52,130:INFO:Parameter make_heatmaps: True
+2019-08-01 16:08:52,130:INFO:Parameter red_or_blue: blue
+2019-08-01 16:08:52,130:INFO:Parameter annotation_colors: None
+2019-08-01 16:08:52,406:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 16:08:52,456:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 16:08:52,492:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:52,549:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:52,651:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 16:08:52,702:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 16:08:52,762:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 16:08:52,819:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 16:08:52,910:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 16:08:53,037:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 16:08:53,169:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-08-01 16:08:53,490:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 16:08:53,815:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-08-01 16:08:54,203:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-08-01 16:08:54,412:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-08-01 16:08:54,653:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-08-01 16:08:54,767:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-08-01 16:08:54,772:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-08-01 16:08:54,775:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-08-01 16:08:54,779:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-08-01 16:08:55,299:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:55,318:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:55,345:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:55,366:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:55,389:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:55,407:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:55,429:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:55,429:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:55,439:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:55,462:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:55,463:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:55,474:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:55,503:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:55,531:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:55,559:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:55,584:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:55,607:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:55,636:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:55,671:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:55,671:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:55,691:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:55,729:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:55,729:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:55,746:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:56,090:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:56,122:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:56,190:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:56,252:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:56,312:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:56,343:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:56,378:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:56,378:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:56,393:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:56,424:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:56,424:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:56,442:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:56,846:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:56,871:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:56,907:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:56,938:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:56,968:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:57,005:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:57,060:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:57,061:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:57,080:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:57,116:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:57,116:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:57,130:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:57,427:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:57,453:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:57,495:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:57,529:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:57,569:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:57,601:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:57,642:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:57,642:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:57,669:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:57,706:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:57,706:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:57,725:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:58,177:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 16:08:58,198:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 16:08:58,221:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 16:08:58,244:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 16:08:58,428:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 16:08:58,467:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 16:08:58,539:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 16:08:58,539:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 16:08:58,562:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 16:08:58,601:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 16:08:58,601:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 16:08:58,618:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 16:08:59,869:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-08-01 16:09:00,243:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H
+2019-08-01 18:31:13,219:INFO:Running BlackSheep in outliers_table mode
+2019-08-01 18:31:13,220:INFO:Parameter which: outliers_table
+2019-08-01 18:31:13,220:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 18:31:13,220:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:13,220:INFO:Parameter up_or_down: up
+2019-08-01 18:31:13,220:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-08-01 18:31:13,220:INFO:Parameter ind_sep: -
+2019-08-01 18:31:13,220:INFO:Parameter do_not_aggregate: False
+2019-08-01 18:31:13,220:INFO:Parameter write_frac_table: True
+2019-08-01 18:31:13,542:INFO:Running BlackSheep in compare_groups mode
+2019-08-01 18:31:13,542:INFO:Parameter which: compare_groups
+2019-08-01 18:31:13,542:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-08-01 18:31:13,542:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:13,542:INFO:Parameter frac_filter: 0.1
+2019-08-01 18:31:13,542:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-08-01 18:31:13,543:INFO:Parameter write_comparison_summaries: True
+2019-08-01 18:31:13,543:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:13,543:INFO:Parameter up_or_down: up
+2019-08-01 18:31:13,543:INFO:Parameter write_gene_list: True
+2019-08-01 18:31:13,543:INFO:Parameter make_heatmaps: True
+2019-08-01 18:31:13,543:INFO:Parameter fdr: 0.6
+2019-08-01 18:31:13,543:INFO:Parameter red_or_blue: red
+2019-08-01 18:31:13,543:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:13,592:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 18:31:13,647:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 18:31:13,683:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 18:31:13,741:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 18:31:13,801:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 18:31:13,860:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 18:31:13,928:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 18:31:13,992:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 18:31:14,051:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 18:31:14,127:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 18:31:14,750:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:15,227:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-08-01 18:31:15,586:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:15,922:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:16,072:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-08-01 18:31:16,310:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:16,417:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-08-01 18:31:16,422:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-08-01 18:31:16,427:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-08-01 18:31:16,433:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-08-01 18:31:16,439:INFO:Running BlackSheep in visualize mode
+2019-08-01 18:31:16,440:INFO:Parameter which: visualize
+2019-08-01 18:31:16,440:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-08-01 18:31:16,440:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:16,440:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-08-01 18:31:16,440:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-08-01 18:31:16,440:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-08-01 18:31:16,441:INFO:Parameter fdr: 0.5
+2019-08-01 18:31:16,441:INFO:Parameter red_or_blue: red
+2019-08-01 18:31:16,441:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-08-01 18:31:16,441:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:16,441:INFO:Parameter write_gene_list: True
+2019-08-01 18:31:16,723:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 18:31:16,854:INFO:Running BlackSheep in outliers mode
+2019-08-01 18:31:16,854:INFO:Parameter which: outliers
+2019-08-01 18:31:16,854:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 18:31:16,854:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:16,855:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:16,855:INFO:Parameter up_or_down: up
+2019-08-01 18:31:16,855:INFO:Parameter do_not_aggregate: False
+2019-08-01 18:31:16,855:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-08-01 18:31:16,855:INFO:Parameter write_outlier_table: True
+2019-08-01 18:31:16,856:INFO:Parameter write_frac_table: True
+2019-08-01 18:31:16,856:INFO:Parameter ind_sep: -
+2019-08-01 18:31:16,856:INFO:Parameter frac_filter: 0.1
+2019-08-01 18:31:16,856:INFO:Parameter write_comparison_summaries: True
+2019-08-01 18:31:16,857:INFO:Parameter fdr: 0.05
+2019-08-01 18:31:16,857:INFO:Parameter write_gene_list: False
+2019-08-01 18:31:16,857:INFO:Parameter make_heatmaps: False
+2019-08-01 18:31:16,857:INFO:Parameter red_or_blue: red
+2019-08-01 18:31:16,857:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:17,143:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 18:31:17,214:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 18:31:17,245:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 18:31:17,323:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 18:31:17,404:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 18:31:17,469:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 18:31:17,555:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 18:31:17,618:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 18:31:17,676:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 18:31:17,745:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 18:31:17,831:INFO:Running BlackSheep in outliers mode
+2019-08-01 18:31:17,832:INFO:Parameter which: outliers
+2019-08-01 18:31:17,832:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 18:31:17,833:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:17,834:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:17,834:INFO:Parameter up_or_down: up
+2019-08-01 18:31:17,834:INFO:Parameter do_not_aggregate: False
+2019-08-01 18:31:17,834:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-08-01 18:31:17,835:INFO:Parameter write_outlier_table: False
+2019-08-01 18:31:17,835:INFO:Parameter write_frac_table: False
+2019-08-01 18:31:17,835:INFO:Parameter ind_sep: -
+2019-08-01 18:31:17,835:INFO:Parameter frac_filter: 0.1
+2019-08-01 18:31:17,836:INFO:Parameter write_comparison_summaries: True
+2019-08-01 18:31:17,836:INFO:Parameter fdr: 0.5
+2019-08-01 18:31:17,836:INFO:Parameter write_gene_list: True
+2019-08-01 18:31:17,837:INFO:Parameter make_heatmaps: True
+2019-08-01 18:31:17,837:INFO:Parameter red_or_blue: blue
+2019-08-01 18:31:17,838:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:18,115:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 18:31:18,175:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 18:31:18,214:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 18:31:18,290:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 18:31:18,369:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 18:31:18,423:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 18:31:18,480:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 18:31:18,538:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 18:31:18,603:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 18:31:18,654:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 18:31:18,715:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-08-01 18:31:18,924:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 18:31:19,320:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-08-01 18:31:19,778:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-08-01 18:31:19,899:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-08-01 18:31:20,086:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-08-01 18:31:20,201:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-08-01 18:31:20,206:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-08-01 18:31:20,211:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-08-01 18:31:20,215:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-08-01 18:31:53,203:INFO:Running BlackSheep in outliers_table mode
+2019-08-01 18:31:53,203:INFO:Parameter which: outliers_table
+2019-08-01 18:31:53,204:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 18:31:53,204:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:53,204:INFO:Parameter up_or_down: up
+2019-08-01 18:31:53,204:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-08-01 18:31:53,204:INFO:Parameter ind_sep: -
+2019-08-01 18:31:53,204:INFO:Parameter do_not_aggregate: False
+2019-08-01 18:31:53,205:INFO:Parameter write_frac_table: True
+2019-08-01 18:31:53,550:INFO:Running BlackSheep in compare_groups mode
+2019-08-01 18:31:53,550:INFO:Parameter which: compare_groups
+2019-08-01 18:31:53,550:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-08-01 18:31:53,550:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:53,550:INFO:Parameter frac_filter: 0.1
+2019-08-01 18:31:53,551:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-08-01 18:31:53,551:INFO:Parameter write_comparison_summaries: True
+2019-08-01 18:31:53,551:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:53,551:INFO:Parameter up_or_down: up
+2019-08-01 18:31:53,551:INFO:Parameter write_gene_list: True
+2019-08-01 18:31:53,551:INFO:Parameter make_heatmaps: True
+2019-08-01 18:31:53,551:INFO:Parameter fdr: 0.6
+2019-08-01 18:31:53,551:INFO:Parameter red_or_blue: red
+2019-08-01 18:31:53,551:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:53,600:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 18:31:53,674:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 18:31:53,731:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 18:31:53,802:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 18:31:53,869:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 18:31:53,945:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 18:31:54,015:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 18:31:54,092:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 18:31:54,223:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 18:31:54,500:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 18:31:55,313:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:55,687:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-08-01 18:31:56,043:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:56,355:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:56,493:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-08-01 18:31:56,894:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-08-01 18:31:57,060:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-08-01 18:31:57,064:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-08-01 18:31:57,068:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-08-01 18:31:57,072:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-08-01 18:31:57,082:INFO:Running BlackSheep in visualize mode
+2019-08-01 18:31:57,084:INFO:Parameter which: visualize
+2019-08-01 18:31:57,084:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-08-01 18:31:57,084:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:57,084:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-08-01 18:31:57,085:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-08-01 18:31:57,085:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-08-01 18:31:57,085:INFO:Parameter fdr: 0.5
+2019-08-01 18:31:57,085:INFO:Parameter red_or_blue: red
+2019-08-01 18:31:57,085:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-08-01 18:31:57,086:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:57,086:INFO:Parameter write_gene_list: True
+2019-08-01 18:31:57,351:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 18:31:57,468:INFO:Running BlackSheep in outliers mode
+2019-08-01 18:31:57,468:INFO:Parameter which: outliers
+2019-08-01 18:31:57,468:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 18:31:57,468:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:57,468:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:57,469:INFO:Parameter up_or_down: up
+2019-08-01 18:31:57,469:INFO:Parameter do_not_aggregate: False
+2019-08-01 18:31:57,469:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-08-01 18:31:57,469:INFO:Parameter write_outlier_table: True
+2019-08-01 18:31:57,469:INFO:Parameter write_frac_table: True
+2019-08-01 18:31:57,470:INFO:Parameter ind_sep: -
+2019-08-01 18:31:57,470:INFO:Parameter frac_filter: 0.1
+2019-08-01 18:31:57,470:INFO:Parameter write_comparison_summaries: True
+2019-08-01 18:31:57,470:INFO:Parameter fdr: 0.05
+2019-08-01 18:31:57,470:INFO:Parameter write_gene_list: False
+2019-08-01 18:31:57,471:INFO:Parameter make_heatmaps: False
+2019-08-01 18:31:57,471:INFO:Parameter red_or_blue: red
+2019-08-01 18:31:57,471:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:57,749:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 18:31:57,819:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 18:31:57,848:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 18:31:57,907:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 18:31:57,965:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 18:31:58,034:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 18:31:58,162:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 18:31:58,231:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 18:31:58,300:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 18:31:58,363:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 18:31:58,420:INFO:Running BlackSheep in outliers mode
+2019-08-01 18:31:58,420:INFO:Parameter which: outliers
+2019-08-01 18:31:58,420:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 18:31:58,421:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 18:31:58,421:INFO:Parameter iqrs: 1.5
+2019-08-01 18:31:58,421:INFO:Parameter up_or_down: up
+2019-08-01 18:31:58,421:INFO:Parameter do_not_aggregate: False
+2019-08-01 18:31:58,421:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-08-01 18:31:58,422:INFO:Parameter write_outlier_table: False
+2019-08-01 18:31:58,422:INFO:Parameter write_frac_table: False
+2019-08-01 18:31:58,422:INFO:Parameter ind_sep: -
+2019-08-01 18:31:58,423:INFO:Parameter frac_filter: 0.1
+2019-08-01 18:31:58,423:INFO:Parameter write_comparison_summaries: True
+2019-08-01 18:31:58,423:INFO:Parameter fdr: 0.5
+2019-08-01 18:31:58,423:INFO:Parameter write_gene_list: True
+2019-08-01 18:31:58,424:INFO:Parameter make_heatmaps: True
+2019-08-01 18:31:58,424:INFO:Parameter red_or_blue: blue
+2019-08-01 18:31:58,424:INFO:Parameter annotation_colors: None
+2019-08-01 18:31:58,716:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 18:31:58,771:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 18:31:58,807:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 18:31:58,868:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 18:31:58,940:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 18:31:58,994:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 18:31:59,079:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 18:31:59,163:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 18:31:59,243:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 18:31:59,314:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 18:31:59,398:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp0_0
+2019-08-01 18:31:59,637:INFO:Saving figure to tests/output/pipeline_figs_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 18:31:59,964:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_0.0.fdr0.5.heatmap.pdf
+2019-08-01 18:32:00,255:INFO:Saving figure to tests/output/pipeline_figs_test.comp1_1.0.fdr0.5.heatmap.pdf
+2019-08-01 18:32:00,382:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp2_1
+2019-08-01 18:32:00,614:INFO:Saving figure to tests/output/pipeline_figs_test.comp2_0.fdr0.5.heatmap.pdf
+2019-08-01 18:32:00,717:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_1
+2019-08-01 18:32:00,722:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp3_0
+2019-08-01 18:32:00,725:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_1
+2019-08-01 18:32:00,729:WARNING:No significant genes at FDR 0.5 in fisherFDR_comp4_0
+2019-08-01 18:32:01,409:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 18:32:01,442:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 18:32:01,475:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 18:32:01,510:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 18:32:01,570:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 18:32:01,612:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 18:32:01,665:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 18:32:01,665:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 18:32:01,693:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 18:32:01,751:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 18:32:01,752:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 18:32:01,765:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 18:32:01,816:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 18:32:01,864:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 18:32:01,931:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 18:32:01,962:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 18:32:01,995:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 18:32:02,019:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 18:32:02,045:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 18:32:02,046:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 18:32:02,058:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 18:32:02,086:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 18:32:02,086:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 18:32:02,100:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 18:32:02,490:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 18:32:02,551:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 18:32:02,756:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 18:32:02,809:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 18:32:02,893:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 18:32:02,953:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 18:32:03,005:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 18:32:03,006:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 18:32:03,027:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 18:32:03,081:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 18:32:03,082:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 18:32:03,095:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 18:32:03,453:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 18:32:03,481:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 18:32:03,514:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 18:32:03,542:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 18:32:03,581:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 18:32:03,616:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 18:32:03,674:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 18:32:03,675:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 18:32:03,714:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 18:32:03,770:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 18:32:03,771:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 18:32:03,793:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 18:32:04,442:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 18:32:04,480:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 18:32:04,523:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 18:32:04,548:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 18:32:04,587:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 18:32:04,611:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 18:32:04,646:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 18:32:04,646:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 18:32:04,665:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 18:32:04,701:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 18:32:04,701:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 18:32:04,718:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 18:32:05,038:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 18:32:05,060:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 18:32:05,087:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 18:32:05,108:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 18:32:05,135:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 18:32:05,160:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 18:32:05,189:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 18:32:05,189:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 18:32:05,204:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 18:32:05,244:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 18:32:05,244:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 18:32:05,263:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 18:32:05,521:INFO:Saving figure to tests/output/vis_test_small.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 18:32:06,651:INFO:Saving figure to tests/output/vis_test_large.POLE_subtype_Yes.fdr0.6.heatmap.pdf
+2019-08-01 18:32:09,785:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-08-01 18:32:10,176:INFO:Saving figure to tests/output/vis_test_medium.MSI_status_MSI-H.fdr0.6.heatmap.pdf
+2019-08-01 18:32:10,931:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H
+2019-08-01 23:36:32,433:INFO:Running BlackSheep in outliers_table mode
+2019-08-01 23:36:32,434:INFO:Parameter which: outliers_table
+2019-08-01 23:36:32,434:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 23:36:32,434:INFO:Parameter iqrs: 1.5
+2019-08-01 23:36:32,434:INFO:Parameter up_or_down: up
+2019-08-01 23:36:32,434:INFO:Parameter output_prefix: tests/output/outliers_table_test
+2019-08-01 23:36:32,434:INFO:Parameter ind_sep: -
+2019-08-01 23:36:32,434:INFO:Parameter do_not_aggregate: False
+2019-08-01 23:36:32,434:INFO:Parameter write_frac_table: True
+2019-08-01 23:36:32,702:INFO:Running BlackSheep in compare_groups mode
+2019-08-01 23:36:32,703:INFO:Parameter which: compare_groups
+2019-08-01 23:36:32,703:INFO:Parameter outliers_table: tests/pidgin_outliers.csv
+2019-08-01 23:36:32,703:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 23:36:32,703:INFO:Parameter frac_filter: 0.1
+2019-08-01 23:36:32,703:INFO:Parameter output_prefix: tests/output/compare_groups_test
+2019-08-01 23:36:32,703:INFO:Parameter write_comparison_summaries: True
+2019-08-01 23:36:32,703:INFO:Parameter iqrs: 1.5
+2019-08-01 23:36:32,703:INFO:Parameter up_or_down: up
+2019-08-01 23:36:32,703:INFO:Parameter write_gene_list: True
+2019-08-01 23:36:32,703:INFO:Parameter make_heatmaps: True
+2019-08-01 23:36:32,703:INFO:Parameter fdr: 0.6
+2019-08-01 23:36:32,704:INFO:Parameter red_or_blue: red
+2019-08-01 23:36:32,704:INFO:Parameter annotation_colors: None
+2019-08-01 23:36:32,738:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_0
+2019-08-01 23:36:32,800:INFO:Calculating enrichment in 4 rows for fisherFDR_comp0_1
+2019-08-01 23:36:32,831:INFO:Calculating enrichment in 4 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:32,878:INFO:Calculating enrichment in 3 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:32,932:INFO:Calculating enrichment in 3 rows for fisherFDR_comp2_1
+2019-08-01 23:36:32,974:INFO:Calculating enrichment in 4 rows for fisherFDR_comp2_0
+2019-08-01 23:36:33,029:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_1
+2019-08-01 23:36:33,073:INFO:Calculating enrichment in 3 rows for fisherFDR_comp3_0
+2019-08-01 23:36:33,123:INFO:Calculating enrichment in 4 rows for fisherFDR_comp4_1
+2019-08-01 23:36:33,168:INFO:Calculating enrichment in 3 rows for fisherFDR_comp4_0
+2019-08-01 23:36:33,678:INFO:Saving figure to tests/output/compare_groups_test.comp0_0.fdr0.6.heatmap.pdf
+2019-08-01 23:36:34,034:INFO:Saving figure to tests/output/compare_groups_test.comp0_1.fdr0.6.heatmap.pdf
+2019-08-01 23:36:34,306:INFO:Saving figure to tests/output/compare_groups_test.comp1_0.0.fdr0.6.heatmap.pdf
+2019-08-01 23:36:34,595:INFO:Saving figure to tests/output/compare_groups_test.comp1_1.0.fdr0.6.heatmap.pdf
+2019-08-01 23:36:34,708:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp2_1
+2019-08-01 23:36:34,889:INFO:Saving figure to tests/output/compare_groups_test.comp2_0.fdr0.6.heatmap.pdf
+2019-08-01 23:36:34,986:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_1
+2019-08-01 23:36:34,989:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp3_0
+2019-08-01 23:36:34,993:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_1
+2019-08-01 23:36:34,997:WARNING:No significant genes at FDR 0.6 in fisherFDR_comp4_0
+2019-08-01 23:36:35,001:INFO:Running BlackSheep in visualize mode
+2019-08-01 23:36:35,001:INFO:Parameter which: visualize
+2019-08-01 23:36:35,001:INFO:Parameter comparison_qvalues: tests/pidgin_qvalues.csv
+2019-08-01 23:36:35,001:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 23:36:35,002:INFO:Parameter visualization_table: tests/pidgin_fracTable.csv
+2019-08-01 23:36:35,002:INFO:Parameter comparison_of_interest: fisherFDR_comp0_1
+2019-08-01 23:36:35,002:INFO:Parameter annotations_to_show: ['comp0 comp1']
+2019-08-01 23:36:35,002:INFO:Parameter fdr: 0.5
+2019-08-01 23:36:35,002:INFO:Parameter red_or_blue: red
+2019-08-01 23:36:35,002:INFO:Parameter output_prefix: tests/output/vis_cli_test
+2019-08-01 23:36:35,002:INFO:Parameter annotation_colors: None
+2019-08-01 23:36:35,002:INFO:Parameter write_gene_list: True
+2019-08-01 23:36:35,242:INFO:Saving figure to tests/output/vis_cli_test.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 23:36:35,334:INFO:Running BlackSheep in outliers mode
+2019-08-01 23:36:35,334:INFO:Parameter which: outliers
+2019-08-01 23:36:35,334:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 23:36:35,334:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 23:36:35,334:INFO:Parameter iqrs: 1.5
+2019-08-01 23:36:35,334:INFO:Parameter up_or_down: up
+2019-08-01 23:36:35,335:INFO:Parameter do_not_aggregate: False
+2019-08-01 23:36:35,335:INFO:Parameter output_prefix: tests/output/pipeline_test
+2019-08-01 23:36:35,335:INFO:Parameter write_outlier_table: True
+2019-08-01 23:36:35,335:INFO:Parameter write_frac_table: True
+2019-08-01 23:36:35,335:INFO:Parameter ind_sep: -
+2019-08-01 23:36:35,335:INFO:Parameter frac_filter: 0.1
+2019-08-01 23:36:35,335:INFO:Parameter write_comparison_summaries: True
+2019-08-01 23:36:35,335:INFO:Parameter fdr: 0.05
+2019-08-01 23:36:35,335:INFO:Parameter write_gene_list: False
+2019-08-01 23:36:35,336:INFO:Parameter make_heatmaps: False
+2019-08-01 23:36:35,336:INFO:Parameter red_or_blue: red
+2019-08-01 23:36:35,336:INFO:Parameter annotation_colors: None
+2019-08-01 23:36:35,616:INFO:Running BlackSheep in outliers mode
+2019-08-01 23:36:35,616:INFO:Parameter which: outliers
+2019-08-01 23:36:35,616:INFO:Parameter values: tests/pidgin_values.csv
+2019-08-01 23:36:35,616:INFO:Parameter annotations: tests/pidgin_annotations.csv
+2019-08-01 23:36:35,617:INFO:Parameter iqrs: 1.5
+2019-08-01 23:36:35,617:INFO:Parameter up_or_down: up
+2019-08-01 23:36:35,617:INFO:Parameter do_not_aggregate: False
+2019-08-01 23:36:35,617:INFO:Parameter output_prefix: tests/output/pipeline_figs_test
+2019-08-01 23:36:35,617:INFO:Parameter write_outlier_table: False
+2019-08-01 23:36:35,617:INFO:Parameter write_frac_table: False
+2019-08-01 23:36:35,618:INFO:Parameter ind_sep: -
+2019-08-01 23:36:35,618:INFO:Parameter frac_filter: 0.1
+2019-08-01 23:36:35,618:INFO:Parameter write_comparison_summaries: True
+2019-08-01 23:36:35,618:INFO:Parameter fdr: 0.5
+2019-08-01 23:36:35,618:INFO:Parameter write_gene_list: True
+2019-08-01 23:36:35,618:INFO:Parameter make_heatmaps: True
+2019-08-01 23:36:35,618:INFO:Parameter red_or_blue: blue
+2019-08-01 23:36:35,619:INFO:Parameter annotation_colors: None
+2019-08-01 23:36:36,094:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 23:36:36,128:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 23:36:36,153:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:36,185:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:36,214:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 23:36:36,231:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 23:36:36,253:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 23:36:36,254:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 23:36:36,265:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 23:36:36,300:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 23:36:36,300:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 23:36:36,313:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 23:36:36,347:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 23:36:36,371:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 23:36:36,395:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:36,418:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:36,441:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 23:36:36,458:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 23:36:36,481:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 23:36:36,481:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 23:36:36,492:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 23:36:36,515:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 23:36:36,515:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 23:36:36,526:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 23:36:36,774:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 23:36:36,793:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 23:36:36,816:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:36,837:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:36,860:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 23:36:36,877:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 23:36:36,899:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 23:36:36,899:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 23:36:36,910:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 23:36:36,933:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 23:36:36,934:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 23:36:36,944:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 23:36:37,202:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 23:36:37,222:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 23:36:37,247:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:37,268:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:37,291:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 23:36:37,308:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 23:36:37,329:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 23:36:37,329:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 23:36:37,339:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 23:36:37,362:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 23:36:37,362:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 23:36:37,372:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 23:36:37,596:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 23:36:37,615:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 23:36:37,637:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:37,657:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:37,683:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 23:36:37,700:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 23:36:37,722:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 23:36:37,723:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 23:36:37,734:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 23:36:37,757:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 23:36:37,757:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 23:36:37,768:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 23:36:38,003:INFO:Calculating enrichment in 1 rows for fisherFDR_comp0_0
+2019-08-01 23:36:38,022:INFO:Calculating enrichment in 3 rows for fisherFDR_comp0_1
+2019-08-01 23:36:38,044:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_0.0
+2019-08-01 23:36:38,066:INFO:Calculating enrichment in 2 rows for fisherFDR_comp1_1.0
+2019-08-01 23:36:38,089:INFO:Calculating enrichment in 1 rows for fisherFDR_comp2_1
+2019-08-01 23:36:38,106:INFO:Calculating enrichment in 2 rows for fisherFDR_comp2_0
+2019-08-01 23:36:38,130:INFO:Calculating enrichment in 0 rows for fisherFDR_comp3_1
+2019-08-01 23:36:38,130:WARNING:No rows tested for fisherFDR_comp3_1
+2019-08-01 23:36:38,142:INFO:Calculating enrichment in 2 rows for fisherFDR_comp3_0
+2019-08-01 23:36:38,167:INFO:Calculating enrichment in 0 rows for fisherFDR_comp4_1
+2019-08-01 23:36:38,168:WARNING:No rows tested for fisherFDR_comp4_1
+2019-08-01 23:36:38,180:INFO:Calculating enrichment in 2 rows for fisherFDR_comp4_0
+2019-08-01 23:36:38,379:INFO:Saving figure to tests/output/vis_test_small.comp0_1.fdr0.5.heatmap.pdf
+2019-08-01 23:36:39,201:INFO:Saving figure to tests/output/vis_test_large.POLE_subtype_Yes.fdr0.6.heatmap.pdf
+2019-08-01 23:36:41,505:WARNING:No significant genes at FDR 0.05 in fisherFDR_POLE_subtype_Yes
+2019-08-01 23:36:41,856:INFO:Saving figure to tests/output/vis_test_medium.MSI_status_MSI-H.fdr0.6.heatmap.pdf
+2019-08-01 23:36:42,545:WARNING:No significant genes at FDR 0.05 in fisherFDR_MSI_status_MSI-H

@@ -1,0 +1,8 @@
+	NotOutlier_comp2_0	NotOutlier_comp2_1	Outliers_comp2_0	Outliers_comp2_1	fisherp_comp2_0	fisherp_comp2_1	fisherFDR_comp2_1	fisherFDR_comp2_0
+geneC	9.0	31.0	1.0	3.0		1.0	1.0	1.0
+geneC	9.0	31.0	1.0	3.0	1.0		1.0	1.0
+geneD	4.0	22.0	4.0	0.0	0.002554278416347378			0.010217113665389512
+geneE	9.0	31.0	1.0	2.0	0.5578964427518028			0.7438619236690704
+geneF	4.0	22.0	2.0	1.0	0.09989053092501389			0.19978106185002778
+geneH	19.0	68.0	1.0	6.0		1.0	1.0	
+geneI	4.0	10.0	0.0	4.0		0.5241830065359476	1.0	

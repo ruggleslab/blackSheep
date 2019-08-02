@@ -1,0 +1,13 @@
+which: compare_groups
+outliers_table: tests/pidgin_outliers.csv
+annotations: tests/pidgin_annotations.csv
+frac_filter: 0.1
+output_prefix: tests/output/compare_groups_test
+write_comparison_summaries: True
+iqrs: 1.5
+up_or_down: up
+write_gene_list: True
+make_heatmaps: True
+fdr: 0.6
+red_or_blue: red
+annotation_colors: None
