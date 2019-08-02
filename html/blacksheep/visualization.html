@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>blacksheep.visualization API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>blacksheep.visualization</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">from typing import Optional, Iterable
+import logging
+from pandas import DataFrame
+import numpy as np
+import catheat
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatch
+import seaborn as sns
+from .constants import *
+
+
+logger = logging.getLogger(&#34;cli&#34;)
+
+
+def get_sample_order(annotations: DataFrame, col_of_interest: str) -&gt; Iterable:
+    &#34;&#34;&#34;
+    Orders the samples using annotations
+    :param annotations: comparisons vs samples annotation DataFrame
+    :param col_of_interest: Comparison to sort by first
+    :return: Sorted order of samples
+    &#34;&#34;&#34;
+    sort_by = [col for col in annotations.index if col != col_of_interest]
+    annotations = annotations.sort_values([col_of_interest] + sort_by, axis=1)
+    return annotations.columns
+
+
+def get_genes(qvals: DataFrame, fdr: float, col: str) -&gt; list:
+    &#34;&#34;&#34;
+    Collects signficant genes
+    :param qvals: qvalues DataFrame
+    :param fdr: FDR cut off
+    :param col: Column to collect genes for
+    :return: List of signficant genes
+    &#34;&#34;&#34;
+    return list(qvals.loc[(qvals[col] &lt; fdr), :].index)
+
+
+def pick_color(red_or_blue: str):
+    &#34;&#34;&#34;
+    Sets colormap for heatmap
+    :param red_or_blue: Use red or blue.
+    :return: Colormap
+    &#34;&#34;&#34;
+    if red_or_blue == &#34;red&#34;:
+        cmap = sns.cubehelix_palette(
+            start=0.857,
+            rot=0.00,
+            gamma=1.5,
+            hue=1,
+            light=1,
+            dark=0.2,
+            reverse=False,
+            as_cmap=True,
+        )
+    elif red_or_blue == &#34;blue&#34;:
+        cmap = sns.cubehelix_palette(
+            start=3,
+            rot=0.00,
+            gamma=1.5,
+            hue=1,
+            light=1,
+            dark=0.2,
+            reverse=False,
+            as_cmap=True,
+        )
+    else:
+        raise ValueError(&#34;Invalid color choice, must be red or blue, setting to red.&#34;)
+
+    cmap.set_bad(&#34;#BDBDBD&#34;)
+    return cmap
+
+
+def check_colors(colors: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    Makes sure every input color can be used as a color by the heatmap and legend.
+    :param colors: Dictionary of values: colors
+    :return: Dictionary of values: colors with invalid ones removed.
+    &#34;&#34;&#34;
+    for lab, color in colors.items():
+        try:
+            mpatch.Patch(color=color)
+        except ValueError:
+            logger.warning(&#34;%s is not a valid color&#34; % color)
+            colors.pop(lab)
+    return colors
+
+
+def gen_colors(pal, n: int):
+    &#34;&#34;&#34;
+    Generates colors from provided palette.
+    :param pal: List of colors, LinearSegmentedColormap or seaborn color palette. Must have
+    enough colors for needed unique values.
+    :param n: How many unique colors are needed
+    :return: List of colors to assign to values.
+    &#34;&#34;&#34;
+
+    # If string
+    if isinstance(pal, str):
+        try:
+            colors = sns.color_palette(pal, n)
+        except:
+            pal = plt.get_cmap(pal)
+            colors = [pal(i) for i in np.linspace(0, 1, n)]
+    elif isinstance(pal, mcolors.LinearSegmentedColormap):
+        colors = [pal(i) for i in np.linspace(0, 1, n)]
+    elif isinstance(pal, (list, np.ndarray)):
+        if len(pal) &lt; n:
+            raise ValueError(
+                &#34;Must provide at least as many colors as there are unique entries: {0}&#34;.format(
+                    len(unique_values)
+                )
+            )
+        else:
+            colors = pal
+    else:
+        raise TypeError(
+            &#39;Unable to generate colors from palette of type &#34;{0}&#34;&#39;.format(type(pal))
+        )
+
+    return colors
+
+
+def assign_colors(data: DataFrame, cmap: dict, palette) -&gt; dict:
+    &#34;&#34;&#34;
+    Combines provided colors, and adds more if needed
+    :param data: Annotations heatmap to color
+    :param cmap: Provided colormap
+    :param palette: Palette to use to generate unspecific colors
+    :return: Color dictionary for every unique value in annotations.
+    &#34;&#34;&#34;
+
+    unique_values = sorted(np.unique(data.values.astype(str)))
+    cmap = {v: c for v, c in cmap.items() if v in unique_values}
+    missing_entries = [v for v in unique_values if v not in cmap.keys()]
+    colors = gen_colors(palette, len(missing_entries))
+    cmap.update({v: colors[i] for i, v in enumerate(missing_entries)})
+
+    return cmap
+
+
+def determine_colors(path: str, annotations: DataFrame) -&gt; dict:
+    &#34;&#34;&#34;
+    Takes a file with value, color pairs and fills out any other needed colors.
+    :param path: File path to value, color pairs
+    :param annotations: Annotation DataFrame
+    :return: Value: color dictionary
+    &#34;&#34;&#34;
+    if path is None:
+        colors = {}
+    else:
+        try:
+            with open(path, &#34;r&#34;) as fh:
+                colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
+            colors = check_colors(colors)
+        except FileNotFoundError:
+            logger.warning(&#34;%s is not a valid file, generating colors&#34; % path)
+            colors = {}
+
+    colors = assign_colors(annotations, colors, default_palette)
+    return colors
+
+
+def plot_heatmap(
+    annotations: DataFrame,
+    qvals: DataFrame,
+    col_of_interest: str,
+    vis_table: DataFrame,
+    fdr: float = 0.05,
+    red_or_blue: str = &#34;red&#34;,
+    output_prefix: str = &#34;outliers&#34;,
+    colors: Optional[str] = None,
+    savefig: bool = False,
+) -&gt; list:
+    &#34;&#34;&#34;
+    Plots a heatmap of signficantly enriched values for a given comparison.
+    :param annotations: Annotations DataFrame, samples as rows, annotations as columns
+    :param qvals: qvalues DataFrame with genes/sites as rows and comparisons as columns
+    :param col_of_interest: Which column from qvalues should be used to find signficant genes
+    :param vis_table: Table to be visualized in heatmap. Index values should correspond to the
+    annotation df index, column names should correspond to qvals df index
+    :param fdr: FDR threshold to for signficance
+    :param red_or_blue: Whether heatmap should be in red or blue color scale
+    :param output_prefix: If saving files, output prefix
+    :param colors: File to find color map for annotation header
+    :param savefig: Whether to save the plot to a pdf
+    :return: List of matplotlib axs, can be further customized before saving. In order the axes
+    contain: annotation header, the heatmap, the color bar, and the legend.
+    &#34;&#34;&#34;
+
+    annotations = annotations.transpose()
+
+    # Get orders
+    annot_label = [col for col in annotations.index if col in col_of_interest][0]
+    sample_order = get_sample_order(annotations, annot_label)
+    genes = get_genes(qvals, fdr, col_of_interest)
+    if not genes:
+        logger.warning(&#34;No significant genes at FDR %s in %s&#34; % (fdr, col_of_interest))
+        return None
+
+    annotations = annotations.reindex(sample_order, axis=1)
+    vis_table = vis_table.reindex(genes).reindex(sample_order, axis=1)
+
+    # Get colors
+    cmap = pick_color(red_or_blue)
+    colors = determine_colors(colors, annotations)
+
+    # Get label
+    label = col_of_interest[10:]
+
+    # Set up figure
+    sns.set(font=&#34;arial&#34;, style=&#34;white&#34;, color_codes=True, font_scale=1)
+    plot_height = min(max((0.19 * (len(annotations) + len(genes))), 2), 11)
+    plot_width = min(max((0.15 * len(annotations.columns)), 4), 8.5)
+    margin_sizeLR = 1.75
+    margin_sizeTB = 0.4
+    fig = plt.figure(figsize=(plot_width, plot_height))
+    gs = plt.GridSpec(
+        figure=fig,
+        nrows=3,
+        ncols=2,
+        width_ratios=[len(annotations.columns), 2],
+        height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
+        wspace=0.01,
+        hspace=0.01,
+        bottom=(margin_sizeTB / plot_height),
+        top=1 - (margin_sizeTB / plot_height),
+        left=0.05 + (margin_sizeLR / plot_width),
+        right=1.05 - (margin_sizeLR / plot_width),
+    )
+
+    annot_ax = plt.subplot(gs[0, 0])
+    vals_ax = plt.subplot(gs[1:, 0])
+    cbar_ax = plt.subplot(gs[-1, 1])
+    leg_ax = plt.subplot(gs[:-1, 1])
+    leg_ax.axis(&#34;off&#34;)
+
+    # Header
+    catheat.heatmap(
+        annotations,
+        cmap=colors,
+        ax=annot_ax,
+        legend=False,
+        xticklabels=False,
+        yticklabels=annotations.index,
+    )
+
+    annot_ax.set_title(plot_title % col_of_interest, fontsize=14)
+    annot_ax.set_yticklabels(annotations.index, rotation=0)
+    annot_ax.set_xlabel(&#34;&#34;)
+    annot_ax.set_ylabel(&#34;&#34;)
+
+    # Values
+    sns.heatmap(
+        vis_table,
+        ax=vals_ax,
+        cbar_ax=cbar_ax,
+        cmap=cmap,
+        vmin=0,
+        vmax=1,
+        yticklabels=vis_table.index,
+        xticklabels=False,
+        cbar_kws=dict(label=cbar_label),
+    )
+    vals_ax.set_yticklabels(vis_table.index, rotation=0)
+    vals_ax.set_xlabel(&#34;&#34;)
+    vals_ax.set_ylabel(&#34;&#34;)
+
+    # Legend
+    handles = [mpatch.Patch(label=l, color=c) for l, c in colors.items()]
+    leg_ax.legend(
+        handles=handles,
+        loc=(0, 0.05),
+        facecolor=&#34;white&#34;,
+        edgecolor=&#34;white&#34;,
+        labelspacing=0,
+    )
+
+    if savefig:
+        fig_path = figure_file_name % (output_prefix, label, fdr)
+        logger.info(&#34;Saving figure to %s&#34; % fig_path)
+        plt.savefig(fig_path, dpi=200)
+
+    return [annot_ax, vals_ax, cbar_ax, leg_ax]</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="blacksheep.visualization.assign_colors"><code class="name flex">
+<span>def <span class="ident">assign_colors</span></span>(<span>data: pandas.core.frame.DataFrame, cmap: dict, palette) -> dict</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Combines provided colors, and adds more if needed
+:param data: Annotations heatmap to color
+:param cmap: Provided colormap
+:param palette: Palette to use to generate unspecific colors
+:return: Color dictionary for every unique value in annotations.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def assign_colors(data: DataFrame, cmap: dict, palette) -&gt; dict:
+    &#34;&#34;&#34;
+    Combines provided colors, and adds more if needed
+    :param data: Annotations heatmap to color
+    :param cmap: Provided colormap
+    :param palette: Palette to use to generate unspecific colors
+    :return: Color dictionary for every unique value in annotations.
+    &#34;&#34;&#34;
+
+    unique_values = sorted(np.unique(data.values.astype(str)))
+    cmap = {v: c for v, c in cmap.items() if v in unique_values}
+    missing_entries = [v for v in unique_values if v not in cmap.keys()]
+    colors = gen_colors(palette, len(missing_entries))
+    cmap.update({v: colors[i] for i, v in enumerate(missing_entries)})
+
+    return cmap</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.check_colors"><code class="name flex">
+<span>def <span class="ident">check_colors</span></span>(<span>colors: dict) -> dict</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Makes sure every input color can be used as a color by the heatmap and legend.
+:param colors: Dictionary of values: colors
+:return: Dictionary of values: colors with invalid ones removed.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def check_colors(colors: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    Makes sure every input color can be used as a color by the heatmap and legend.
+    :param colors: Dictionary of values: colors
+    :return: Dictionary of values: colors with invalid ones removed.
+    &#34;&#34;&#34;
+    for lab, color in colors.items():
+        try:
+            mpatch.Patch(color=color)
+        except ValueError:
+            logger.warning(&#34;%s is not a valid color&#34; % color)
+            colors.pop(lab)
+    return colors</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.determine_colors"><code class="name flex">
+<span>def <span class="ident">determine_colors</span></span>(<span>path: str, annotations: pandas.core.frame.DataFrame) -> dict</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Takes a file with value, color pairs and fills out any other needed colors.
+:param path: File path to value, color pairs
+:param annotations: Annotation DataFrame
+:return: Value: color dictionary</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def determine_colors(path: str, annotations: DataFrame) -&gt; dict:
+    &#34;&#34;&#34;
+    Takes a file with value, color pairs and fills out any other needed colors.
+    :param path: File path to value, color pairs
+    :param annotations: Annotation DataFrame
+    :return: Value: color dictionary
+    &#34;&#34;&#34;
+    if path is None:
+        colors = {}
+    else:
+        try:
+            with open(path, &#34;r&#34;) as fh:
+                colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
+            colors = check_colors(colors)
+        except FileNotFoundError:
+            logger.warning(&#34;%s is not a valid file, generating colors&#34; % path)
+            colors = {}
+
+    colors = assign_colors(annotations, colors, default_palette)
+    return colors</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.gen_colors"><code class="name flex">
+<span>def <span class="ident">gen_colors</span></span>(<span>pal, n: int)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Generates colors from provided palette.
+:param pal: List of colors, LinearSegmentedColormap or seaborn color palette. Must have
+enough colors for needed unique values.
+:param n: How many unique colors are needed
+:return: List of colors to assign to values.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def gen_colors(pal, n: int):
+    &#34;&#34;&#34;
+    Generates colors from provided palette.
+    :param pal: List of colors, LinearSegmentedColormap or seaborn color palette. Must have
+    enough colors for needed unique values.
+    :param n: How many unique colors are needed
+    :return: List of colors to assign to values.
+    &#34;&#34;&#34;
+
+    # If string
+    if isinstance(pal, str):
+        try:
+            colors = sns.color_palette(pal, n)
+        except:
+            pal = plt.get_cmap(pal)
+            colors = [pal(i) for i in np.linspace(0, 1, n)]
+    elif isinstance(pal, mcolors.LinearSegmentedColormap):
+        colors = [pal(i) for i in np.linspace(0, 1, n)]
+    elif isinstance(pal, (list, np.ndarray)):
+        if len(pal) &lt; n:
+            raise ValueError(
+                &#34;Must provide at least as many colors as there are unique entries: {0}&#34;.format(
+                    len(unique_values)
+                )
+            )
+        else:
+            colors = pal
+    else:
+        raise TypeError(
+            &#39;Unable to generate colors from palette of type &#34;{0}&#34;&#39;.format(type(pal))
+        )
+
+    return colors</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.get_genes"><code class="name flex">
+<span>def <span class="ident">get_genes</span></span>(<span>qvals: pandas.core.frame.DataFrame, fdr: float, col: str) -> list</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Collects signficant genes
+:param qvals: qvalues DataFrame
+:param fdr: FDR cut off
+:param col: Column to collect genes for
+:return: List of signficant genes</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def get_genes(qvals: DataFrame, fdr: float, col: str) -&gt; list:
+    &#34;&#34;&#34;
+    Collects signficant genes
+    :param qvals: qvalues DataFrame
+    :param fdr: FDR cut off
+    :param col: Column to collect genes for
+    :return: List of signficant genes
+    &#34;&#34;&#34;
+    return list(qvals.loc[(qvals[col] &lt; fdr), :].index)</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.get_sample_order"><code class="name flex">
+<span>def <span class="ident">get_sample_order</span></span>(<span>annotations: pandas.core.frame.DataFrame, col_of_interest: str) -> Iterable</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Orders the samples using annotations
+:param annotations: comparisons vs samples annotation DataFrame
+:param col_of_interest: Comparison to sort by first
+:return: Sorted order of samples</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def get_sample_order(annotations: DataFrame, col_of_interest: str) -&gt; Iterable:
+    &#34;&#34;&#34;
+    Orders the samples using annotations
+    :param annotations: comparisons vs samples annotation DataFrame
+    :param col_of_interest: Comparison to sort by first
+    :return: Sorted order of samples
+    &#34;&#34;&#34;
+    sort_by = [col for col in annotations.index if col != col_of_interest]
+    annotations = annotations.sort_values([col_of_interest] + sort_by, axis=1)
+    return annotations.columns</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.pick_color"><code class="name flex">
+<span>def <span class="ident">pick_color</span></span>(<span>red_or_blue: str)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sets colormap for heatmap
+:param red_or_blue: Use red or blue.
+:return: Colormap</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def pick_color(red_or_blue: str):
+    &#34;&#34;&#34;
+    Sets colormap for heatmap
+    :param red_or_blue: Use red or blue.
+    :return: Colormap
+    &#34;&#34;&#34;
+    if red_or_blue == &#34;red&#34;:
+        cmap = sns.cubehelix_palette(
+            start=0.857,
+            rot=0.00,
+            gamma=1.5,
+            hue=1,
+            light=1,
+            dark=0.2,
+            reverse=False,
+            as_cmap=True,
+        )
+    elif red_or_blue == &#34;blue&#34;:
+        cmap = sns.cubehelix_palette(
+            start=3,
+            rot=0.00,
+            gamma=1.5,
+            hue=1,
+            light=1,
+            dark=0.2,
+            reverse=False,
+            as_cmap=True,
+        )
+    else:
+        raise ValueError(&#34;Invalid color choice, must be red or blue, setting to red.&#34;)
+
+    cmap.set_bad(&#34;#BDBDBD&#34;)
+    return cmap</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.visualization.plot_heatmap"><code class="name flex">
+<span>def <span class="ident">plot_heatmap</span></span>(<span>annotations: pandas.core.frame.DataFrame, qvals: pandas.core.frame.DataFrame, col_of_interest: str, vis_table: pandas.core.frame.DataFrame, fdr: float = 0.05, red_or_blue: str = 'red', output_prefix: str = 'outliers', colors: Union[str, NoneType] = None, savefig: bool = False) -> list</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a heatmap of signficantly enriched values for a given comparison.
+:param annotations: Annotations DataFrame, samples as rows, annotations as columns
+:param qvals: qvalues DataFrame with genes/sites as rows and comparisons as columns
+:param col_of_interest: Which column from qvalues should be used to find signficant genes
+:param vis_table: Table to be visualized in heatmap. Index values should correspond to the
+annotation df index, column names should correspond to qvals df index
+:param fdr: FDR threshold to for signficance
+:param red_or_blue: Whether heatmap should be in red or blue color scale
+:param output_prefix: If saving files, output prefix
+:param colors: File to find color map for annotation header
+:param savefig: Whether to save the plot to a pdf
+:return: List of matplotlib axs, can be further customized before saving. In order the axes
+contain: annotation header, the heatmap, the color bar, and the legend.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_heatmap(
+    annotations: DataFrame,
+    qvals: DataFrame,
+    col_of_interest: str,
+    vis_table: DataFrame,
+    fdr: float = 0.05,
+    red_or_blue: str = &#34;red&#34;,
+    output_prefix: str = &#34;outliers&#34;,
+    colors: Optional[str] = None,
+    savefig: bool = False,
+) -&gt; list:
+    &#34;&#34;&#34;
+    Plots a heatmap of signficantly enriched values for a given comparison.
+    :param annotations: Annotations DataFrame, samples as rows, annotations as columns
+    :param qvals: qvalues DataFrame with genes/sites as rows and comparisons as columns
+    :param col_of_interest: Which column from qvalues should be used to find signficant genes
+    :param vis_table: Table to be visualized in heatmap. Index values should correspond to the
+    annotation df index, column names should correspond to qvals df index
+    :param fdr: FDR threshold to for signficance
+    :param red_or_blue: Whether heatmap should be in red or blue color scale
+    :param output_prefix: If saving files, output prefix
+    :param colors: File to find color map for annotation header
+    :param savefig: Whether to save the plot to a pdf
+    :return: List of matplotlib axs, can be further customized before saving. In order the axes
+    contain: annotation header, the heatmap, the color bar, and the legend.
+    &#34;&#34;&#34;
+
+    annotations = annotations.transpose()
+
+    # Get orders
+    annot_label = [col for col in annotations.index if col in col_of_interest][0]
+    sample_order = get_sample_order(annotations, annot_label)
+    genes = get_genes(qvals, fdr, col_of_interest)
+    if not genes:
+        logger.warning(&#34;No significant genes at FDR %s in %s&#34; % (fdr, col_of_interest))
+        return None
+
+    annotations = annotations.reindex(sample_order, axis=1)
+    vis_table = vis_table.reindex(genes).reindex(sample_order, axis=1)
+
+    # Get colors
+    cmap = pick_color(red_or_blue)
+    colors = determine_colors(colors, annotations)
+
+    # Get label
+    label = col_of_interest[10:]
+
+    # Set up figure
+    sns.set(font=&#34;arial&#34;, style=&#34;white&#34;, color_codes=True, font_scale=1)
+    plot_height = min(max((0.19 * (len(annotations) + len(genes))), 2), 11)
+    plot_width = min(max((0.15 * len(annotations.columns)), 4), 8.5)
+    margin_sizeLR = 1.75
+    margin_sizeTB = 0.4
+    fig = plt.figure(figsize=(plot_width, plot_height))
+    gs = plt.GridSpec(
+        figure=fig,
+        nrows=3,
+        ncols=2,
+        width_ratios=[len(annotations.columns), 2],
+        height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
+        wspace=0.01,
+        hspace=0.01,
+        bottom=(margin_sizeTB / plot_height),
+        top=1 - (margin_sizeTB / plot_height),
+        left=0.05 + (margin_sizeLR / plot_width),
+        right=1.05 - (margin_sizeLR / plot_width),
+    )
+
+    annot_ax = plt.subplot(gs[0, 0])
+    vals_ax = plt.subplot(gs[1:, 0])
+    cbar_ax = plt.subplot(gs[-1, 1])
+    leg_ax = plt.subplot(gs[:-1, 1])
+    leg_ax.axis(&#34;off&#34;)
+
+    # Header
+    catheat.heatmap(
+        annotations,
+        cmap=colors,
+        ax=annot_ax,
+        legend=False,
+        xticklabels=False,
+        yticklabels=annotations.index,
+    )
+
+    annot_ax.set_title(plot_title % col_of_interest, fontsize=14)
+    annot_ax.set_yticklabels(annotations.index, rotation=0)
+    annot_ax.set_xlabel(&#34;&#34;)
+    annot_ax.set_ylabel(&#34;&#34;)
+
+    # Values
+    sns.heatmap(
+        vis_table,
+        ax=vals_ax,
+        cbar_ax=cbar_ax,
+        cmap=cmap,
+        vmin=0,
+        vmax=1,
+        yticklabels=vis_table.index,
+        xticklabels=False,
+        cbar_kws=dict(label=cbar_label),
+    )
+    vals_ax.set_yticklabels(vis_table.index, rotation=0)
+    vals_ax.set_xlabel(&#34;&#34;)
+    vals_ax.set_ylabel(&#34;&#34;)
+
+    # Legend
+    handles = [mpatch.Patch(label=l, color=c) for l, c in colors.items()]
+    leg_ax.legend(
+        handles=handles,
+        loc=(0, 0.05),
+        facecolor=&#34;white&#34;,
+        edgecolor=&#34;white&#34;,
+        labelspacing=0,
+    )
+
+    if savefig:
+        fig_path = figure_file_name % (output_prefix, label, fdr)
+        logger.info(&#34;Saving figure to %s&#34; % fig_path)
+        plt.savefig(fig_path, dpi=200)
+
+    return [annot_ax, vals_ax, cbar_ax, leg_ax]</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="blacksheep" href="index.html">blacksheep</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="blacksheep.visualization.assign_colors" href="#blacksheep.visualization.assign_colors">assign_colors</a></code></li>
+<li><code><a title="blacksheep.visualization.check_colors" href="#blacksheep.visualization.check_colors">check_colors</a></code></li>
+<li><code><a title="blacksheep.visualization.determine_colors" href="#blacksheep.visualization.determine_colors">determine_colors</a></code></li>
+<li><code><a title="blacksheep.visualization.gen_colors" href="#blacksheep.visualization.gen_colors">gen_colors</a></code></li>
+<li><code><a title="blacksheep.visualization.get_genes" href="#blacksheep.visualization.get_genes">get_genes</a></code></li>
+<li><code><a title="blacksheep.visualization.get_sample_order" href="#blacksheep.visualization.get_sample_order">get_sample_order</a></code></li>
+<li><code><a title="blacksheep.visualization.pick_color" href="#blacksheep.visualization.pick_color">pick_color</a></code></li>
+<li><code><a title="blacksheep.visualization.plot_heatmap" href="#blacksheep.visualization.plot_heatmap">plot_heatmap</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>blacksheep API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>blacksheep</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">import logging
+from .classes import qValues, OutlierTable
+from .outliers import make_outliers_table, compare_groups_outliers, run_outliers
+from .visualization import plot_heatmap
+from .parsers import binarize_annotations
+
+
+fmt = &#34;%(asctime)s:%(levelname)s:%(message)s&#34;
+logging.basicConfig(format=fmt, level=logging.INFO, datefmt=&#34;%m/%d/%Y %H:%M:%S&#34;)
+
+
+__all__ = [
+    &#34;make_outliers_table&#34;,
+    &#34;compare_groups_outliers&#34;,
+    &#34;run_outliers&#34;,
+    &#34;plot_heatmap&#34;,
+    &#34;binarize_annotations&#34;,
+]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="blacksheep.classes" href="classes.html">blacksheep.classes</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.cli" href="cli.html">blacksheep.cli</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.comparisons" href="comparisons.html">blacksheep.comparisons</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.constants" href="constants.html">blacksheep.constants</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.outlierTable" href="outlierTable.html">blacksheep.outlierTable</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.parsers" href="parsers.html">blacksheep.parsers</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="blacksheep.visualization" href="visualization.html">blacksheep.visualization</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="blacksheep.binarize_annotations"><code class="name flex">
+<span>def <span class="ident">binarize_annotations</span></span>(<span>df: pandas.core.frame.DataFrame) -> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Takes an annotation DataFrame, checks each column for the number of possible values,
+and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
+possible values are retained as-is. Cols with more than 2 values are expanded. For each
+value in that column, a new column is created with val and not_val options.
+:param df: Annotations DataFrame.
+:return: Refactored annotations DataFrame.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def binarize_annotations(df: DataFrame) -&gt; DataFrame:
+    &#34;&#34;&#34;Takes an annotation DataFrame, checks each column for the number of possible values,
+        and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
+        possible values are retained as-is. Cols with more than 2 values are expanded. For each
+        value in that column, a new column is created with val and not_val options.
+    :param df: Annotations DataFrame.
+    :return: Refactored annotations DataFrame.
+    &#34;&#34;&#34;
+
+    new_df = pd.DataFrame(index=df.index)
+    for col in df.columns:
+        if len(df[col].dropna().value_counts().keys()) == 2:
+            new_df[col] = df[col]
+        elif len(df[col].dropna().value_counts().keys()) &gt; 2:
+            for val in df[col].dropna().value_counts().keys():
+                val = val.replace(&#34;_&#34;, &#34;-&#34;)
+                new_df.loc[(df[col] != val), binarized_col_name % (col, val)] = (
+                    outgroup_val % val
+                )
+                new_df.loc[(df[col] == val), binarized_col_name % (col, val)] = val
+                new_df.loc[df[col].isnull(), binarized_col_name % (col, val)] = np.nan
+    return new_df</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.compare_groups_outliers"><code class="name flex">
+<span>def <span class="ident">compare_groups_outliers</span></span>(<span><a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a>: <a title="blacksheep.classes.OutlierTable" href="classes.html#blacksheep.classes.OutlierTable">OutlierTable</a>, annotations: pandas.core.frame.DataFrame, frac_filter: Union[float, NoneType] = 0.3, save_qvalues: bool = False, output_prefix: str = '<a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a>', output_comparison_summaries: bool = False) -> <a title="blacksheep.classes.qValues" href="classes.html#blacksheep.classes.qValues">qValues</a></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Takes an OutlierTable object and a sample annotation DataFrame and performs comparisons for
+any column in annotations with exactly 2 groups. For each group identified in the annotations
+DataFrame, this function will calculate the q-values of enrichment of outliers for each row in
+each group.</p>
+<p>:param outliers: An OutlierTable, with a DataFrame of outlier and non-outlier counts,
+as well as metadata about how the outliers were calculated.
+:param annotations: A DataFrame with samples as rows and annotations as columns. Each
+column must contain exactly 2 different categories, not counting missing values. Columns
+without 2 options will be ignored.
+:param frac_filter: The fraction of samples in the group of interest that must
+have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+:param save_qvalues: Whether to write a file with a table of qvalues.
+:param output_prefix: If files are written, a prefix for the files.
+:param up_or_down: Whether the input OutlierTable is up or down outliers.
+:param output_comparison_summaries: Whether to write a file for each annotation column with the
+counts in the fisher table, pvalues and q values per row.
+:return: A qValues object, which includes a DataFrame of q-values for each comparison,
+as well as some metadata about how the comparisons were performed.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def compare_groups_outliers(
+    outliers: OutlierTable,
+    annotations: DataFrame,
+    frac_filter: Optional[float] = 0.3,
+    save_qvalues: bool = False,
+    output_prefix: str = &#34;outliers&#34;,
+    output_comparison_summaries: bool = False,
+) -&gt; qValues:
+    &#34;&#34;&#34;Takes an OutlierTable object and a sample annotation DataFrame and performs comparisons for
+    any column in annotations with exactly 2 groups. For each group identified in the annotations
+    DataFrame, this function will calculate the q-values of enrichment of outliers for each row in
+    each group.
+
+    :param outliers: An OutlierTable, with a DataFrame of outlier and non-outlier counts,
+        as well as metadata about how the outliers were calculated.
+    :param annotations: A DataFrame with samples as rows and annotations as columns. Each
+        column must contain exactly 2 different categories, not counting missing values. Columns
+        without 2 options will be ignored.
+    :param frac_filter: The fraction of samples in the group of interest that must
+        have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+    :param save_qvalues: Whether to write a file with a table of qvalues.
+    :param output_prefix: If files are written, a prefix for the files.
+    :param up_or_down: Whether the input OutlierTable is up or down outliers.
+    :param output_comparison_summaries: Whether to write a file for each annotation column with the
+        counts in the fisher table, pvalues and q values per row.
+    :return: A qValues object, which includes a DataFrame of q-values for each comparison,
+        as well as some metadata about how the comparisons were performed.
+    &#34;&#34;&#34;
+
+    df = outliers.df
+    samples = outliers.samples
+    up_or_down = outliers.up_or_down
+    results_df = pd.DataFrame(index=df.index)
+    for comp in annotations.columns:
+        logging.info(&#34;Testing for enrichment in %s comparison&#34; % comp)
+
+        group0_label, group0, group1_label, group1 = get_sample_lists(annotations, comp)
+        # Checking everything is in place
+        if group0 is None:
+            logging.error(
+                &#34;There are not exactly 2 groups of samples, skipping %s&#34; % comp
+            )
+            continue
+        not_there = [samp for samp in group0 if samp not in samples] + [
+            samp for samp in group1 if samp not in samples
+        ]
+        if not_there:
+            logging.warning(
+                &#34;These samples were not found in outliers table: &#34;
+                &#34;%s, continuing without them. &#34; % &#34;, &#34;.join(not_there)
+            )
+        group0 = [samp for samp in group0 if samp in samples]
+        group1 = [samp for samp in group1 if samp in samples]
+        if len(group0) &lt; 2:
+            logging.error(
+                &#34;Group %s does not have at least two samples, &#34;
+                &#34;skipping comparison %s. &#34; % (group0_label, comp)
+            )
+            continue
+        if len(group1) &lt; 2:
+            logging.error(
+                &#34;Group %s does not have at least two samples, &#34;
+                &#34;skipping comparison%s. &#34; % (group1_label, comp)
+            )
+            continue
+
+        # doing tests
+        label0 = fdr_col_label % (comp, group0_label)
+        results_df, fisher_info0 = compare_groups(
+            results_df, df, group0, group1, frac_filter, label0
+        )
+
+        label1 = fdr_col_label % (comp, group1_label)
+        results_df, fisher_info1 = compare_groups(
+            results_df, df, group1, group0, frac_filter, label1
+        )
+
+        if output_comparison_summaries:
+            fisher_info0.columns = [
+                &#34;%s_%s_%s&#34; % (outlier_count_lab, comp, group0_label),
+                &#34;%s_%s_%s&#34; % (outlier_count_lab, comp, group1_label),
+                &#34;%s_%s_%s&#34; % (not_outlier_count_lab, comp, group0_label),
+                &#34;%s_%s_%s&#34; % (not_outlier_count_lab, comp, group1_label),
+                specific_fisher_p % (comp, group0_label),
+            ]
+
+            fisher_info1.columns = [
+                &#34;%s_%s_%s&#34; % (outlier_count_lab, comp, group1_label),
+                &#34;%s_%s_%s&#34; % (outlier_count_lab, comp, group0_label),
+                &#34;%s_%s_%s&#34; % (not_outlier_count_lab, comp, group1_label),
+                &#34;%s_%s_%s&#34; % (not_outlier_count_lab, comp, group0_label),
+                specific_fisher_p % (comp, group1_label),
+            ]
+            comp_df = pd.concat(
+                [fisher_info0, fisher_info1], axis=0, join=&#34;outer&#34;, sort=True
+            ).merge(results_df[[label0, label1]], left_index=True, right_index=True)
+            comp_df.to_csv(
+                ind_comparison_file_name % (output_prefix, up_or_down, comp), sep=&#34;\t&#34;
+            )
+    results_df = results_df.dropna(how=&#34;all&#34;, axis=0)
+    if save_qvalues:
+        qval_path = os.path.abspath(qvalues_file_name % (output_prefix, up_or_down))
+        logging.info(&#34;Saving qvalues to %s&#34; % qval_path)
+        results_df.to_csv(qval_path, sep=&#34;\t&#34;)
+    qvals = qValues(results_df, annotations.columns, frac_filter)
+    return qvals</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.make_outliers_table"><code class="name flex">
+<span>def <span class="ident">make_outliers_table</span></span>(<span>df: pandas.core.frame.DataFrame, iqrs: float = 1.5, up_or_down: str = 'up', aggregate: bool = True, save_outlier_table: bool = False, save_frac_table: bool = False, output_prefix: str = '<a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a>', ind_sep: str = '-') -> <a title="blacksheep.classes.OutlierTable" href="classes.html#blacksheep.classes.OutlierTable">OutlierTable</a></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Converts a DataFrame of values into an OutliersTable object, which includes a DataFrame
+of outlier and non-outlier count values.</p>
+<p>:param df: Input DataFrame with samples as columns and sites/genes as columns.
+:param iqrs: The number of inter-quartile ranges (IQRs) above or below the median to consider a
+value as an outlier.
+:param up_or_down: Whether to call up or down outliers. Up is above the median; down
+is below the median. Options "up" or "down".
+:param aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual
+sites. For instance if columns indicate phosphosites on proteins, with the format
+"RAG2-S365", output will show counts of outliers per protein (e.g. RAG2) rather than on
+individual sites (e.g. RAG2-S365).
+:param save_outlier_table: Whether to write a file with the outlier count table. Default False.
+:param save_frac_table: Whether to write a file with the outlier fraction table. Default False.
+:param output_prefix: If files are written, a prefix for the files.
+:param ind_sep: The separator used in sites, for instance, to separate a gene and site.
+If just using genes (i.e. no separator), or not aggregating this parameter has no effect.</p>
+<p>:return: Returns an OutlierTable object, with outlier and non-outlier counts and metadata
+about how the outliers were called.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def make_outliers_table(
+        df: DataFrame,
+        iqrs: float = 1.5,
+        up_or_down: str = &#34;up&#34;,
+        aggregate: bool = True,
+        save_outlier_table: bool = False,
+        save_frac_table: bool = False,
+        output_prefix: str = &#34;outliers&#34;,
+        ind_sep: str = &#34;-&#34;,
+) -&gt; OutlierTable:
+    &#34;&#34;&#34;Converts a DataFrame of values into an OutliersTable object, which includes a DataFrame
+    of outlier and non-outlier count values.
+
+    :param df: Input DataFrame with samples as columns and sites/genes as columns.
+    :param iqrs: The number of inter-quartile ranges (IQRs) above or below the median to consider a
+        value as an outlier.
+    :param up_or_down: Whether to call up or down outliers. Up is above the median; down
+        is below the median. Options &#34;up&#34; or &#34;down&#34;.
+    :param aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual
+        sites. For instance if columns indicate phosphosites on proteins, with the format
+        &#34;RAG2-S365&#34;, output will show counts of outliers per protein (e.g. RAG2) rather than on
+        individual sites (e.g. RAG2-S365).
+    :param save_outlier_table: Whether to write a file with the outlier count table. Default False.
+    :param save_frac_table: Whether to write a file with the outlier fraction table. Default False.
+    :param output_prefix: If files are written, a prefix for the files.
+    :param ind_sep: The separator used in sites, for instance, to separate a gene and site.
+        If just using genes (i.e. no separator), or not aggregating this parameter has no effect.
+
+    :return: Returns an OutlierTable object, with outlier and non-outlier counts and metadata
+        about how the outliers were called.
+    &#34;&#34;&#34;
+
+    samples = df.columns
+    logging.info(&#34;Calling outliers for %s samples&#34; % len(samples))
+
+    df = convert_to_outliers(df, samples, iqrs, up_or_down)
+    df = convert_to_counts(df, samples, aggregate, ind_sep)
+    outliers = OutlierTable(df, up_or_down, iqrs, samples, None)
+    frac_table = outliers.make_frac_table()
+
+    if save_frac_table:
+        frac_path = os.path.abspath(frac_table_file_name % (output_prefix, up_or_down))
+        logging.info(&#34;Saving outlier fraction table to %s&#34; % frac_path)
+        frac_table.to_csv(frac_path, sep=&#34;\t&#34;)
+
+    if save_outlier_table:
+        out_path = os.path.abspath(
+            outlier_table_file_name % (output_prefix, up_or_down)
+        )
+        logging.info(&#34;Saving outlier table to %s&#34; % out_path)
+        df.to_csv(out_path, sep=&#34;\t&#34;)
+
+    return outliers</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.plot_heatmap"><code class="name flex">
+<span>def <span class="ident">plot_heatmap</span></span>(<span>annotations: pandas.core.frame.DataFrame, qvals: pandas.core.frame.DataFrame, col_of_interest: str, vis_table: pandas.core.frame.DataFrame, fdr: float = 0.05, red_or_blue: str = 'red', output_prefix: str = '<a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a>', colors: Union[str, NoneType] = None, savefig: bool = False) -> list</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a heatmap of signficantly enriched values for a given comparison.
+:param annotations: Annotations DataFrame, samples as rows, annotations as columns
+:param qvals: qvalues DataFrame with genes/sites as rows and comparisons as columns
+:param col_of_interest: Which column from qvalues should be used to find signficant genes
+:param vis_table: Table to be visualized in heatmap. Index values should correspond to the
+annotation df index, column names should correspond to qvals df index
+:param fdr: FDR threshold to for signficance
+:param red_or_blue: Whether heatmap should be in red or blue color scale
+:param output_prefix: If saving files, output prefix
+:param colors: File to find color map for annotation header
+:param savefig: Whether to save the plot to a pdf
+:return: List of matplotlib axs, can be further customized before saving. In order the axes
+contain: annotation header, the heatmap, the color bar, and the legend.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_heatmap(
+    annotations: DataFrame,
+    qvals: DataFrame,
+    col_of_interest: str,
+    vis_table: DataFrame,
+    fdr: float = 0.05,
+    red_or_blue: str = &#34;red&#34;,
+    output_prefix: str = &#34;outliers&#34;,
+    colors: Optional[str] = None,
+    savefig: bool = False,
+) -&gt; list:
+    &#34;&#34;&#34;
+    Plots a heatmap of signficantly enriched values for a given comparison.
+    :param annotations: Annotations DataFrame, samples as rows, annotations as columns
+    :param qvals: qvalues DataFrame with genes/sites as rows and comparisons as columns
+    :param col_of_interest: Which column from qvalues should be used to find signficant genes
+    :param vis_table: Table to be visualized in heatmap. Index values should correspond to the
+    annotation df index, column names should correspond to qvals df index
+    :param fdr: FDR threshold to for signficance
+    :param red_or_blue: Whether heatmap should be in red or blue color scale
+    :param output_prefix: If saving files, output prefix
+    :param colors: File to find color map for annotation header
+    :param savefig: Whether to save the plot to a pdf
+    :return: List of matplotlib axs, can be further customized before saving. In order the axes
+    contain: annotation header, the heatmap, the color bar, and the legend.
+    &#34;&#34;&#34;
+
+    annotations = annotations.transpose()
+
+    # Get orders
+    annot_label = [col for col in annotations.index if col in col_of_interest][0]
+    sample_order = get_sample_order(annotations, annot_label)
+    genes = get_genes(qvals, fdr, col_of_interest)
+    if not genes:
+        logger.warning(&#34;No significant genes at FDR %s in %s&#34; % (fdr, col_of_interest))
+        return None
+
+    annotations = annotations.reindex(sample_order, axis=1)
+    vis_table = vis_table.reindex(genes).reindex(sample_order, axis=1)
+
+    # Get colors
+    cmap = pick_color(red_or_blue)
+    colors = determine_colors(colors, annotations)
+
+    # Get label
+    label = col_of_interest[10:]
+
+    # Set up figure
+    sns.set(font=&#34;arial&#34;, style=&#34;white&#34;, color_codes=True, font_scale=1)
+    plot_height = min(max((0.19 * (len(annotations) + len(genes))), 2), 11)
+    plot_width = min(max((0.15 * len(annotations.columns)), 4), 8.5)
+    margin_sizeLR = 1.75
+    margin_sizeTB = 0.4
+    fig = plt.figure(figsize=(plot_width, plot_height))
+    gs = plt.GridSpec(
+        figure=fig,
+        nrows=3,
+        ncols=2,
+        width_ratios=[len(annotations.columns), 2],
+        height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
+        wspace=0.01,
+        hspace=0.01,
+        bottom=(margin_sizeTB / plot_height),
+        top=1 - (margin_sizeTB / plot_height),
+        left=0.05 + (margin_sizeLR / plot_width),
+        right=1.05 - (margin_sizeLR / plot_width),
+    )
+
+    annot_ax = plt.subplot(gs[0, 0])
+    vals_ax = plt.subplot(gs[1:, 0])
+    cbar_ax = plt.subplot(gs[-1, 1])
+    leg_ax = plt.subplot(gs[:-1, 1])
+    leg_ax.axis(&#34;off&#34;)
+
+    # Header
+    catheat.heatmap(
+        annotations,
+        cmap=colors,
+        ax=annot_ax,
+        legend=False,
+        xticklabels=False,
+        yticklabels=annotations.index,
+    )
+
+    annot_ax.set_title(plot_title % col_of_interest, fontsize=14)
+    annot_ax.set_yticklabels(annotations.index, rotation=0)
+    annot_ax.set_xlabel(&#34;&#34;)
+    annot_ax.set_ylabel(&#34;&#34;)
+
+    # Values
+    sns.heatmap(
+        vis_table,
+        ax=vals_ax,
+        cbar_ax=cbar_ax,
+        cmap=cmap,
+        vmin=0,
+        vmax=1,
+        yticklabels=vis_table.index,
+        xticklabels=False,
+        cbar_kws=dict(label=cbar_label),
+    )
+    vals_ax.set_yticklabels(vis_table.index, rotation=0)
+    vals_ax.set_xlabel(&#34;&#34;)
+    vals_ax.set_ylabel(&#34;&#34;)
+
+    # Legend
+    handles = [mpatch.Patch(label=l, color=c) for l, c in colors.items()]
+    leg_ax.legend(
+        handles=handles,
+        loc=(0, 0.05),
+        facecolor=&#34;white&#34;,
+        edgecolor=&#34;white&#34;,
+        labelspacing=0,
+    )
+
+    if savefig:
+        fig_path = figure_file_name % (output_prefix, label, fdr)
+        logger.info(&#34;Saving figure to %s&#34; % fig_path)
+        plt.savefig(fig_path, dpi=200)
+
+    return [annot_ax, vals_ax, cbar_ax, leg_ax]</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.run_outliers"><code class="name flex">
+<span>def <span class="ident">run_outliers</span></span>(<span>df: pandas.core.frame.DataFrame, annotations: pandas.core.frame.DataFrame, iqrs: float = 1.5, up_or_down: str = 'up', aggregate: bool = True, save_outlier_table: bool = False, save_frac_table: bool = False, frac_filter: Union[float, NoneType] = 0.3, save_qvalues: bool = False, output_prefix: str = '<a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a>', ind_sep: str = '-', output_comparison_summaries: bool = False) -> Tuple[<a title="blacksheep.classes.OutlierTable" href="classes.html#blacksheep.classes.OutlierTable">OutlierTable</a>, <a title="blacksheep.classes.qValues" href="classes.html#blacksheep.classes.qValues">qValues</a>]</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Takes a DataFrame of values and returns OutliersTable and qValues objects. This command runs
+the whole outliers pipeline. The DataFrame in the OutliersTable object can be used to run more
+comparisons in future. The qValues object can be used for visualization, or writing
+significant gene lists.</p>
+<p>:param df: Input DataFrame with samples as columns and sites/genes as rows.
+:param annotations: A DataFrame with samples as rows and annotations as columns. Each
+column must contain exactly 2 different values, not counting missing
+values. Other columns will be ignored.
+:param iqrs: The number of interquartile ranges (IQRs) above or below the median to consider a
+value as an outlier.
+:param up_or_down: Whether to call up or down outliers. Up is above the median; down
+is below the median. Options "up" or "down".
+:param aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual
+sites. For instance if columns indicate phosphosites on proteins, with the format
+"RAG2-S365", output will show counts of outliers per protein (e.g. RAG2) rather than on
+individual sites (e.g. RAG2-S365).
+:param save_outlier_table: Whether to write a file with the outlier count table.
+:param save_frac_table: Whether to write a file of the fraction of outliers.
+:param frac_filter: The fraction of samples in the group of interest that must
+have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+:param save_qvalues: Whether to output a table of qvalues.
+:param output_prefix: If files are written, a prefix for the files.
+:param ind_sep: The separator used in the columns, for instance, to separate a gene and site.
+If just using genes (i.e. no separator), or not aggregating this parameter
+has no effect.
+:param output_comparison_summaries: Whether to write a table for each comparison with the
+counts in the fisher table, pvalues and q values per row.</p>
+<p>:return: Returns an OutliersTable object and qValues object.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def run_outliers(
+    df: DataFrame,
+    annotations: DataFrame,
+    iqrs: float = 1.5,
+    up_or_down: str = &#34;up&#34;,
+    aggregate: bool = True,
+    save_outlier_table: bool = False,
+    save_frac_table: bool = False,
+    frac_filter: Optional[float] = 0.3,
+    save_qvalues: bool = False,
+    output_prefix: str = &#34;outliers&#34;,
+    ind_sep: str = &#34;-&#34;,
+    output_comparison_summaries: bool = False,
+) -&gt; Tuple[OutlierTable, qValues]:
+    &#34;&#34;&#34;Takes a DataFrame of values and returns OutliersTable and qValues objects. This command runs
+    the whole outliers pipeline. The DataFrame in the OutliersTable object can be used to run more
+    comparisons in future. The qValues object can be used for visualization, or writing
+    significant gene lists.
+
+    :param df: Input DataFrame with samples as columns and sites/genes as rows.
+    :param annotations: A DataFrame with samples as rows and annotations as columns. Each
+        column must contain exactly 2 different values, not counting missing
+        values. Other columns will be ignored.
+    :param iqrs: The number of interquartile ranges (IQRs) above or below the median to consider a
+        value as an outlier.
+    :param up_or_down: Whether to call up or down outliers. Up is above the median; down
+        is below the median. Options &#34;up&#34; or &#34;down&#34;.
+    :param aggregate: Whether to sum outliers across a grouping (e.g. gene-level) than individual
+        sites. For instance if columns indicate phosphosites on proteins, with the format
+        &#34;RAG2-S365&#34;, output will show counts of outliers per protein (e.g. RAG2) rather than on
+        individual sites (e.g. RAG2-S365).
+    :param save_outlier_table: Whether to write a file with the outlier count table.
+    :param save_frac_table: Whether to write a file of the fraction of outliers.
+    :param frac_filter: The fraction of samples in the group of interest that must
+        have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+    :param save_qvalues: Whether to output a table of qvalues.
+    :param output_prefix: If files are written, a prefix for the files.
+    :param ind_sep: The separator used in the columns, for instance, to separate a gene and site.
+        If just using genes (i.e. no separator), or not aggregating this parameter
+        has no effect.
+    :param output_comparison_summaries: Whether to write a table for each comparison with the
+        counts in the fisher table, pvalues and q values per row.
+
+    :return: Returns an OutliersTable object and qValues object.
+    &#34;&#34;&#34;
+
+    logging.info(&#34;Making outliers table&#34;)
+    outliers = make_outliers_table(
+        df,
+        iqrs,
+        up_or_down,
+        aggregate,
+        save_outlier_table,
+        save_frac_table,
+        output_prefix,
+        ind_sep,
+    )
+
+    logging.info(&#34;Performing group comparisons&#34;)
+    qvals = compare_groups_outliers(
+        outliers,
+        annotations,
+        frac_filter,
+        save_qvalues,
+        output_prefix,
+        output_comparison_summaries,
+    )
+
+    return outliers, qvals</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="blacksheep.classes" href="classes.html">blacksheep.classes</a></code></li>
+<li><code><a title="blacksheep.cli" href="cli.html">blacksheep.cli</a></code></li>
+<li><code><a title="blacksheep.comparisons" href="comparisons.html">blacksheep.comparisons</a></code></li>
+<li><code><a title="blacksheep.constants" href="constants.html">blacksheep.constants</a></code></li>
+<li><code><a title="blacksheep.outlierTable" href="outlierTable.html">blacksheep.outlierTable</a></code></li>
+<li><code><a title="blacksheep.outliers" href="outliers.html">blacksheep.outliers</a></code></li>
+<li><code><a title="blacksheep.parsers" href="parsers.html">blacksheep.parsers</a></code></li>
+<li><code><a title="blacksheep.visualization" href="visualization.html">blacksheep.visualization</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="blacksheep.binarize_annotations" href="#blacksheep.binarize_annotations">binarize_annotations</a></code></li>
+<li><code><a title="blacksheep.compare_groups_outliers" href="#blacksheep.compare_groups_outliers">compare_groups_outliers</a></code></li>
+<li><code><a title="blacksheep.make_outliers_table" href="#blacksheep.make_outliers_table">make_outliers_table</a></code></li>
+<li><code><a title="blacksheep.plot_heatmap" href="#blacksheep.plot_heatmap">plot_heatmap</a></code></li>
+<li><code><a title="blacksheep.run_outliers" href="#blacksheep.run_outliers">run_outliers</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -5,12 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.6.3" />
 <title>blacksheep.cli API documentation</title>
-<meta name="description" content="blacksheep outliers_table
-Arguments and Usage
-Usage
-```
-usage: blacksheep outliers_table [-h] [--output_prefix OUTPUT_PREFIX]
-…" />
+<meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -25,499 +20,12 @@ usage: blacksheep outliers_table [-h] [--output_prefix OUTPUT_PREFIX]
 <h1 class="title">Module <code>blacksheep.cli</code></h1>
 </header>
 <section id="section-intro">
-<h1 id="blacksheep-outliers_table">blacksheep outliers_table</h1>
-<h1 id="arguments-and-usage">Arguments and Usage</h1>
-<h2 id="usage">Usage</h2>
-<pre><code>usage: blacksheep outliers_table [-h] [--output_prefix OUTPUT_PREFIX]
-                                 [--iqrs IQRS] [--up_or_down {up,down}]
-                                 [--ind_sep IND_SEP] [--do_not_aggregate]
-                                 [--write_frac_table]
-                                 values
-</code></pre>
-<h2 id="arguments">Arguments</h2>
-<h3 id="quick-reference-table">Quick reference table</h3>
-<table>
-<thead>
-<tr>
-<th>Short</th>
-<th>Long</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-h</code></td>
-<td><code>--help</code></td>
-<td></td>
-<td>show this help message and exit</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--output_prefix</code></td>
-<td><code>outliers</code></td>
-<td>Output prefix for writing files. Defaul</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--iqrs</code></td>
-<td><code>1.5</code></td>
-<td>Number of interquartile ranges (IQRs) a</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--up_or_down</code></td>
-<td><code>true</code></td>
-<td>Whether to look for up or down outliers</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--ind_sep</code></td>
-<td><code>-</code></td>
-<td>If site labels have a parent molecule (</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--do_not_aggregate</code></td>
-<td></td>
-<td>Use flag if you do not want to sum outl</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_frac_table</code></td>
-<td></td>
-<td>Use flag if you want to write a table w</td>
-</tr>
-</tbody>
-</table>
-<h3 id="-h-help"><code>-h</code>, <code>--help</code></h3>
-<p>show this help message and exit</p>
-<h3 id="-output_prefix-default-outliers"><code>--output_prefix</code> (Default: outliers)</h3>
-<p>Output prefix for writing files. Default outliers.</p>
-<h3 id="-iqrs-default-15"><code>--iqrs</code> (Default: 1.5)</h3>
-<p>Number of interquartile ranges (IQRs) above or below the median to consider a
-value an outlier. Default is 1.5 IQRs.</p>
-<h3 id="-up_or_down-default-true"><code>--up_or_down</code> (Default: true)</h3>
-<p>Whether to look for up or down outliers. Choices are up or down. Default up.</p>
-<h3 id="-ind_sep-default-"><code>--ind_sep</code> (Default: -)</h3>
-<p>If site labels have a parent molecule (e.g. a gene name such as ATM) and a
-site identifier (e.g. S365) this is the delimiter between the two elements.
-Default is -</p>
-<h3 id="-do_not_aggregate"><code>--do_not_aggregate</code></h3>
-<p>Use flag if you do not want to sum outliers based on site prefixes.</p>
-<h3 id="-write_frac_table"><code>--write_frac_table</code></h3>
-<p>Use flag if you want to write a table with fraction of values per site, per
-sample that are outliers. Will not be written by default. Useful for
-visualization.</p>
-<h1 id="blacksheep-binarize">blacksheep binarize</h1>
-<h1 id="arguments-and-usage_1">Arguments and Usage</h1>
-<h2 id="usage_1">Usage</h2>
-<pre><code>usage: blacksheep binarize [-h] [--output_prefix OUTPUT_PREFIX] annotations
-</code></pre>
-<h2 id="arguments_1">Arguments</h2>
-<h3 id="quick-reference-table_1">Quick reference table</h3>
-<table>
-<thead>
-<tr>
-<th>Short</th>
-<th>Long</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-h</code></td>
-<td><code>--help</code></td>
-<td></td>
-<td>show this help message and exit</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--output_prefix</code></td>
-<td><code>outliers</code></td>
-<td>Output prefix for writing files. Default o</td>
-</tr>
-</tbody>
-</table>
-<h3 id="-h-help_1"><code>-h</code>, <code>--help</code></h3>
-<p>show this help message and exit</p>
-<h3 id="-output_prefix-default-outliers_1"><code>--output_prefix</code> (Default: outliers)</h3>
-<p>Output prefix for writing files. Default outliers.</p>
-<h1 id="blacksheep-compare_groups">blacksheep compare_groups</h1>
-<h1 id="arguments-and-usage_2">Arguments and Usage</h1>
-<h2 id="usage_2">Usage</h2>
-<pre><code>usage: blacksheep compare_groups [-h] [--output_prefix OUTPUT_PREFIX]
-                                 [--frac_filter FRAC_FILTER]
-                                 [--write_comparison_summaries] [--iqrs IQRS]
-                                 [--up_or_down {up,down}] [--write_gene_list]
-                                 [--make_heatmaps] [--fdr FDR]
-                                 [--red_or_blue {red,blue}]
-                                 [--annotation_colors ANNOTATION_COLORS]
-                                 outliers_table annotations
-</code></pre>
-<h2 id="arguments_2">Arguments</h2>
-<h3 id="quick-reference-table_2">Quick reference table</h3>
-<table>
-<thead>
-<tr>
-<th>Short</th>
-<th>Long</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-h</code></td>
-<td><code>--help</code></td>
-<td></td>
-<td>show this help message and ex</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--output_prefix</code></td>
-<td><code>outliers</code></td>
-<td>Output prefix for writing fil</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--frac_filter</code></td>
-<td><code>0.3</code></td>
-<td>The minimum fraction of sampl</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_comparison_summaries</code></td>
-<td></td>
-<td>Use flag to write a separate</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--iqrs</code></td>
-<td><code>None</code></td>
-<td>Number of IQRs used to define</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--up_or_down</code></td>
-<td><code>None</code></td>
-<td>Whether input outlier table r</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_gene_list</code></td>
-<td></td>
-<td>Use flag to write a list of s</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--make_heatmaps</code></td>
-<td></td>
-<td>Use flag to draw a heatmap of</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--fdr</code></td>
-<td><code>0.05</code></td>
-<td>FDR cut off to use for signfi</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--red_or_blue</code></td>
-<td><code>red</code></td>
-<td>If &ndash;make_heatmaps is called,</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--annotation_colors</code></td>
-<td><code>None</code></td>
-<td>File with color map to use fo</td>
-</tr>
-</tbody>
-</table>
-<h3 id="-h-help_2"><code>-h</code>, <code>--help</code></h3>
-<p>show this help message and exit</p>
-<h3 id="-output_prefix-default-outliers_2"><code>--output_prefix</code> (Default: outliers)</h3>
-<p>Output prefix for writing files. Default outliers.</p>
-<h3 id="-frac_filter-default-03"><code>--frac_filter</code> (Default: 0.3)</h3>
-<p>The minimum fraction of samples per group that must have an outlier in a gene
-toconsider that gene in the analysis. This is used to prevent a high number of
-outlier values in 1 sample from driving a low qvalue. Default 0.3</p>
-<h3 id="-write_comparison_summaries"><code>--write_comparison_summaries</code></h3>
-<p>Use flag to write a separate file for each column in the annotations table,
-with outlier counts in each group, p-values and q-values in each group.</p>
-<h3 id="-iqrs-default-none"><code>--iqrs</code> (Default: None)</h3>
-<p>Number of IQRs used to define outliers in the input count table. Optional.</p>
-<h3 id="-up_or_down-default-none"><code>--up_or_down</code> (Default: None)</h3>
-<p>Whether input outlier table represents up or down outliers. Needed for output
-file labels. Default up</p>
-<h3 id="-write_gene_list"><code>--write_gene_list</code></h3>
-<p>Use flag to write a list of significantly enriched genes for each value in
-each comparison. If used, need an fdr threshold as well.</p>
-<h3 id="-make_heatmaps"><code>--make_heatmaps</code></h3>
-<p>Use flag to draw a heatmap of signficantly enriched genes for each value in
-each comparison. If used, need an fdr threshold as well.</p>
-<h3 id="-fdr-default-005"><code>--fdr</code> (Default: 0.05)</h3>
-<p>FDR cut off to use for signficantly enriched gene lists and heatmaps. Default
-0.05</p>
-<h3 id="-red_or_blue-default-red"><code>--red_or_blue</code> (Default: red)</h3>
-<p>If &ndash;make_heatmaps is called, color of values to draw on heatmap. Default red.</p>
-<h3 id="-annotation_colors-default-none"><code>--annotation_colors</code> (Default: None)</h3>
-<p>File with color map to use for annotation header if &ndash;make_heatmaps is used.
-Must have a 'value
-color' format for each value in annotations. Any value
-not represented will be assigned a new color.</p>
-<h1 id="blacksheep-visualize">blacksheep visualize</h1>
-<h1 id="arguments-and-usage_3">Arguments and Usage</h1>
-<h2 id="usage_3">Usage</h2>
-<pre><code>usage: blacksheep visualize [-h] [--output_prefix OUTPUT_PREFIX]
-                            [--annotations_to_show ANNOTATIONS_TO_SHOW [ANNOTATIONS_TO_SHOW ...]]
-                            [--fdr FDR] [--red_or_blue {red,blue}]
-                            [--annotation_colors ANNOTATION_COLORS]
-                            [--write_gene_list]
-                            comparison_qvalues annotations visualization_table
-                            comparison_of_interest
-</code></pre>
-<h2 id="arguments_3">Arguments</h2>
-<h3 id="quick-reference-table_3">Quick reference table</h3>
-<table>
-<thead>
-<tr>
-<th>Short</th>
-<th>Long</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-h</code></td>
-<td><code>--help</code></td>
-<td></td>
-<td>show this help message and exit</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--output_prefix</code></td>
-<td><code>outliers</code></td>
-<td>Output prefix for writing files. Def</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--annotations_to_show</code></td>
-<td><code>None</code></td>
-<td>Names of columns from the annotation</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--fdr</code></td>
-<td><code>0.05</code></td>
-<td>FDR threshold to use to select genes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--red_or_blue</code></td>
-<td><code>red</code></td>
-<td>Color of values to draw on heatmap.</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--annotation_colors</code></td>
-<td><code>None</code></td>
-<td>File with color map to use for annot</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_gene_list</code></td>
-<td></td>
-<td>Use flag to write a list of signific</td>
-</tr>
-</tbody>
-</table>
-<h3 id="-h-help_3"><code>-h</code>, <code>--help</code></h3>
-<p>show this help message and exit</p>
-<h3 id="-output_prefix-default-outliers_3"><code>--output_prefix</code> (Default: outliers)</h3>
-<p>Output prefix for writing files. Default outliers.</p>
-<h3 id="-annotations_to_show-default-none"><code>--annotations_to_show</code> (Default: None)</h3>
-<p>Names of columns from the annotation table to show in the header of the
-heatmap. Default is all columns.</p>
-<h3 id="-fdr-default-005_1"><code>--fdr</code> (Default: 0.05)</h3>
-<p>FDR threshold to use to select genes to visualize. Default 0.05</p>
-<h3 id="-red_or_blue-default-red_1"><code>--red_or_blue</code> (Default: red)</h3>
-<p>Color of values to draw on heatmap. Default red.</p>
-<h3 id="-annotation_colors-default-none_1"><code>--annotation_colors</code> (Default: None)</h3>
-<p>File with color map to use for annotation header. Must have a line with 'value
-color' format for each value in annotations. Any value not represented will be
-assigned a new color.</p>
-<h3 id="-write_gene_list_1"><code>--write_gene_list</code></h3>
-<p>Use flag to write a list of significantly enriched genes for each value in
-each comparison.</p>
-<h1 id="blacksheep-outliers">blacksheep outliers</h1>
-<h1 id="arguments-and-usage_4">Arguments and Usage</h1>
-<h2 id="usage_4">Usage</h2>
-<pre><code>usage: blacksheep outliers [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
-                           [--up_or_down {up,down}] [--do_not_aggregate]
-                           [--write_outlier_table] [--write_frac_table]
-                           [--ind_sep IND_SEP] [--frac_filter FRAC_FILTER]
-                           [--write_comparison_summaries] [--fdr FDR]
-                           [--write_gene_list] [--make_heatmaps]
-                           [--red_or_blue {red,blue}]
-                           [--annotation_colors ANNOTATION_COLORS]
-                           values annotations
-</code></pre>
-<h2 id="arguments_4">Arguments</h2>
-<h3 id="quick-reference-table_4">Quick reference table</h3>
-<table>
-<thead>
-<tr>
-<th>Short</th>
-<th>Long</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-h</code></td>
-<td><code>--help</code></td>
-<td></td>
-<td>show this help message and ex</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--output_prefix</code></td>
-<td><code>outliers</code></td>
-<td>Output prefix for writing fil</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--iqrs</code></td>
-<td><code>1.5</code></td>
-<td>Number of inter-quartile rang</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--up_or_down</code></td>
-<td><code>true</code></td>
-<td>Whether to look for up or dow</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--do_not_aggregate</code></td>
-<td></td>
-<td>Use flag if you do not want t</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_outlier_table</code></td>
-<td></td>
-<td>Use flag to write a table of</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_frac_table</code></td>
-<td></td>
-<td>Use flag if you want to write</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--ind_sep</code></td>
-<td><code>-</code></td>
-<td>If site labels have a parent</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--frac_filter</code></td>
-<td><code>0.3</code></td>
-<td>The minimum fraction of sampl</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_comparison_summaries</code></td>
-<td></td>
-<td>Use flag to write a separate</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--fdr</code></td>
-<td><code>0.05</code></td>
-<td>FDR threshold to use to selec</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--write_gene_list</code></td>
-<td></td>
-<td>Use flag to write a list of s</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--make_heatmaps</code></td>
-<td></td>
-<td>Use flag to draw a heatmap of</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--red_or_blue</code></td>
-<td><code>red</code></td>
-<td>Color of values to draw on he</td>
-</tr>
-<tr>
-<td></td>
-<td><code>--annotation_colors</code></td>
-<td><code>None</code></td>
-<td>File with color map to use fo</td>
-</tr>
-</tbody>
-</table>
-<h3 id="-h-help_4"><code>-h</code>, <code>--help</code></h3>
-<p>show this help message and exit</p>
-<h3 id="-output_prefix-default-outliers_4"><code>--output_prefix</code> (Default: outliers)</h3>
-<p>Output prefix for writing files. Default outliers.</p>
-<h3 id="-iqrs-default-15_1"><code>--iqrs</code> (Default: 1.5)</h3>
-<p>Number of inter-quartile ranges (IQRs) above or below the median to consider a
-value an outlier. Default is 1.5.</p>
-<h3 id="-up_or_down-default-true_1"><code>--up_or_down</code> (Default: true)</h3>
-<p>Whether to look for up or down outliers. Choices are up or down. Default up.</p>
-<h3 id="-do_not_aggregate_1"><code>--do_not_aggregate</code></h3>
-<p>Use flag if you do not want to sum outliers based on site prefixes.</p>
-<h3 id="-write_outlier_table"><code>--write_outlier_table</code></h3>
-<p>Use flag to write a table of outlier counts.</p>
-<h3 id="-write_frac_table_1"><code>--write_frac_table</code></h3>
-<p>Use flag if you want to write a table with fraction of values per site per
-sample that are outliers. Useful for custom visualization.</p>
-<h3 id="-ind_sep-default-_1"><code>--ind_sep</code> (Default: -)</h3>
-<p>If site labels have a parent molecule (e.g. a gene name such as ATM) and a
-site identifier (e.g. S365) this is the delimiter between the two elements.
-Default is -</p>
-<h3 id="-frac_filter-default-03_1"><code>--frac_filter</code> (Default: 0.3)</h3>
-<p>The minimum fraction of samples per group that must have an outlier in a gene
-toconsider that gene in the analysis. This is used to prevent a high number of
-outlier values in 1 sample from driving a low qvalue. Default 0.3</p>
-<h3 id="-write_comparison_summaries_1"><code>--write_comparison_summaries</code></h3>
-<p>Use flag to write a separate file for each column in the annotations table,
-with outlier counts in each group, p-values and q-values in each group.</p>
-<h3 id="-fdr-default-005_2"><code>--fdr</code> (Default: 0.05)</h3>
-<p>FDR threshold to use to select genes to visualize. Default 0.05</p>
-<h3 id="-write_gene_list_2"><code>--write_gene_list</code></h3>
-<p>Use flag to write a list of significantly enriched genes for each value in
-each comparison.</p>
-<h3 id="-make_heatmaps_1"><code>--make_heatmaps</code></h3>
-<p>Use flag to draw a heatmap of significantly enriched genes for each value in
-each comparison. If used, need an fdr threshold as well.</p>
-<h3 id="-red_or_blue-default-red_2"><code>--red_or_blue</code> (Default: red)</h3>
-<p>Color of values to draw on heatmap. Default red.</p>
-<h3 id="-annotation_colors-default-none_2"><code>--annotation_colors</code> (Default: None)</h3>
-<p>File with color map to use for annotation header. Must have a line with 'value
-color' format for each value in annotations. Any value not represented will be
-assigned a new color.</p>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">from typing import Optional, List, Iterable
 import sys
 import logging
 import argparse
-import argdown
 import matplotlib.pyplot as plt
 from blacksheep.outliers import run_outliers
 from blacksheep.outliers import make_outliers_table
@@ -528,36 +36,12 @@ from blacksheep.classes import qValues
 from blacksheep.visualization import plot_heatmap
 from blacksheep.constants import *
 
-__doc__ = &#34;&#34;&#34;
-Command line interface for blacksheep: 
-
-    .. include:: ../docs/help_cli.txt
-    
-&#34;&#34;&#34;
-
-
-&#34;&#34;&#34;
-
-
-    .. include:: ../docs/blsh_help.txt
-    
-    .. include:: ../docs/blsh_ol_help.txt
-    
-    .. include:: ../docs/blsh_bn_help.txt
-    
-    .. include:: ../docs/blsh_cg_help.txt
-    
-    .. include:: ../docs/blsh_vz_help.txt
-    
-    .. include:: ../docs/blsh_ro_help.txt
-   
-&#34;&#34;&#34;
 
 fmt = &#34;%(asctime)s:%(levelname)s:%(message)s&#34;
 logging.basicConfig(format=fmt, level=logging.INFO, datefmt=&#34;%m/%d/%Y %H:%M:%S&#34;)
 
 
-def _set_up_logger(path):
+def set_up_logger(path):
     logger = logging.getLogger(&#34;cli&#34;)
     fh = logging.FileHandler(&#34;%s.log&#34; % path)
     fh.setLevel(logging.INFO)
@@ -572,7 +56,7 @@ def _set_up_logger(path):
 
 
 # arg checkers
-def _check_positive(arg: str) -&gt; float:
+def check_positive(arg: str) -&gt; float:
     try:
         arg = float(arg)
     except TypeError:
@@ -582,7 +66,7 @@ def _check_positive(arg: str) -&gt; float:
     return arg
 
 
-def _bn0and1(arg: str) -&gt; float:
+def bn0and1(arg: str) -&gt; float:
     try:
         arg = float(arg)
     except TypeError:
@@ -593,10 +77,8 @@ def _bn0and1(arg: str) -&gt; float:
 
 
 # Argparser
-def _make_parser():
-    parser = argparse.ArgumentParser(
-        prog=&#34;blacksheep&#34;, description=&#39;&#39;,
-    )
+def make_parser():
+    parser = argparse.ArgumentParser(prog=&#34;BlackSheep&#34;, description=&#34;&#34;)
     parser.add_argument(&#34;--version&#34;, &#34;-v&#34;, action=&#34;version&#34;, version=&#34;%(prog)s 0.0.1&#34;)
 
     subparsers = parser.add_subparsers(dest=&#34;which&#34;)
@@ -614,14 +96,8 @@ def _make_parser():
         &#34;genes must be sites or genes. Only .tsv and .csv accepted.&#34;,
     )
     outliers_table.add_argument(
-        &#34;--output_prefix&#34;,
-        type=check_output_prefix,
-        default=&#34;outliers&#34;,
-        help=&#34;Output prefix for writing files. Default outliers. &#34;,
-    )
-    outliers_table.add_argument(
         &#34;--iqrs&#34;,
-        type=_check_positive,
+        type=check_positive,
         default=1.5,
         help=&#34;Number of interquartile ranges (IQRs) above or below the &#34;
         &#34;median to consider a value an outlier. Default is 1.5 IQRs.&#34;,
@@ -633,6 +109,12 @@ def _make_parser():
         choices=[&#34;up&#34;, &#34;down&#34;],
         help=&#34;Whether to look for up or down outliers. Choices are up or &#34;
         &#34;down. Default up.&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;outliers_table&#34;,
+        help=&#34;Output prefix for writing files. Default outliers. &#34;,
     )
     outliers_table.add_argument(
         &#34;--ind_sep&#34;,
@@ -674,8 +156,8 @@ def _make_parser():
     binarize.add_argument(
         &#34;--output_prefix&#34;,
         type=check_output_prefix,
-        default=&#34;outliers&#34;,
-        help=&#34;Output prefix for writing files. Default outliers. &#34;,
+        default=&#34;binarized_annotations&#34;,
+        help=&#34;Prefix for new annotation file&#34;,
     )
 
     compare_groups = subparsers.add_parser(
@@ -703,18 +185,18 @@ def _make_parser():
         &#34;table. &#34;,
     )
     compare_groups.add_argument(
-        &#34;--output_prefix&#34;,
-        type=check_output_prefix,
-        default=&#34;outliers&#34;,
-        help=&#34;Output prefix for writing files. Default outliers. &#34;,
-    )
-    compare_groups.add_argument(
         &#34;--frac_filter&#34;,
-        type=_bn0and1,
+        type=bn0and1,
         default=0.3,
         help=&#34;The minimum fraction of samples per group that must have an outlier in a gene to&#34;
         &#34;consider that gene in the analysis. This is used to prevent a high number of outlier &#34;
         &#34;values in 1 sample from driving a low qvalue. Default 0.3&#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;compare_groups&#34;,
+        help=&#34;File prefix for qvalues table and other optional outputs. Default outliers&#34;,
     )
     compare_groups.add_argument(
         &#34;--write_comparison_summaries&#34;,
@@ -725,7 +207,7 @@ def _make_parser():
     )
     compare_groups.add_argument(
         &#34;--iqrs&#34;,
-        type=_check_positive,
+        type=check_positive,
         default=None,
         help=&#34;Number of IQRs used to define outliers in the input count table. Optional.&#34;,
     )
@@ -752,7 +234,7 @@ def _make_parser():
     )
     compare_groups.add_argument(
         &#34;--fdr&#34;,
-        type=_bn0and1,
+        type=bn0and1,
         default=0.05,
         help=&#34;FDR cut off to use for signficantly enriched gene lists and heatmaps. Default 0.05&#34;,
     )
@@ -800,12 +282,6 @@ def _make_parser():
         help=&#34;Name of column in qvalues table from which to visualize significant genes. &#34;,
     )
     visualize.add_argument(
-        &#34;--output_prefix&#34;,
-        type=check_output_prefix,
-        default=&#34;outliers&#34;,
-        help=&#34;Output prefix for writing files. Default outliers. &#34;,
-    )
-    visualize.add_argument(
         &#34;--annotations_to_show&#34;,
         type=str,
         default=None,
@@ -815,7 +291,7 @@ def _make_parser():
     )
     visualize.add_argument(
         &#34;--fdr&#34;,
-        type=_bn0and1,
+        type=bn0and1,
         default=0.05,
         help=&#34;FDR threshold to use to select genes to visualize. Default 0.05&#34;,
     )
@@ -825,6 +301,12 @@ def _make_parser():
         choices=[&#34;red&#34;, &#34;blue&#34;],
         default=&#34;red&#34;,
         help=&#34;Color of values to draw on heatmap. Default red. &#34;,
+    )
+    visualize.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;visualization&#34;,
+        help=&#34;Output prefix for writing files. Default outliers. &#34;,
     )
     visualize.add_argument(
         &#34;--annotation_colors&#34;,
@@ -860,14 +342,8 @@ def _make_parser():
         &#34;header is different annotations. e.g. mutation status.&#34;,
     )
     outliers.add_argument(
-        &#34;--output_prefix&#34;,
-        type=check_output_prefix,
-        default=&#34;outliers&#34;,
-        help=&#34;Output prefix for writing files. Default outliers. &#34;,
-    )
-    outliers.add_argument(
         &#34;--iqrs&#34;,
-        type=_check_positive,
+        type=check_positive,
         default=1.5,
         help=&#34;Number of inter-quartile ranges (IQRs) above or below the &#34;
         &#34;median to consider a value an outlier. Default is 1.5.&#34;,
@@ -884,6 +360,12 @@ def _make_parser():
         default=False,
         action=&#34;store_true&#34;,
         help=&#34;Use flag if you do not want to sum outliers based on site prefixes.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;outliers_pipeline&#34;,
+        help=&#34;Output prefix for writing files. Default outliers. &#34;,
     )
     outliers.add_argument(
         &#34;--write_outlier_table&#34;,
@@ -908,7 +390,7 @@ def _make_parser():
     )
     outliers.add_argument(
         &#34;--frac_filter&#34;,
-        type=_bn0and1,
+        type=bn0and1,
         default=0.3,
         help=&#34;The minimum fraction of samples per group that must have an outlier in a gene to&#34;
         &#34;consider that gene in the analysis. This is used to prevent a high number of outlier &#34;
@@ -923,7 +405,7 @@ def _make_parser():
     )
     outliers.add_argument(
         &#34;--fdr&#34;,
-        type=_bn0and1,
+        type=bn0and1,
         default=0.05,
         help=&#34;FDR threshold to use to select genes to visualize. Default 0.05&#34;,
     )
@@ -956,20 +438,16 @@ def _make_parser():
         &#34;have a line with &#39;value    color&#39; format for each value in annotations. Any value &#34;
         &#34;not represented will be assigned a new color. &#34;,
     )
-    # argparsers = [outliers, compare_groups, visualize, outliers_table, binarize, parser]
-    # helps = {par.prog: argdown.md_help(par) for par in argparsers}
-
     return parser
 
 
-
 # Module runner
-def _main(args: Optional[List[str]] = None):
+def main(args: Optional[List[str]] = None):
     if args is None:
         args = sys.argv[1:]
-    args = _make_parser().parse_args(args)
+    args = make_parser().parse_args(args)
 
-    logger = _set_up_logger(args.output_prefix)
+    logger = set_up_logger(args.output_prefix)
 
     logger.info(&#34;Running BlackSheep in %s mode&#34; % args.which)
     for arg in vars(args):
@@ -1097,22 +575,9 @@ def _main(args: Optional[List[str]] = None):
         for arg in vars(args):
             fh.write(&#34;%s: %s\n&#34; % (arg, getattr(args, arg)))
 
-parser = _make_parser()
-subparsers_actions = [
-    action.choices for action in parser._actions if isinstance(action, argparse._SubParsersAction)
-]
-helps = {}
-for choices in subparsers_actions:
-    for choice, subparser in choices.items():
-        helps[choice] = argdown.md_help(subparser)
-
-doc = []
-for k, v in helps.items():
-    doc.extend([&#39;# blacksheep %s&#39; % k, v])
-__doc__ = &#39;\n&#39;.join(doc)
 
 if __name__ == &#34;__main__&#34;:
-    _main()</code></pre>
+    main()</code></pre>
 </details>
 </section>
 <section>
@@ -1120,6 +585,576 @@ if __name__ == &#34;__main__&#34;:
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="blacksheep.cli.bn0and1"><code class="name flex">
+<span>def <span class="ident">bn0and1</span></span>(<span>arg: str) -> float</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def bn0and1(arg: str) -&gt; float:
+    try:
+        arg = float(arg)
+    except TypeError:
+        raise argparse.ArgumentTypeError(&#34;%s is an invalid positive value&#34; % arg)
+    if (arg &lt; 0) or (arg &gt; 1):
+        raise argparse.ArgumentTypeError(&#34;%s is not a number between 0 and 1&#34; % arg)
+    return arg</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.cli.check_positive"><code class="name flex">
+<span>def <span class="ident">check_positive</span></span>(<span>arg: str) -> float</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def check_positive(arg: str) -&gt; float:
+    try:
+        arg = float(arg)
+    except TypeError:
+        raise argparse.ArgumentTypeError(&#34;%s is not a valid number&#34; % arg)
+    if arg &lt; 0:
+        raise argparse.ArgumentTypeError(&#34;%s is not a positive number&#34; % arg)
+    return arg</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.cli.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>args: Union[List[str], NoneType] = None)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def main(args: Optional[List[str]] = None):
+    if args is None:
+        args = sys.argv[1:]
+    args = make_parser().parse_args(args)
+
+    logger = set_up_logger(args.output_prefix)
+
+    logger.info(&#34;Running BlackSheep in %s mode&#34; % args.which)
+    for arg in vars(args):
+        logger.info(&#34;Parameter %s: %s&#34; % (arg, getattr(args, arg)))
+
+    if args.which == &#34;outliers_table&#34;:
+        df = parsers.parse_values(args.values)
+        make_outliers_table(
+            df,
+            args.iqrs,
+            args.up_or_down,
+            ~args.do_not_aggregate,
+            save_outlier_table=True,
+            save_frac_table=args.write_frac_table,
+            output_prefix=args.output_prefix,
+            ind_sep=args.ind_sep,
+        )
+
+    elif args.which == &#34;binarize&#34;:
+        annotations = parsers.parse_values(args.annotations)
+        annotations = parsers.binarize_annotations(annotations)
+        annotations.to_csv(&#34;%s.tsv&#34; % args.output_prefix, sep=&#34;\t&#34;)
+
+    elif args.which == &#34;compare_groups&#34;:
+        outliers = parsers.parse_outliers(
+            args.outliers_table, args.up_or_down, args.iqrs
+        )
+
+        annotations = parsers.parse_values(args.annotations)
+        qVals = compare_groups_outliers(
+            outliers,
+            annotations,
+            args.frac_filter,
+            save_qvalues=True,
+            output_prefix=args.output_prefix,
+            output_comparison_summaries=args.write_comparison_summaries,
+        )
+        if args.write_gene_list:
+            qVals.write_gene_lists(args.fdr, args.output_prefix)
+
+        if args.make_heatmaps:
+            for col_of_interest in qVals.df.columns:
+                plot_heatmap(
+                    annotations,
+                    qVals.df,
+                    col_of_interest,
+                    outliers.frac_table,
+                    fdr=args.fdr,
+                    red_or_blue=args.red_or_blue,
+                    output_prefix=args.output_prefix,
+                    colors=args.annotation_colors,
+                    savefig=True,
+                )
+                plt.close()
+
+    elif args.which == &#34;visualize&#34;:
+        qvals = parsers.parse_values(args.comparison_qvalues)
+        annotations = parsers.parse_values(args.annotations)
+        frac_table = parsers.parse_values(args.visualization_table)
+        col_of_interest = args.comparison_of_interest
+        annot_cols = args.annotations_to_show[0].split()
+
+        try:
+            annotations = annotations[annot_cols]
+        except KeyError:
+            raise ValueError(&#34;Some of %s not in annotations&#34; % annot_cols)
+
+        annot_label = col_of_interest.split(&#34;_&#34;, 1)[1].rsplit(&#34;_&#34;, 1)[0]
+        if annot_label not in annot_cols:
+            raise ValueError(&#34;%s must be in annotations columns to show&#34; % annot_label)
+
+        plot_heatmap(
+            annotations,
+            qvals,
+            col_of_interest,
+            frac_table,
+            fdr=args.fdr,
+            red_or_blue=args.red_or_blue,
+            output_prefix=args.output_prefix,
+            colors=args.annotation_colors,
+            savefig=True,
+        )
+        plt.close()
+        if args.write_gene_list:
+            qValues(qvals[[col_of_interest]], [], None).write_gene_lists(
+                args.fdr, args.output_prefix
+            )
+
+    elif args.which == &#34;outliers&#34;:
+        df = parsers.parse_values(args.values)
+        annotations = parsers.parse_values(args.annotations)
+        outLiers, qVals = run_outliers(
+            df,
+            annotations,
+            args.frac_filter,
+            args.iqrs,
+            args.up_or_down,
+            ~args.do_not_aggregate,
+            args.write_outlier_table,
+            args.write_frac_table,
+            save_qvalues=True,
+            output_prefix=args.output_prefix,
+            ind_sep=args.ind_sep,
+            output_comparison_summaries=args.write_comparison_summaries,
+        )
+        if args.write_gene_list:
+            qVals.write_gene_lists(args.fdr, args.output_prefix)
+
+        if args.make_heatmaps:
+            for col_of_interest in qVals.df.columns:
+                plot_heatmap(
+                    annotations,
+                    qVals.df,
+                    col_of_interest,
+                    outLiers.frac_table,
+                    fdr=args.fdr,
+                    red_or_blue=args.red_or_blue,
+                    output_prefix=args.output_prefix,
+                    colors=args.annotation_colors,
+                    savefig=True,
+                )
+                plt.close()
+
+    with open(parameters_file_name % args.output_prefix, &#34;w&#34;) as fh:
+        for arg in vars(args):
+            fh.write(&#34;%s: %s\n&#34; % (arg, getattr(args, arg)))</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.cli.make_parser"><code class="name flex">
+<span>def <span class="ident">make_parser</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def make_parser():
+    parser = argparse.ArgumentParser(prog=&#34;BlackSheep&#34;, description=&#34;&#34;)
+    parser.add_argument(&#34;--version&#34;, &#34;-v&#34;, action=&#34;version&#34;, version=&#34;%(prog)s 0.0.1&#34;)
+
+    subparsers = parser.add_subparsers(dest=&#34;which&#34;)
+    subparsers.required = True
+
+    outliers_table = subparsers.add_parser(
+        &#34;outliers_table&#34;,
+        description=&#34;Takes a table of values and converts to a &#34;
+        &#34;table of outlier counts.&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;values&#34;,
+        type=is_valid_file,
+        help=&#34;File path to input values. Columns must be samples, &#34;
+        &#34;genes must be sites or genes. Only .tsv and .csv accepted.&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--iqrs&#34;,
+        type=check_positive,
+        default=1.5,
+        help=&#34;Number of interquartile ranges (IQRs) above or below the &#34;
+        &#34;median to consider a value an outlier. Default is 1.5 IQRs.&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--up_or_down&#34;,
+        type=str,
+        default=&#34;true&#34;,
+        choices=[&#34;up&#34;, &#34;down&#34;],
+        help=&#34;Whether to look for up or down outliers. Choices are up or &#34;
+        &#34;down. Default up.&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;outliers_table&#34;,
+        help=&#34;Output prefix for writing files. Default outliers. &#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--ind_sep&#34;,
+        type=str,
+        default=&#34;-&#34;,
+        help=&#34;If site labels have a parent molecule (e.g. a gene name such &#34;
+        &#34;as ATM) and a site identifier (e.g. S365) this is the &#34;
+        &#34;delimiter between the two elements. Default is -&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--do_not_aggregate&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag if you do not want to sum outliers based on site &#34; &#34;prefixes.&#34;,
+    )
+    outliers_table.add_argument(
+        &#34;--write_frac_table&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag if you want to write a table with fraction of &#34;
+        &#34;values per site, per sample that are outliers. Will not be &#34;
+        &#34;written by default. Useful for visualization. &#34;,
+    )
+
+    binarize = subparsers.add_parser(
+        &#34;binarize&#34;,
+        description=&#34;Takes an annotation table where some columns &#34;
+        &#34;may have more than 2 possible values (not &#34;
+        &#34;including empty/null values) and outputs an &#34;
+        &#34;annotation table with only two values per &#34;
+        &#34;annotation. Propagates null values. &#34;,
+    )
+    binarize.add_argument(
+        &#34;annotations&#34;,
+        type=is_valid_file,
+        help=&#34;Annotation table with samples as rows and &#34;
+        &#34;annotation labels as columns. &#34;,
+    )
+    binarize.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;binarized_annotations&#34;,
+        help=&#34;Prefix for new annotation file&#34;,
+    )
+
+    compare_groups = subparsers.add_parser(
+        &#34;compare_groups&#34;,
+        description=&#34;Takes an annotation table and outlier count &#34;
+        &#34;table (output of outliers_table) and outputs qvalues from &#34;
+        &#34;a statistical test that looks for enrichment of outlier values in each &#34;
+        &#34;group in the annotation table. For each value in each comparison, the qvalue table will &#34;
+        &#34;have 1 column, if there are any genes in that comparison. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;outliers_table&#34;,
+        type=is_valid_file,
+        help=&#34;Table of outlier counts (output of outliers_table). Must be &#34;
+        &#34;.tsv or .csv file, with outlier and non-outlier counts as columns, and genes/sites as &#34;
+        &#34;rows. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;annotations&#34;,
+        type=is_valid_file,
+        help=&#34;Table of annotations. Must be .csv or .tsv. Samples as rows &#34;
+        &#34;and comparisons as columns. Comparisons must have only  &#34;
+        &#34;unique values (not including missing values). If there are &#34;
+        &#34;more options than that, you can use binarize to prepare the &#34;
+        &#34;table. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--frac_filter&#34;,
+        type=bn0and1,
+        default=0.3,
+        help=&#34;The minimum fraction of samples per group that must have an outlier in a gene to&#34;
+        &#34;consider that gene in the analysis. This is used to prevent a high number of outlier &#34;
+        &#34;values in 1 sample from driving a low qvalue. Default 0.3&#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;compare_groups&#34;,
+        help=&#34;File prefix for qvalues table and other optional outputs. Default outliers&#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--write_comparison_summaries&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to write a separate file for each column in the annotations table, &#34;
+        &#34;with outlier counts in each group, p-values and q-values in each group. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--iqrs&#34;,
+        type=check_positive,
+        default=None,
+        help=&#34;Number of IQRs used to define outliers in the input count table. Optional.&#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--up_or_down&#34;,
+        type=str,
+        choices=[&#34;up&#34;, &#34;down&#34;],
+        help=&#34;Whether input outlier table represents up or down outliers. Needed for &#34;
+        &#34;output file labels. Default up&#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--write_gene_list&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to write a list of significantly enriched genes for each value in each &#34;
+        &#34;comparison. If used, need an fdr threshold as well. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--make_heatmaps&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to draw a heatmap of signficantly enriched genes for each value in each &#34;
+        &#34;comparison. If used, need an fdr threshold as well. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--fdr&#34;,
+        type=bn0and1,
+        default=0.05,
+        help=&#34;FDR cut off to use for signficantly enriched gene lists and heatmaps. Default 0.05&#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--red_or_blue&#34;,
+        type=str,
+        choices=[&#34;red&#34;, &#34;blue&#34;],
+        default=&#34;red&#34;,
+        help=&#34;If --make_heatmaps is called, color of values to draw on heatmap. Default red. &#34;,
+    )
+    compare_groups.add_argument(
+        &#34;--annotation_colors&#34;,
+        type=is_valid_file,
+        default=None,
+        help=&#34;File with color map to use for annotation header if --make_heatmaps is used. Must &#34;
+        &#34;have a &#39;value    color&#39; format for each value in annotations. Any value not &#34;
+        &#34;represented will be assigned a new color. &#34;,
+    )
+
+    visualize = subparsers.add_parser(
+        &#34;visualize&#34;,
+        description=&#34;Used to make custom heatmaps from significant &#34; &#34;genes. &#34;,
+    )
+    visualize.add_argument(
+        &#34;comparison_qvalues&#34;,
+        type=is_valid_file,
+        help=&#34;Table of qvalues, output from compare_groups. Must be .csv or .tsv. Has genes/sites &#34;
+        &#34;as rows and comparison values as columns. &#34;,
+    )
+    visualize.add_argument(
+        &#34;annotations&#34;,
+        type=is_valid_file,
+        help=&#34;Table of annotations used to generate qvalues. &#34;,
+    )
+    visualize.add_argument(
+        &#34;visualization_table&#34;,
+        type=is_valid_file,
+        help=&#34;Values to visualize in heatmap. Samples as columns and &#34;
+        &#34;genes/sites as rows. Using outlier fraction table is recommended, but original &#34;
+        &#34;values can also be used if no aggregation was used. &#34;,
+    )
+    visualize.add_argument(
+        &#34;comparison_of_interest&#34;,
+        type=str,
+        help=&#34;Name of column in qvalues table from which to visualize significant genes. &#34;,
+    )
+    visualize.add_argument(
+        &#34;--annotations_to_show&#34;,
+        type=str,
+        default=None,
+        nargs=&#34;+&#34;,
+        help=&#34;Names of columns from the annotation table to show in the header of the heatmap. &#34;
+        &#34;Default is all columns. &#34;,
+    )
+    visualize.add_argument(
+        &#34;--fdr&#34;,
+        type=bn0and1,
+        default=0.05,
+        help=&#34;FDR threshold to use to select genes to visualize. Default 0.05&#34;,
+    )
+    visualize.add_argument(
+        &#34;--red_or_blue&#34;,
+        type=str,
+        choices=[&#34;red&#34;, &#34;blue&#34;],
+        default=&#34;red&#34;,
+        help=&#34;Color of values to draw on heatmap. Default red. &#34;,
+    )
+    visualize.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;visualization&#34;,
+        help=&#34;Output prefix for writing files. Default outliers. &#34;,
+    )
+    visualize.add_argument(
+        &#34;--annotation_colors&#34;,
+        type=is_valid_file,
+        default=None,
+        help=&#34;File with color map to use for annotation header. Must &#34;
+        &#34;have a line with &#39;value    color&#39; format for each value in annotations. Any value &#34;
+        &#34;not represented will be assigned a new color. &#34;,
+    )
+    visualize.add_argument(
+        &#34;--write_gene_list&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to write a list of significantly enriched genes for each value in each &#34;
+        &#34;comparison.&#34;,
+    )
+
+    outliers = subparsers.add_parser(
+        &#34;outliers&#34;,
+        description=&#34;Runs whole outliers pipeline. Has options to output every &#34;
+        &#34;possible output. &#34;,
+    )
+    outliers.add_argument(
+        &#34;values&#34;,
+        type=is_valid_file,
+        help=&#34;File path to input values. Samples are columns and genes/sites are rows. Only .tsv &#34;
+        &#34;and .csv accepted.&#34;,
+    )
+    outliers.add_argument(
+        &#34;annotations&#34;,
+        type=is_valid_file,
+        help=&#34;File path to annotation values. Rows are sample names, &#34;
+        &#34;header is different annotations. e.g. mutation status.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--iqrs&#34;,
+        type=check_positive,
+        default=1.5,
+        help=&#34;Number of inter-quartile ranges (IQRs) above or below the &#34;
+        &#34;median to consider a value an outlier. Default is 1.5.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--up_or_down&#34;,
+        type=str,
+        default=&#34;true&#34;,
+        choices=[&#34;up&#34;, &#34;down&#34;],
+        help=&#34;Whether to look for up or down outliers. Choices are up or down. Default up.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--do_not_aggregate&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag if you do not want to sum outliers based on site prefixes.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--output_prefix&#34;,
+        type=check_output_prefix,
+        default=&#34;outliers_pipeline&#34;,
+        help=&#34;Output prefix for writing files. Default outliers. &#34;,
+    )
+    outliers.add_argument(
+        &#34;--write_outlier_table&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to write a table of outlier counts.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--write_frac_table&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag if you want to write a table with fraction of &#34;
+        &#34;values per site per sample that are outliers. Useful for custom visualization.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--ind_sep&#34;,
+        type=str,
+        default=&#34;-&#34;,
+        help=&#34;If site labels have a parent molecule (e.g. a gene name such &#34;
+        &#34;as ATM) and a site identifier (e.g. S365) this is the &#34;
+        &#34;delimiter between the two elements. Default is -&#34;,
+    )
+    outliers.add_argument(
+        &#34;--frac_filter&#34;,
+        type=bn0and1,
+        default=0.3,
+        help=&#34;The minimum fraction of samples per group that must have an outlier in a gene to&#34;
+        &#34;consider that gene in the analysis. This is used to prevent a high number of outlier &#34;
+        &#34;values in 1 sample from driving a low qvalue. Default 0.3&#34;,
+    )
+    outliers.add_argument(
+        &#34;--write_comparison_summaries&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to write a separate file for each column in the annotations table, &#34;
+        &#34;with outlier counts in each group, p-values and q-values in each group. &#34;,
+    )
+    outliers.add_argument(
+        &#34;--fdr&#34;,
+        type=bn0and1,
+        default=0.05,
+        help=&#34;FDR threshold to use to select genes to visualize. Default 0.05&#34;,
+    )
+    outliers.add_argument(
+        &#34;--write_gene_list&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to write a list of significantly enriched genes for each value in each &#34;
+        &#34;comparison.&#34;,
+    )
+    outliers.add_argument(
+        &#34;--make_heatmaps&#34;,
+        default=False,
+        action=&#34;store_true&#34;,
+        help=&#34;Use flag to draw a heatmap of significantly enriched genes for each value in each &#34;
+        &#34;comparison. If used, need an fdr threshold as well. &#34;,
+    )
+    outliers.add_argument(
+        &#34;--red_or_blue&#34;,
+        type=str,
+        choices=[&#34;red&#34;, &#34;blue&#34;],
+        default=&#34;red&#34;,
+        help=&#34;Color of values to draw on heatmap. Default red. &#34;,
+    )
+    outliers.add_argument(
+        &#34;--annotation_colors&#34;,
+        type=is_valid_file,
+        default=None,
+        help=&#34;File with color map to use for annotation header. Must &#34;
+        &#34;have a line with &#39;value    color&#39; format for each value in annotations. Any value &#34;
+        &#34;not represented will be assigned a new color. &#34;,
+    )
+    return parser</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.cli.set_up_logger"><code class="name flex">
+<span>def <span class="ident">set_up_logger</span></span>(<span>path)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def set_up_logger(path):
+    logger = logging.getLogger(&#34;cli&#34;)
+    fh = logging.FileHandler(&#34;%s.log&#34; % path)
+    fh.setLevel(logging.INFO)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.WARNING)
+    fmter = logging.Formatter(fmt)
+    fh.setFormatter(fmter)
+    ch.setFormatter(fmter)
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+    return logger</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 </section>
@@ -1127,100 +1162,21 @@ if __name__ == &#34;__main__&#34;:
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul>
-<li><a href="#blacksheep-outliers_table">blacksheep outliers_table</a></li>
-<li><a href="#arguments-and-usage">Arguments and Usage</a><ul>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#arguments">Arguments</a><ul>
-<li><a href="#quick-reference-table">Quick reference table</a></li>
-<li><a href="#-h-help">-h, &ndash;help</a></li>
-<li><a href="#-output_prefix-default-outliers">&ndash;output_prefix (Default: outliers)</a></li>
-<li><a href="#-iqrs-default-15">&ndash;iqrs (Default: 1.5)</a></li>
-<li><a href="#-up_or_down-default-true">&ndash;up_or_down (Default: true)</a></li>
-<li><a href="#-ind_sep-default-">&ndash;ind_sep (Default: -)</a></li>
-<li><a href="#-do_not_aggregate">&ndash;do_not_aggregate</a></li>
-<li><a href="#-write_frac_table">&ndash;write_frac_table</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#blacksheep-binarize">blacksheep binarize</a></li>
-<li><a href="#arguments-and-usage_1">Arguments and Usage</a><ul>
-<li><a href="#usage_1">Usage</a></li>
-<li><a href="#arguments_1">Arguments</a><ul>
-<li><a href="#quick-reference-table_1">Quick reference table</a></li>
-<li><a href="#-h-help_1">-h, &ndash;help</a></li>
-<li><a href="#-output_prefix-default-outliers_1">&ndash;output_prefix (Default: outliers)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#blacksheep-compare_groups">blacksheep compare_groups</a></li>
-<li><a href="#arguments-and-usage_2">Arguments and Usage</a><ul>
-<li><a href="#usage_2">Usage</a></li>
-<li><a href="#arguments_2">Arguments</a><ul>
-<li><a href="#quick-reference-table_2">Quick reference table</a></li>
-<li><a href="#-h-help_2">-h, &ndash;help</a></li>
-<li><a href="#-output_prefix-default-outliers_2">&ndash;output_prefix (Default: outliers)</a></li>
-<li><a href="#-frac_filter-default-03">&ndash;frac_filter (Default: 0.3)</a></li>
-<li><a href="#-write_comparison_summaries">&ndash;write_comparison_summaries</a></li>
-<li><a href="#-iqrs-default-none">&ndash;iqrs (Default: None)</a></li>
-<li><a href="#-up_or_down-default-none">&ndash;up_or_down (Default: None)</a></li>
-<li><a href="#-write_gene_list">&ndash;write_gene_list</a></li>
-<li><a href="#-make_heatmaps">&ndash;make_heatmaps</a></li>
-<li><a href="#-fdr-default-005">&ndash;fdr (Default: 0.05)</a></li>
-<li><a href="#-red_or_blue-default-red">&ndash;red_or_blue (Default: red)</a></li>
-<li><a href="#-annotation_colors-default-none">&ndash;annotation_colors (Default: None)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#blacksheep-visualize">blacksheep visualize</a></li>
-<li><a href="#arguments-and-usage_3">Arguments and Usage</a><ul>
-<li><a href="#usage_3">Usage</a></li>
-<li><a href="#arguments_3">Arguments</a><ul>
-<li><a href="#quick-reference-table_3">Quick reference table</a></li>
-<li><a href="#-h-help_3">-h, &ndash;help</a></li>
-<li><a href="#-output_prefix-default-outliers_3">&ndash;output_prefix (Default: outliers)</a></li>
-<li><a href="#-annotations_to_show-default-none">&ndash;annotations_to_show (Default: None)</a></li>
-<li><a href="#-fdr-default-005_1">&ndash;fdr (Default: 0.05)</a></li>
-<li><a href="#-red_or_blue-default-red_1">&ndash;red_or_blue (Default: red)</a></li>
-<li><a href="#-annotation_colors-default-none_1">&ndash;annotation_colors (Default: None)</a></li>
-<li><a href="#-write_gene_list_1">&ndash;write_gene_list</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#blacksheep-outliers">blacksheep outliers</a></li>
-<li><a href="#arguments-and-usage_4">Arguments and Usage</a><ul>
-<li><a href="#usage_4">Usage</a></li>
-<li><a href="#arguments_4">Arguments</a><ul>
-<li><a href="#quick-reference-table_4">Quick reference table</a></li>
-<li><a href="#-h-help_4">-h, &ndash;help</a></li>
-<li><a href="#-output_prefix-default-outliers_4">&ndash;output_prefix (Default: outliers)</a></li>
-<li><a href="#-iqrs-default-15_1">&ndash;iqrs (Default: 1.5)</a></li>
-<li><a href="#-up_or_down-default-true_1">&ndash;up_or_down (Default: true)</a></li>
-<li><a href="#-do_not_aggregate_1">&ndash;do_not_aggregate</a></li>
-<li><a href="#-write_outlier_table">&ndash;write_outlier_table</a></li>
-<li><a href="#-write_frac_table_1">&ndash;write_frac_table</a></li>
-<li><a href="#-ind_sep-default-_1">&ndash;ind_sep (Default: -)</a></li>
-<li><a href="#-frac_filter-default-03_1">&ndash;frac_filter (Default: 0.3)</a></li>
-<li><a href="#-write_comparison_summaries_1">&ndash;write_comparison_summaries</a></li>
-<li><a href="#-fdr-default-005_2">&ndash;fdr (Default: 0.05)</a></li>
-<li><a href="#-write_gene_list_2">&ndash;write_gene_list</a></li>
-<li><a href="#-make_heatmaps_1">&ndash;make_heatmaps</a></li>
-<li><a href="#-red_or_blue-default-red_2">&ndash;red_or_blue (Default: red)</a></li>
-<li><a href="#-annotation_colors-default-none_2">&ndash;annotation_colors (Default: None)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<ul></ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="blacksheep" href="index.html">blacksheep</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="blacksheep.cli.bn0and1" href="#blacksheep.cli.bn0and1">bn0and1</a></code></li>
+<li><code><a title="blacksheep.cli.check_positive" href="#blacksheep.cli.check_positive">check_positive</a></code></li>
+<li><code><a title="blacksheep.cli.main" href="#blacksheep.cli.main">main</a></code></li>
+<li><code><a title="blacksheep.cli.make_parser" href="#blacksheep.cli.make_parser">make_parser</a></code></li>
+<li><code><a title="blacksheep.cli.set_up_logger" href="#blacksheep.cli.set_up_logger">set_up_logger</a></code></li>
 </ul>
 </li>
 </ul>

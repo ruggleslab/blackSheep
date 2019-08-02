@@ -13,6 +13,30 @@ from blacksheep.classes import qValues
 from blacksheep.visualization import plot_heatmap
 from blacksheep.constants import *
 
+__doc__ = """
+Command line interface for blacksheep: 
+
+    .. include:: ../docs/help_cli.txt
+    
+"""
+
+
+"""
+
+
+    .. include:: ../docs/blsh_help.txt
+    
+    .. include:: ../docs/blsh_ol_help.txt
+    
+    .. include:: ../docs/blsh_bn_help.txt
+    
+    .. include:: ../docs/blsh_cg_help.txt
+    
+    .. include:: ../docs/blsh_vz_help.txt
+    
+    .. include:: ../docs/blsh_ro_help.txt
+   
+"""
 
 fmt = "%(asctime)s:%(levelname)s:%(message)s"
 logging.basicConfig(format=fmt, level=logging.INFO, datefmt="%m/%d/%Y %H:%M:%S")

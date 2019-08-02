@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>blacksheep.comparisons API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>blacksheep.comparisons</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">import logging
+from typing import List, Tuple, Iterable, Optional
+import pandas as pd
+from pandas import DataFrame
+from pandas import Series
+import numpy as np
+import scipy.stats
+from blacksheep.constants import *
+
+
+SampleList = List[str]
+logger = logging.getLogger(&#34;cli&#34;)
+
+
+def multi_hyp_correct(
+    pvalues: Iterable[float], correction_type: str = &#34;Benjamini-Hochberg&#34;
+) -&gt; Iterable[float]:
+    &#34;&#34;&#34;Corrects p-values for multiple hypothesis testing
+    :param pvalues: Array of p-values to correct
+    :param correction_type: Which procedure to use. Options are &#34;Benjamini-Hochberg&#34; or
+        &#34;Bonferroni&#34;
+    :return: Array of p-values corrected for multiple hypothesis testing (aka q-values).
+    &#34;&#34;&#34;
+
+    pvalues = np.array(pvalues)
+    n = sum(~np.isnan(pvalues))
+    new_pvalues = np.empty(len(pvalues))
+
+    if correction_type == &#34;Bonferroni&#34;:
+        new_pvalues = n * pvalues
+
+    elif correction_type == &#34;Benjamini-Hochberg&#34;:
+
+        values = [(pvalue, i) for i, pvalue in enumerate(pvalues)]
+        values = [x for x in values if ~np.isnan(x[0])]
+        values.sort()
+        values.reverse()
+        new_values = []
+        for i, vals in enumerate(values):
+            rank = n - i
+            pvalue, index = vals
+            new_values.append((n / rank) * pvalue)
+        for i in range(0, int(n) - 1):
+            if new_values[i] &lt; new_values[i + 1]:
+                new_values[i + 1] = new_values[i]
+        for i, vals in enumerate(values):
+            pvalue, index = vals
+            new_pvalues[index] = new_values[i]
+
+    new_pvalues[np.isnan(pvalues)] = np.nan
+    for i, val in enumerate(new_pvalues):
+        if ~np.isnan(val):
+            new_pvalues[i] = min(1, val)
+
+    return new_pvalues
+
+
+def get_sample_lists(
+    annotations: DataFrame, col: str
+) -&gt; Tuple[Optional[str], Optional[SampleList], Optional[str], Optional[SampleList]]:
+    &#34;&#34;&#34;Finds groupings of samples from an annotation DataFrame column.
+    :param annotations: A DataFrame with samples as the index and annotations as columns. Each
+        column must contain exactly 2 different values, and optionally missing values. Columns with
+        less or more than 2 options will be ignored.
+    :param col: Which column for which to define groups.
+    :return: A label for group0, the list of samples in group0, a label for group1 and the list
+        of samples in group1.
+    &#34;&#34;&#34;
+
+    groups = list(pd.Series(annotations[col].value_counts().keys()).dropna())
+    if len(groups) != 2:
+        return None, None, None, None
+    group0 = list(annotations.loc[annotations[col] == groups[0], :].index)
+    group1 = list(annotations.loc[annotations[col] == groups[1], :].index)
+    return groups[0], group0, groups[1], group1
+
+
+def filter_outliers(
+    df: DataFrame,
+    group0_list: SampleList,
+    group1_list: SampleList,
+    frac_filter: Optional[float],
+) -&gt; DataFrame:
+    &#34;&#34;&#34;Filters an outlier count table for rows that are enriched for outliers in group0 and that
+    have more than a frac_filter fraction of samples of group0 with an outlier.
+
+    :param df: Outliers count table, output from convertToCounts. Samples are columns,
+        genes/sites are the index.
+    :param group0_list: List of samples in the group of interest.
+    :param group1_list: List of samples in the outgroup.
+    :param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
+        have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+
+    :return: A DataFrame with rows that are not enriched in group0 removed. If frac_filter &gt; 0,
+    rows without enough outliers in group0 are also removed.
+    &#34;&#34;&#34;
+
+    group0_outliers = [x + col_seps + col_outlier_suffix for x in group0_list]
+    group0_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group0_list]
+    group1_outliers = [x + col_seps + col_outlier_suffix for x in group1_list]
+    group1_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group1_list]
+
+    if frac_filter != None:
+        min_num_outlier_samps = len(group0_list) * frac_filter
+        num_outlier_samps = (df[group0_outliers] &gt; 0).sum(axis=1)
+        df = df.loc[num_outlier_samps &gt;= min_num_outlier_samps, :]
+
+    # Filter for higher proportion of outliers in group0 than group1
+    group0_outlier_rate = (
+        df[group0_outliers]
+        .sum(axis=1)
+        .divide(df[group0_outliers + group0_notOutliers].sum(axis=1), axis=0)
+    )
+    group1_outlier_rate = (
+        df[group1_outliers]
+        .sum(axis=1)
+        .divide(df[group0_outliers + group1_notOutliers].sum(axis=1), axis=0)
+    )
+
+    df = df.loc[group0_outlier_rate &gt; group1_outlier_rate, :]
+
+    return df
+
+
+def fisher_test_groups(
+    group0_list: SampleList,
+    group1_list: SampleList,
+    outlier_table: DataFrame,
+    correction_type: str = mult_hypoth_method,
+) -&gt; Tuple[Series, DataFrame]:
+    &#34;&#34;&#34;Performs fishers test by counting outlier and not outlier sites in two groups. Corrects for
+    multiple hypothesis testing too.
+
+    :param group0_list: List of samples in group of interest
+    :param group1_list: List of samples in outgroup
+    :param outlier_table: Outlier count table, like output of convertToCounts
+
+    :return: Series of qvalues with index matching filtered rows.
+    &#34;&#34;&#34;
+
+    outliers_group0_list = [x + col_seps + col_outlier_suffix for x in group0_list]
+    notOutliers_group0_list = [
+        x + col_seps + col_not_outlier_suffix for x in group0_list
+    ]
+    outliers_group1_list = [x + col_seps + col_outlier_suffix for x in group1_list]
+    notOutliers_group1_list = [
+        x + col_seps + col_not_outlier_suffix for x in group1_list
+    ]
+
+    outlier_table[outlier_count_lab + general_group_label_0] = outlier_table[
+        outliers_group0_list
+    ].sum(axis=1)
+    outlier_table[not_outlier_count_lab + general_group_label_0] = outlier_table[
+        notOutliers_group0_list
+    ].sum(axis=1)
+    outlier_table[outlier_count_lab + general_group_label_1] = outlier_table[
+        outliers_group1_list
+    ].sum(axis=1)
+    outlier_table[not_outlier_count_lab + general_group_label_1] = outlier_table[
+        notOutliers_group1_list
+    ].sum(axis=1)
+
+    outlier_table[fisherp_col] = outlier_table.apply(
+        (
+            lambda r: scipy.stats.fisher_exact(
+                [
+                    [
+                        r[outlier_count_lab + general_group_label_0],
+                        r[outlier_count_lab + general_group_label_1],
+                    ],
+                    [
+                        r[not_outlier_count_lab + general_group_label_0],
+                        r[not_outlier_count_lab + general_group_label_1],
+                    ],
+                ]
+            )[1]
+        ),
+        axis=1,
+    )
+
+    outlier_table[fisherfdr_col] = multi_hyp_correct(
+        list(outlier_table[fisherp_col]), correction_type
+    )
+    fisher_info = outlier_table[
+        [
+            outlier_count_lab + general_group_label_0,
+            outlier_count_lab + general_group_label_1,
+            not_outlier_count_lab + general_group_label_0,
+            not_outlier_count_lab + general_group_label_1,
+            fisherp_col,
+        ]
+    ]
+    return outlier_table[fisherfdr_col], fisher_info
+
+
+def compare_groups(
+    results_df: DataFrame,
+    outliers: DataFrame,
+    group0: SampleList,
+    group1: SampleList,
+    frac_filter: Optional[float],
+    label: str,
+) -&gt; Tuple[DataFrame, Optional[DataFrame]]:
+    &#34;&#34;&#34;Performs fisher test and cleans up a fisher infor table for making output for each comparison
+    :param results_df: Accumulating qvalues DataFrame
+    :param outliers: Outliers count DataFrame
+    :param group0: List of samples in group of interest
+    :param group1: List of samples in outgroup
+    :param frac_filter: Fraction of samples in group of interest require to have an outlier per
+    site to be considered in analysis
+    :param label: What to call the FDR output column on the qvalues DataFrame
+
+    :return: Concatenated qvalues DataFrame and a table of info about the comparison
+    &#34;&#34;&#34;
+
+    df = filter_outliers(outliers, group0, group1, frac_filter)
+    logger.info(&#34;Calculating enrichment in %s rows for %s&#34; % (len(df), label))
+    if len(df) &gt; 0:
+        col, fisher_info = fisher_test_groups(group0, group1, df)
+        col = DataFrame(col)
+        col.columns = [label]
+        results_df = pd.concat([results_df, col], axis=1, join=&#34;outer&#34;, sort=False)
+    else:
+        logger.warning(&#34;No rows tested for %s&#34; % label)
+        fisher_info = DataFrame(columns=[label])
+    return results_df, fisher_info</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="blacksheep.comparisons.compare_groups"><code class="name flex">
+<span>def <span class="ident">compare_groups</span></span>(<span>results_df: pandas.core.frame.DataFrame, outliers: pandas.core.frame.DataFrame, group0: List[str], group1: List[str], frac_filter: Union[float, NoneType], label: str) -> Tuple[pandas.core.frame.DataFrame, Union[pandas.core.frame.DataFrame, NoneType]]</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Performs fisher test and cleans up a fisher infor table for making output for each comparison
+:param results_df: Accumulating qvalues DataFrame
+:param outliers: Outliers count DataFrame
+:param group0: List of samples in group of interest
+:param group1: List of samples in outgroup
+:param frac_filter: Fraction of samples in group of interest require to have an outlier per
+site to be considered in analysis
+:param label: What to call the FDR output column on the qvalues DataFrame</p>
+<p>:return: Concatenated qvalues DataFrame and a table of info about the comparison</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def compare_groups(
+    results_df: DataFrame,
+    outliers: DataFrame,
+    group0: SampleList,
+    group1: SampleList,
+    frac_filter: Optional[float],
+    label: str,
+) -&gt; Tuple[DataFrame, Optional[DataFrame]]:
+    &#34;&#34;&#34;Performs fisher test and cleans up a fisher infor table for making output for each comparison
+    :param results_df: Accumulating qvalues DataFrame
+    :param outliers: Outliers count DataFrame
+    :param group0: List of samples in group of interest
+    :param group1: List of samples in outgroup
+    :param frac_filter: Fraction of samples in group of interest require to have an outlier per
+    site to be considered in analysis
+    :param label: What to call the FDR output column on the qvalues DataFrame
+
+    :return: Concatenated qvalues DataFrame and a table of info about the comparison
+    &#34;&#34;&#34;
+
+    df = filter_outliers(outliers, group0, group1, frac_filter)
+    logger.info(&#34;Calculating enrichment in %s rows for %s&#34; % (len(df), label))
+    if len(df) &gt; 0:
+        col, fisher_info = fisher_test_groups(group0, group1, df)
+        col = DataFrame(col)
+        col.columns = [label]
+        results_df = pd.concat([results_df, col], axis=1, join=&#34;outer&#34;, sort=False)
+    else:
+        logger.warning(&#34;No rows tested for %s&#34; % label)
+        fisher_info = DataFrame(columns=[label])
+    return results_df, fisher_info</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.comparisons.filter_outliers"><code class="name flex">
+<span>def <span class="ident">filter_outliers</span></span>(<span>df: pandas.core.frame.DataFrame, group0_list: List[str], group1_list: List[str], frac_filter: Union[float, NoneType]) -> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Filters an outlier count table for rows that are enriched for outliers in group0 and that
+have more than a frac_filter fraction of samples of group0 with an outlier.</p>
+<p>:param df: Outliers count table, output from convertToCounts. Samples are columns,
+genes/sites are the index.
+:param group0_list: List of samples in the group of interest.
+:param group1_list: List of samples in the outgroup.
+:param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
+have an outlier value to be considered in the comparison. Float between 0 and 1 or None.</p>
+<p>:return: A DataFrame with rows that are not enriched in group0 removed. If frac_filter &gt; 0,
+rows without enough outliers in group0 are also removed.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def filter_outliers(
+    df: DataFrame,
+    group0_list: SampleList,
+    group1_list: SampleList,
+    frac_filter: Optional[float],
+) -&gt; DataFrame:
+    &#34;&#34;&#34;Filters an outlier count table for rows that are enriched for outliers in group0 and that
+    have more than a frac_filter fraction of samples of group0 with an outlier.
+
+    :param df: Outliers count table, output from convertToCounts. Samples are columns,
+        genes/sites are the index.
+    :param group0_list: List of samples in the group of interest.
+    :param group1_list: List of samples in the outgroup.
+    :param frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
+        have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
+
+    :return: A DataFrame with rows that are not enriched in group0 removed. If frac_filter &gt; 0,
+    rows without enough outliers in group0 are also removed.
+    &#34;&#34;&#34;
+
+    group0_outliers = [x + col_seps + col_outlier_suffix for x in group0_list]
+    group0_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group0_list]
+    group1_outliers = [x + col_seps + col_outlier_suffix for x in group1_list]
+    group1_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group1_list]
+
+    if frac_filter != None:
+        min_num_outlier_samps = len(group0_list) * frac_filter
+        num_outlier_samps = (df[group0_outliers] &gt; 0).sum(axis=1)
+        df = df.loc[num_outlier_samps &gt;= min_num_outlier_samps, :]
+
+    # Filter for higher proportion of outliers in group0 than group1
+    group0_outlier_rate = (
+        df[group0_outliers]
+        .sum(axis=1)
+        .divide(df[group0_outliers + group0_notOutliers].sum(axis=1), axis=0)
+    )
+    group1_outlier_rate = (
+        df[group1_outliers]
+        .sum(axis=1)
+        .divide(df[group0_outliers + group1_notOutliers].sum(axis=1), axis=0)
+    )
+
+    df = df.loc[group0_outlier_rate &gt; group1_outlier_rate, :]
+
+    return df</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.comparisons.fisher_test_groups"><code class="name flex">
+<span>def <span class="ident">fisher_test_groups</span></span>(<span>group0_list: List[str], group1_list: List[str], outlier_table: pandas.core.frame.DataFrame, correction_type: str = 'Benjamini-Hochberg') -> Tuple[pandas.core.series.Series, pandas.core.frame.DataFrame]</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Performs fishers test by counting outlier and not outlier sites in two groups. Corrects for
+multiple hypothesis testing too.</p>
+<p>:param group0_list: List of samples in group of interest
+:param group1_list: List of samples in outgroup
+:param outlier_table: Outlier count table, like output of convertToCounts</p>
+<p>:return: Series of qvalues with index matching filtered rows.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def fisher_test_groups(
+    group0_list: SampleList,
+    group1_list: SampleList,
+    outlier_table: DataFrame,
+    correction_type: str = mult_hypoth_method,
+) -&gt; Tuple[Series, DataFrame]:
+    &#34;&#34;&#34;Performs fishers test by counting outlier and not outlier sites in two groups. Corrects for
+    multiple hypothesis testing too.
+
+    :param group0_list: List of samples in group of interest
+    :param group1_list: List of samples in outgroup
+    :param outlier_table: Outlier count table, like output of convertToCounts
+
+    :return: Series of qvalues with index matching filtered rows.
+    &#34;&#34;&#34;
+
+    outliers_group0_list = [x + col_seps + col_outlier_suffix for x in group0_list]
+    notOutliers_group0_list = [
+        x + col_seps + col_not_outlier_suffix for x in group0_list
+    ]
+    outliers_group1_list = [x + col_seps + col_outlier_suffix for x in group1_list]
+    notOutliers_group1_list = [
+        x + col_seps + col_not_outlier_suffix for x in group1_list
+    ]
+
+    outlier_table[outlier_count_lab + general_group_label_0] = outlier_table[
+        outliers_group0_list
+    ].sum(axis=1)
+    outlier_table[not_outlier_count_lab + general_group_label_0] = outlier_table[
+        notOutliers_group0_list
+    ].sum(axis=1)
+    outlier_table[outlier_count_lab + general_group_label_1] = outlier_table[
+        outliers_group1_list
+    ].sum(axis=1)
+    outlier_table[not_outlier_count_lab + general_group_label_1] = outlier_table[
+        notOutliers_group1_list
+    ].sum(axis=1)
+
+    outlier_table[fisherp_col] = outlier_table.apply(
+        (
+            lambda r: scipy.stats.fisher_exact(
+                [
+                    [
+                        r[outlier_count_lab + general_group_label_0],
+                        r[outlier_count_lab + general_group_label_1],
+                    ],
+                    [
+                        r[not_outlier_count_lab + general_group_label_0],
+                        r[not_outlier_count_lab + general_group_label_1],
+                    ],
+                ]
+            )[1]
+        ),
+        axis=1,
+    )
+
+    outlier_table[fisherfdr_col] = multi_hyp_correct(
+        list(outlier_table[fisherp_col]), correction_type
+    )
+    fisher_info = outlier_table[
+        [
+            outlier_count_lab + general_group_label_0,
+            outlier_count_lab + general_group_label_1,
+            not_outlier_count_lab + general_group_label_0,
+            not_outlier_count_lab + general_group_label_1,
+            fisherp_col,
+        ]
+    ]
+    return outlier_table[fisherfdr_col], fisher_info</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.comparisons.get_sample_lists"><code class="name flex">
+<span>def <span class="ident">get_sample_lists</span></span>(<span>annotations: pandas.core.frame.DataFrame, col: str) -> Tuple[Union[str, NoneType], Union[List[str], NoneType], Union[str, NoneType], Union[List[str], NoneType]]</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Finds groupings of samples from an annotation DataFrame column.
+:param annotations: A DataFrame with samples as the index and annotations as columns. Each
+column must contain exactly 2 different values, and optionally missing values. Columns with
+less or more than 2 options will be ignored.
+:param col: Which column for which to define groups.
+:return: A label for group0, the list of samples in group0, a label for group1 and the list
+of samples in group1.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def get_sample_lists(
+    annotations: DataFrame, col: str
+) -&gt; Tuple[Optional[str], Optional[SampleList], Optional[str], Optional[SampleList]]:
+    &#34;&#34;&#34;Finds groupings of samples from an annotation DataFrame column.
+    :param annotations: A DataFrame with samples as the index and annotations as columns. Each
+        column must contain exactly 2 different values, and optionally missing values. Columns with
+        less or more than 2 options will be ignored.
+    :param col: Which column for which to define groups.
+    :return: A label for group0, the list of samples in group0, a label for group1 and the list
+        of samples in group1.
+    &#34;&#34;&#34;
+
+    groups = list(pd.Series(annotations[col].value_counts().keys()).dropna())
+    if len(groups) != 2:
+        return None, None, None, None
+    group0 = list(annotations.loc[annotations[col] == groups[0], :].index)
+    group1 = list(annotations.loc[annotations[col] == groups[1], :].index)
+    return groups[0], group0, groups[1], group1</code></pre>
+</details>
+</dd>
+<dt id="blacksheep.comparisons.multi_hyp_correct"><code class="name flex">
+<span>def <span class="ident">multi_hyp_correct</span></span>(<span>pvalues: Iterable[float], correction_type: str = 'Benjamini-Hochberg') -> Iterable[float]</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Corrects p-values for multiple hypothesis testing
+:param pvalues: Array of p-values to correct
+:param correction_type: Which procedure to use. Options are "Benjamini-Hochberg" or
+"Bonferroni"
+:return: Array of p-values corrected for multiple hypothesis testing (aka q-values).</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def multi_hyp_correct(
+    pvalues: Iterable[float], correction_type: str = &#34;Benjamini-Hochberg&#34;
+) -&gt; Iterable[float]:
+    &#34;&#34;&#34;Corrects p-values for multiple hypothesis testing
+    :param pvalues: Array of p-values to correct
+    :param correction_type: Which procedure to use. Options are &#34;Benjamini-Hochberg&#34; or
+        &#34;Bonferroni&#34;
+    :return: Array of p-values corrected for multiple hypothesis testing (aka q-values).
+    &#34;&#34;&#34;
+
+    pvalues = np.array(pvalues)
+    n = sum(~np.isnan(pvalues))
+    new_pvalues = np.empty(len(pvalues))
+
+    if correction_type == &#34;Bonferroni&#34;:
+        new_pvalues = n * pvalues
+
+    elif correction_type == &#34;Benjamini-Hochberg&#34;:
+
+        values = [(pvalue, i) for i, pvalue in enumerate(pvalues)]
+        values = [x for x in values if ~np.isnan(x[0])]
+        values.sort()
+        values.reverse()
+        new_values = []
+        for i, vals in enumerate(values):
+            rank = n - i
+            pvalue, index = vals
+            new_values.append((n / rank) * pvalue)
+        for i in range(0, int(n) - 1):
+            if new_values[i] &lt; new_values[i + 1]:
+                new_values[i + 1] = new_values[i]
+        for i, vals in enumerate(values):
+            pvalue, index = vals
+            new_pvalues[index] = new_values[i]
+
+    new_pvalues[np.isnan(pvalues)] = np.nan
+    for i, val in enumerate(new_pvalues):
+        if ~np.isnan(val):
+            new_pvalues[i] = min(1, val)
+
+    return new_pvalues</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="blacksheep" href="index.html">blacksheep</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="blacksheep.comparisons.compare_groups" href="#blacksheep.comparisons.compare_groups">compare_groups</a></code></li>
+<li><code><a title="blacksheep.comparisons.filter_outliers" href="#blacksheep.comparisons.filter_outliers">filter_outliers</a></code></li>
+<li><code><a title="blacksheep.comparisons.fisher_test_groups" href="#blacksheep.comparisons.fisher_test_groups">fisher_test_groups</a></code></li>
+<li><code><a title="blacksheep.comparisons.get_sample_lists" href="#blacksheep.comparisons.get_sample_lists">get_sample_lists</a></code></li>
+<li><code><a title="blacksheep.comparisons.multi_hyp_correct" href="#blacksheep.comparisons.multi_hyp_correct">multi_hyp_correct</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
