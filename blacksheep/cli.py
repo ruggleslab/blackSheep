@@ -8,10 +8,11 @@ from blacksheep.outliers import run_outliers
 from blacksheep.outliers import make_outliers_table
 from blacksheep.outliers import compare_groups_outliers
 from blacksheep import parsers
-from blacksheep.parsers import is_valid_file, check_output_prefix
+from blacksheep.parsers import _is_valid_file, _check_output_prefix
 from blacksheep.classes import qValues
 from blacksheep.visualization import plot_heatmap
 from blacksheep.constants import *
+
 
 __doc__ = """
 Command line interface for blacksheep: 
@@ -20,23 +21,6 @@ Command line interface for blacksheep:
     
 """
 
-
-"""
-
-
-    .. include:: ../docs/blsh_help.txt
-    
-    .. include:: ../docs/blsh_ol_help.txt
-    
-    .. include:: ../docs/blsh_bn_help.txt
-    
-    .. include:: ../docs/blsh_cg_help.txt
-    
-    .. include:: ../docs/blsh_vz_help.txt
-    
-    .. include:: ../docs/blsh_ro_help.txt
-   
-"""
 
 fmt = "%(asctime)s:%(levelname)s:%(message)s"
 logging.basicConfig(format=fmt, level=logging.INFO, datefmt="%m/%d/%Y %H:%M:%S")
@@ -94,13 +78,13 @@ def _make_parser():
     )
     outliers_table.add_argument(
         "values",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="File path to input values. Columns must be samples, "
         "genes must be sites or genes. Only .tsv and .csv accepted.",
     )
     outliers_table.add_argument(
         "--output_prefix",
-        type=check_output_prefix,
+        type=_check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
@@ -152,13 +136,13 @@ def _make_parser():
     )
     binarize.add_argument(
         "annotations",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="Annotation table with samples as rows and "
         "annotation labels as columns. ",
     )
     binarize.add_argument(
         "--output_prefix",
-        type=check_output_prefix,
+        type=_check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
@@ -173,14 +157,14 @@ def _make_parser():
     )
     compare_groups.add_argument(
         "outliers_table",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="Table of outlier counts (output of outliers_table). Must be "
         ".tsv or .csv file, with outlier and non-outlier counts as columns, and genes/sites as "
         "rows. ",
     )
     compare_groups.add_argument(
         "annotations",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="Table of annotations. Must be .csv or .tsv. Samples as rows "
         "and comparisons as columns. Comparisons must have only  "
         "unique values (not including missing values). If there are "
@@ -189,7 +173,7 @@ def _make_parser():
     )
     compare_groups.add_argument(
         "--output_prefix",
-        type=check_output_prefix,
+        type=_check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
@@ -250,7 +234,7 @@ def _make_parser():
     )
     compare_groups.add_argument(
         "--annotation_colors",
-        type=is_valid_file,
+        type=_is_valid_file,
         default=None,
         help="File with color map to use for annotation header if --make_heatmaps is used. Must "
         "have a 'value    color' format for each value in annotations. Any value not "
@@ -263,18 +247,18 @@ def _make_parser():
     )
     visualize.add_argument(
         "comparison_qvalues",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="Table of qvalues, output from compare_groups. Must be .csv or .tsv. Has genes/sites "
         "as rows and comparison values as columns. ",
     )
     visualize.add_argument(
         "annotations",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="Table of annotations used to generate qvalues. ",
     )
     visualize.add_argument(
         "visualization_table",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="Values to visualize in heatmap. Samples as columns and "
         "genes/sites as rows. Using outlier fraction table is recommended, but original "
         "values can also be used if no aggregation was used. ",
@@ -286,7 +270,7 @@ def _make_parser():
     )
     visualize.add_argument(
         "--output_prefix",
-        type=check_output_prefix,
+        type=_check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
@@ -313,7 +297,7 @@ def _make_parser():
     )
     visualize.add_argument(
         "--annotation_colors",
-        type=is_valid_file,
+        type=_is_valid_file,
         default=None,
         help="File with color map to use for annotation header. Must "
         "have a line with 'value    color' format for each value in annotations. Any value "
@@ -334,19 +318,19 @@ def _make_parser():
     )
     outliers.add_argument(
         "values",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
         "and .csv accepted.",
     )
     outliers.add_argument(
         "annotations",
-        type=is_valid_file,
+        type=_is_valid_file,
         help="File path to annotation values. Rows are sample names, "
         "header is different annotations. e.g. mutation status.",
     )
     outliers.add_argument(
         "--output_prefix",
-        type=check_output_prefix,
+        type=_check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
@@ -435,7 +419,7 @@ def _make_parser():
     )
     outliers.add_argument(
         "--annotation_colors",
-        type=is_valid_file,
+        type=_is_valid_file,
         default=None,
         help="File with color map to use for annotation header. Must "
         "have a line with 'value    color' format for each value in annotations. Any value "
@@ -582,6 +566,7 @@ def _main(args: Optional[List[str]] = None):
         for arg in vars(args):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
 
+# Get the helps into a good doc format
 parser = _make_parser()
 subparsers_actions = [
     action.choices for action in parser._actions if isinstance(action, argparse._SubParsersAction)
@@ -596,5 +581,6 @@ for k, v in helps.items():
     doc.extend(['# blacksheep %s' % k, v])
 __doc__ = '\n'.join(doc)
 
+# Run cli
 if __name__ == "__main__":
     _main()

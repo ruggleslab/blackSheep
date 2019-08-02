@@ -4,9 +4,9 @@ import os.path
 import pandas as pd
 from pandas import DataFrame
 from .classes import OutlierTable, qValues
-from .outlierTable import convert_to_outliers
-from .outlierTable import convert_to_counts
-from .comparisons import compare_groups
+from .outlierTable import _convert_to_outliers
+from .outlierTable import _convert_to_counts
+from .comparisons import _compare_groups
 from .comparisons import get_sample_lists
 from .constants import *
 
@@ -52,8 +52,8 @@ def make_outliers_table(
     samples = df.columns
     logging.info("Calling outliers for %s samples" % len(samples))
 
-    df = convert_to_outliers(df, samples, iqrs, up_or_down)
-    df = convert_to_counts(df, samples, aggregate, ind_sep)
+    df = _convert_to_outliers(df, samples, iqrs, up_or_down)
+    df = _convert_to_counts(df, samples, aggregate, ind_sep)
     outliers = OutlierTable(df, up_or_down, iqrs, samples, None)
     frac_table = outliers.make_frac_table()
 
@@ -144,12 +144,12 @@ def compare_groups_outliers(
 
         # doing tests
         label0 = fdr_col_label % (comp, group0_label)
-        results_df, fisher_info0 = compare_groups(
+        results_df, fisher_info0 = _compare_groups(
             results_df, df, group0, group1, frac_filter, label0
         )
 
         label1 = fdr_col_label % (comp, group1_label)
-        results_df, fisher_info1 = compare_groups(
+        results_df, fisher_info1 = _compare_groups(
             results_df, df, group1, group0, frac_filter, label1
         )
 

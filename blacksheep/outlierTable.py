@@ -8,7 +8,7 @@ from blacksheep.constants import *
 SampleList = List[str]
 
 
-def convert_to_outliers(
+def _convert_to_outliers(
     df: DataFrame, samples: SampleList, NUM_IQRs: float, up_or_down: str
 ) -> DataFrame:
     """Calls outliers on a given values table.
@@ -50,7 +50,7 @@ def convert_to_outliers(
     return outlier_df
 
 
-def convert_to_counts(
+def _convert_to_counts(
     df: DataFrame, samples: SampleList, aggregate: bool, ind_sep: str
 ) -> DataFrame:
     """Counts outliers and non-outlier values for each sample and each row (if aggregate=False)

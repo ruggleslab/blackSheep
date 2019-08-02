@@ -12,7 +12,7 @@ SampleList = List[str]
 logger = logging.getLogger("cli")
 
 
-def multi_hyp_correct(
+def _multi_hyp_correct(
     pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
 ) -> Iterable[float]:
     """Corrects p-values for multiple hypothesis testing
@@ -83,7 +83,7 @@ def get_sample_lists(
     return groups[0], group0, groups[1], group1
 
 
-def filter_outliers(
+def _filter_outliers(
     df: DataFrame,
     group0_list: SampleList,
     group1_list: SampleList,
@@ -132,7 +132,7 @@ def filter_outliers(
     return df
 
 
-def fisher_test_groups(
+def _fisher_test_groups(
     group0_list: SampleList,
     group1_list: SampleList,
     outlier_table: DataFrame,
@@ -191,7 +191,7 @@ def fisher_test_groups(
         axis=1,
     )
 
-    outlier_table[fisherfdr_col] = multi_hyp_correct(
+    outlier_table[fisherfdr_col] = _multi_hyp_correct(
         list(outlier_table[fisherp_col]), correction_type
     )
     fisher_info = outlier_table[
@@ -206,7 +206,7 @@ def fisher_test_groups(
     return outlier_table[fisherfdr_col], fisher_info
 
 
-def compare_groups(
+def _compare_groups(
     results_df: DataFrame,
     outliers: DataFrame,
     group0: SampleList,
@@ -229,10 +229,10 @@ def compare_groups(
 
     """
 
-    df = filter_outliers(outliers, group0, group1, frac_filter)
+    df = _filter_outliers(outliers, group0, group1, frac_filter)
     logger.info("Calculating enrichment in %s rows for %s" % (len(df), label))
     if len(df) > 0:
-        col, fisher_info = fisher_test_groups(group0, group1, df)
+        col, fisher_info = _fisher_test_groups(group0, group1, df)
         col = DataFrame(col)
         col.columns = [label]
         results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)

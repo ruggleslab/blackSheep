@@ -7,7 +7,7 @@ from .classes import OutlierTable
 from .constants import *
 
 
-def is_valid_file(arg: str) -> str:
+def _is_valid_file(arg: str) -> str:
     """Checks if file exists (probably pretty redundant except as a type checker in argparse)
 
     Args:
@@ -22,7 +22,7 @@ def is_valid_file(arg: str) -> str:
     return arg
 
 
-def check_output_prefix(arg: str) -> str:
+def _check_output_prefix(arg: str) -> str:
     """Checks if output prefix is valid
 
     Args:
@@ -35,11 +35,11 @@ def check_output_prefix(arg: str) -> str:
 
     if "/" in arg:
         prefix = arg.rsplit("/", 1)[0]
-        is_valid_file(prefix)
+        _is_valid_file(prefix)
     return arg
 
 
-def check_suffix(path: str) -> str:
+def _check_suffix(path: str) -> str:
     """Checks that file is a .csv or .tsv file, and returns which sep to use
 
     Args:
@@ -69,8 +69,8 @@ def parse_values(path: str) -> DataFrame:
         DataFrame from table in file
 
     """
-    sep = check_suffix(path)
-    df = pd.read_csv(is_valid_file(path), sep=sep, index_col=0)
+    sep = _check_suffix(path)
+    df = pd.read_csv(_is_valid_file(path), sep=sep, index_col=0)
     return df
 
 
@@ -87,8 +87,8 @@ def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
 
     """
 
-    sep = check_suffix(path)
-    df = pd.read_csv(is_valid_file(path), sep=sep, index_col=0)
+    sep = _check_suffix(path)
+    df = pd.read_csv(_is_valid_file(path), sep=sep, index_col=0)
     samples = sorted(list(set([ind.rsplit(col_seps, 1)[0] for ind in df.columns])))
     outliers = OutlierTable(df, updown, iqrs, samples, None)
     outliers.make_frac_table()
@@ -138,6 +138,6 @@ def list_to_file(lis: Iterable, filename: str):
 
     """
 
-    with open(check_output_prefix(filename), "w") as fh:
+    with open(_check_output_prefix(filename), "w") as fh:
         for x in lis:
             fh.write("%s\n" % x)

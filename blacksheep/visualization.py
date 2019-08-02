@@ -9,7 +9,7 @@ import seaborn as sns
 from .constants import *
 
 
-def get_sample_order(annotations: DataFrame, col_of_interest: str) -> Iterable:
+def _get_sample_order(annotations: DataFrame, col_of_interest: str) -> Iterable:
     """Orders the samples using annotations
 
     Args:
@@ -26,7 +26,7 @@ def get_sample_order(annotations: DataFrame, col_of_interest: str) -> Iterable:
     return annotations.columns
 
 
-def get_genes(qvals: DataFrame, fdr: float, col: str) -> list:
+def _get_genes(qvals: DataFrame, fdr: float, col: str) -> list:
     """Collects significant genes
 
     Args:
@@ -42,7 +42,7 @@ def get_genes(qvals: DataFrame, fdr: float, col: str) -> list:
     return list(qvals.loc[(qvals[col] < fdr), :].index)
 
 
-def pick_color(red_or_blue: str):
+def _pick_color(red_or_blue: str):
     """Sets colormap for heatmap
 
     Args:
@@ -81,7 +81,7 @@ def pick_color(red_or_blue: str):
     return cmap
 
 
-def check_colors(colors: dict) -> dict:
+def _check_colors(colors: dict) -> dict:
     """Makes sure every input color can be used as a color by the heatmap and legend.
 
     Args:
@@ -100,7 +100,7 @@ def check_colors(colors: dict) -> dict:
     return colors
 
 
-def gen_colors(pal, n: int):
+def _gen_colors(pal, n: int):
     """Generates colors from provided palette.
 
     Args:
@@ -139,7 +139,7 @@ def gen_colors(pal, n: int):
     return colors
 
 
-def assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
+def _assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
     """Combines provided colors, and adds more if needed
 
     Args:
@@ -155,13 +155,13 @@ def assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
     unique_values = sorted(np.unique(data.values.astype(str)))
     cmap = {v: c for v, c in cmap.items() if v in unique_values}
     missing_entries = [v for v in unique_values if v not in cmap.keys()]
-    colors = gen_colors(palette, len(missing_entries))
+    colors = _gen_colors(palette, len(missing_entries))
     cmap.update({v: colors[i] for i, v in enumerate(missing_entries)})
 
     return cmap
 
 
-def determine_colors(path: str, annotations: DataFrame) -> dict:
+def _determine_colors(path: str, annotations: DataFrame) -> dict:
     """Takes a file with value, color pairs and fills out any other needed colors.
 
     Args:
@@ -179,12 +179,12 @@ def determine_colors(path: str, annotations: DataFrame) -> dict:
         try:
             with open(path, "r") as fh:
                 colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
-            colors = check_colors(colors)
+            colors = _check_colors(colors)
         except FileNotFoundError:
             logging.warning("%s is not a valid file, generating colors" % path)
             colors = {}
 
-    colors = assign_colors(annotations, colors, default_palette)
+    colors = _assign_colors(annotations, colors, default_palette)
     return colors
 
 
@@ -223,8 +223,8 @@ def plot_heatmap(
 
     # Get orders
     annot_label = [col for col in annotations.index if col in col_of_interest][0]
-    sample_order = get_sample_order(annotations, annot_label)
-    genes = get_genes(qvals, fdr, col_of_interest)
+    sample_order = _get_sample_order(annotations, annot_label)
+    genes = _get_genes(qvals, fdr, col_of_interest)
     if not genes:
         logging.warning("No significant genes at FDR %s in %s" % (fdr, col_of_interest))
         return None
@@ -233,8 +233,8 @@ def plot_heatmap(
     vis_table = vis_table.reindex(genes).reindex(sample_order, axis=1)
 
     # Get colors
-    cmap = pick_color(red_or_blue)
-    colors = determine_colors(colors, annotations)
+    cmap = _pick_color(red_or_blue)
+    colors = _determine_colors(colors, annotations)
 
     # Get label
     label = col_of_interest[10:]
