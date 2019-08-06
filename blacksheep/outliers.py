@@ -171,10 +171,11 @@ def compare_groups_outliers(
             ]
             comp_df = pd.concat(
                 [fisher_info0, fisher_info1], axis=0, join="outer", sort=True
-            ).merge(results_df[[label0, label1]], left_index=True, right_index=True)
-            comp_df.to_csv(
-                ind_comparison_file_name % (output_prefix, up_or_down, comp), sep="\t"
-            )
+            ).merge(results_df.reindex([label0, label1], axis=1), left_index=True, right_index=True)
+            if len(comp_df) > 0:
+                comp_df.to_csv(
+                    ind_comparison_file_name % (output_prefix, up_or_down, comp), sep="\t"
+                )
     results_df = results_df.dropna(how="all", axis=0)
     if save_qvalues:
         qval_path = os.path.abspath(qvalues_file_name % (output_prefix, up_or_down))
