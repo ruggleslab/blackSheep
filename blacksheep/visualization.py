@@ -2,7 +2,7 @@ from typing import Optional, Iterable
 import logging
 from pandas import DataFrame
 import numpy as np
-import catheat
+from . import catheat
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatch
 import seaborn as sns
@@ -100,45 +100,6 @@ def _check_colors(colors: dict) -> dict:
     return colors
 
 
-def _gen_colors(pal, n: int):
-    """Generates colors from provided palette.
-
-    Args:
-        pal: List of colors, LinearSegmentedColormap or seaborn color palette. Must have
-    enough colors for needed unique values.
-        n: How many unique colors are needed
-
-    Returns:
-        List of colors to assign to values.
-
-    """
-
-    # If string
-    if isinstance(pal, str):
-        try:
-            colors = sns.color_palette(pal, n)
-        except:
-            pal = plt.get_cmap(pal)
-            colors = [pal(i) for i in np.linspace(0, 1, n)]
-    elif isinstance(pal, mcolors.LinearSegmentedColormap):
-        colors = [pal(i) for i in np.linspace(0, 1, n)]
-    elif isinstance(pal, (list, np.ndarray)):
-        if len(pal) < n:
-            raise ValueError(
-                "Must provide at least as many colors as there are unique entries: {0}".format(
-                    len(unique_values)
-                )
-            )
-        else:
-            colors = pal
-    else:
-        raise TypeError(
-            'Unable to generate colors from palette of type "{0}"'.format(type(pal))
-        )
-
-    return colors
-
-
 def _assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
     """Combines provided colors, and adds more if needed
 
@@ -155,7 +116,7 @@ def _assign_colors(data: DataFrame, cmap: dict, palette) -> dict:
     unique_values = sorted(np.unique(data.values.astype(str)))
     cmap = {v: c for v, c in cmap.items() if v in unique_values}
     missing_entries = [v for v in unique_values if v not in cmap.keys()]
-    colors = _gen_colors(palette, len(missing_entries))
+    colors = catheat._gen_colors(palette, len(missing_entries))
     cmap.update({v: colors[i] for i, v in enumerate(missing_entries)})
 
     return cmap
@@ -271,7 +232,10 @@ def plot_heatmap(
         annotations,
         cmap=colors,
         ax=annot_ax,
-        legend=False,
+        leg_ax=leg_ax,
+        leg_kws=dict(loc=(0, 0.05),
+                     facecolor="white",
+                     edgecolor="white"),
         xticklabels=False,
         yticklabels=annotations.index,
     )
@@ -296,16 +260,6 @@ def plot_heatmap(
     vals_ax.set_yticklabels(vis_table.index, rotation=0)
     vals_ax.set_xlabel("")
     vals_ax.set_ylabel("")
-
-    # Legend
-    handles = [mpatch.Patch(label=l, color=c) for l, c in colors.items()]
-    leg_ax.legend(
-        handles=handles,
-        loc=(0, 0.05),
-        facecolor="white",
-        edgecolor="white",
-        labelspacing=0,
-    )
 
     if savefig:
         fig_path = figure_file_name % (output_prefix, label, fdr)
