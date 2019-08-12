@@ -204,8 +204,6 @@ def plot_heatmap(
     sns.set(font="arial", style="white", color_codes=True, font_scale=1)
     plot_height = min(max((0.19 * (len(annotations) + len(genes))), 2), 11)
     plot_width = min(max((0.15 * len(annotations.columns)), 4), 8.5)
-    # margin_sizeLR = 1.75
-    # margin_sizeTB = 0.4
     fig = plt.figure(figsize=(plot_width, plot_height))
     gs = plt.GridSpec(
         figure=fig,
@@ -215,10 +213,6 @@ def plot_heatmap(
         height_ratios=[len(annotations)] + [len(vis_table) / 2 for i in range(0, 2)],
         wspace=0.01,
         hspace=0.01,
-        # bottom=(margin_sizeTB / plot_height),
-        # top=1 - (margin_sizeTB / plot_height),
-        # left=0.05 + (margin_sizeLR / plot_width),
-        # right=1.05 - (margin_sizeLR / plot_width),
     )
 
     annot_ax = plt.subplot(gs[0, 0])
