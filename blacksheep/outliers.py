@@ -78,7 +78,7 @@ def compare_groups_outliers(
     frac_filter: Optional[float] = 0.3,
     save_qvalues: bool = False,
     output_prefix: str = "outliers",
-    output_comparison_summaries: bool = False,
+    save_comparison_summaries: bool = False,
 ) -> qValues:
     """Takes an OutlierTable object and a sample annotation DataFrame and performs comparisons for
     any column in annotations with exactly 2 groups. For each group identified in the annotations
@@ -95,7 +95,7 @@ def compare_groups_outliers(
         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
         save_qvalues: Whether to write a file with a table of qvalues.
         output_prefix: If files are written, a prefix for the files.
-        output_comparison_summaries: Whether to write a file for each annotation column with the \
+        save_comparison_summaries: Whether to write a file for each annotation column with the \
         counts in the fisher table, pvalues and q values per row.
 
     Returns: qvals
@@ -153,7 +153,7 @@ def compare_groups_outliers(
             results_df, df, group1, group0, frac_filter, label1
         )
 
-        if output_comparison_summaries:
+        if save_comparison_summaries:
             fisher_info0.columns = [
                 "%s_%s_%s" % (outlier_count_lab, comp, group0_label),
                 "%s_%s_%s" % (outlier_count_lab, comp, group1_label),
@@ -197,7 +197,7 @@ def run_outliers(
     save_qvalues: bool = False,
     output_prefix: str = "outliers",
     ind_sep: str = "-",
-    output_comparison_summaries: bool = False,
+    save_comparison_summaries: bool = False,
 ) -> Tuple[OutlierTable, qValues]:
     """Takes a DataFrame of values and returns OutlierTable and qValues objects. This command runs
     the whole outliers pipeline. The DataFrame in the OutlierTable object can be used to run more
@@ -226,7 +226,7 @@ def run_outliers(
         ind_sep: The separator used in the columns, for instance, to separate a gene and site. \
         If just using genes (i.e. no separator), or not aggregating this parameter \
         has no effect.
-        output_comparison_summaries: Whether to write a table for each comparison with the \
+        save_comparison_summaries: Whether to write a table for each comparison with the \
         counts in the fisher table, pvalues and qvalues per row.
 
     Returns: outliers, qvals
@@ -253,7 +253,7 @@ def run_outliers(
         frac_filter,
         save_qvalues,
         output_prefix,
-        output_comparison_summaries,
+        save_comparison_summaries,
     )
 
     return outliers, qvals

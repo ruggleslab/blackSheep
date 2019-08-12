@@ -1,8 +1,12 @@
+import warnings
 import os.path
-from typing import Iterable
+from typing import Iterable, Optional
 import pandas as pd
-from pandas import DataFrame
+from pandas import DataFrame, Series
 import numpy as np
+import sklearn.linear_model as lm
+from sklearn.exceptions import UndefinedMetricWarning
+
 from .classes import OutlierTable
 from .constants import *
 
@@ -141,3 +145,59 @@ def list_to_file(lis: Iterable, filename: str):
     with open(_check_output_prefix(filename), "w") as fh:
         for x in lis:
             fh.write("%s\n" % x)
+
+
+def convert_to_residuals(
+        valstarget: Series,
+        valsnormer: Series,
+        model
+) -> Series:
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
+    nonull = ((valstarget.isnull() == False) & (valsnormer.isnull() == False))
+    if sum(nonull) < model.get_params()['cv']:
+        residuals = np.empty(len(valstarget))
+        residuals = pd.Series(residuals, index=valstarget.index)
+    else:
+        features = valsnormer[nonull].values.reshape(-1, 1)
+        labels = valstarget[nonull].values
+        model = model.fit(features, labels)
+        prediction = model.predict(features)
+        residuals = labels - prediction
+        residuals = pd.Series(residuals, index=valstarget[nonull].index)
+    return residuals
+
+
+def normalize_df(
+        target: DataFrame,
+        normer: DataFrame,
+        ind_sep: str = '-',
+        alphas: Optional[Iterable[float]] = None,
+        cv: float = 5,
+        **RidgeCV_kws
+) -> DataFrame:
+    if alphas is None:
+        alphas = [2 ** i for i in range(-10, 10, 1)]
+
+    normer = normer.reindex(target.columns, axis=1)
+
+    target = target.transpose()
+    target['col0'] = 0
+    target.set_index('col0', append=True, inplace=True)
+    target = target.reorder_levels([target.index.names[-1], target.index.names[0]]).transpose()
+
+    normer = normer.transpose()
+    normer['col0'] = 1
+    normer.set_index('col0', append=True, inplace=True)
+    normer = normer.reorder_levels([normer.index.names[-1], normer.index.names[0]]).transpose()
+
+    target['gene'] = [i.split(ind_sep)[0] for i in target.index]
+    target = target.loc[target['gene'].isin(normer.index), :]
+    data = target.merge(normer, how='left', left_on='gene', right_index=True)
+
+    model = lm.RidgeCV(alphas=alphas, cv=cv, **RidgeCV_kws)
+    normed = data.apply(
+        (lambda row: convert_to_residuals(row[0], row[1], model)),
+        axis=1)
+
+    return normed

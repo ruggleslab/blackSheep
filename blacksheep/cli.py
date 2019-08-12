@@ -474,7 +474,7 @@ def _main(args: Optional[List[str]] = None):
             frac_filter=args.frac_filter,
             save_qvalues=True,
             output_prefix=args.output_prefix,
-            output_comparison_summaries=args.write_comparison_summaries,
+            save_comparison_summaries=args.write_comparison_summaries,
         )
         if args.write_gene_list:
             qVals.write_gene_lists(args.fdr, args.output_prefix)
@@ -542,7 +542,7 @@ def _main(args: Optional[List[str]] = None):
             save_qvalues=True,
             output_prefix=args.output_prefix,
             ind_sep=args.ind_sep,
-            output_comparison_summaries=args.write_comparison_summaries,
+            save_comparison_summaries=args.write_comparison_summaries,
         )
         if args.write_gene_list:
             qVals.write_gene_lists(args.fdr, args.output_prefix)
