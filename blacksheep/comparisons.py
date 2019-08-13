@@ -124,7 +124,7 @@ def _filter_outliers(
     group1_outlier_rate = (
         df[group1_outliers]
         .sum(axis=1)
-        .divide(df[group0_outliers + group1_notOutliers].sum(axis=1), axis=0)
+        .divide(df[group1_outliers + group1_notOutliers].sum(axis=1), axis=0)
     )
 
     df = df.loc[group0_outlier_rate > group1_outlier_rate, :]
