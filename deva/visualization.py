@@ -227,9 +227,7 @@ def plot_heatmap(
         cmap=colors,
         ax=annot_ax,
         leg_ax=leg_ax,
-        leg_kws=dict(loc=(0, 0.05),
-                     facecolor="white",
-                     edgecolor="white"),
+        leg_kws=dict(loc=(0, 0.05), facecolor="white", edgecolor="white"),
         xticklabels=False,
         yticklabels=annotations.index,
     )
@@ -258,6 +256,6 @@ def plot_heatmap(
     if savefig:
         fig_path = figure_file_name % (output_prefix, label, fdr)
         logging.info("Saving figure to %s" % fig_path)
-        plt.savefig(fig_path, dpi=200, bbox_inches='tight')
+        plt.savefig(fig_path, dpi=200, bbox_inches="tight")
 
     return [annot_ax, vals_ax, cbar_ax, leg_ax]

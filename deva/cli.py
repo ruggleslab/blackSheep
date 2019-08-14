@@ -2,6 +2,7 @@ from typing import Optional, List, Iterable
 import sys
 import logging
 import argparse
+
 # import argdown
 import matplotlib.pyplot as plt
 from deva.outliers import run_outliers
@@ -63,9 +64,7 @@ def _bn0and1(arg: str) -> float:
 
 # Argparser
 def _make_parser():
-    parser = argparse.ArgumentParser(
-        prog="deva", description='',
-    )
+    parser = argparse.ArgumentParser(prog="deva", description="")
     parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
     subparsers = parser.add_subparsers(dest="which")
@@ -431,7 +430,6 @@ def _make_parser():
     return parser
 
 
-
 # Module runner
 def _main(args: Optional[List[str]] = None):
     if args is None:
@@ -565,6 +563,7 @@ def _main(args: Optional[List[str]] = None):
     with open(parameters_file_name % args.output_prefix, "w") as fh:
         for arg in vars(args):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
+
 
 # Get the helps into a good doc format
 # parser = _make_parser()

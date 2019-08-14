@@ -128,15 +128,11 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
     return new_df
 
 
-def convert_to_residuals(
-        valstarget: Series,
-        valsnormer: Series,
-        model
-) -> Series:
+def convert_to_residuals(valstarget: Series, valsnormer: Series, model) -> Series:
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
-    nonull = ((valstarget.isnull() == False) & (valsnormer.isnull() == False))
-    if sum(nonull) < model.get_params()['cv']:
+    nonull = (valstarget.isnull() == False) & (valsnormer.isnull() == False)
+    if sum(nonull) < model.get_params()["cv"]:
         residuals = np.empty(len(valstarget))
         residuals = pd.Series(residuals, index=valstarget.index)
     else:
@@ -150,12 +146,12 @@ def convert_to_residuals(
 
 
 def normalize_df(
-        target: DataFrame,
-        normer: DataFrame,
-        ind_sep: str = '-',
-        alphas: Optional[Iterable[float]] = None,
-        cv: float = 5,
-        **RidgeCV_kws
+    target: DataFrame,
+    normer: DataFrame,
+    ind_sep: str = "-",
+    alphas: Optional[Iterable[float]] = None,
+    cv: float = 5,
+    **RidgeCV_kws
 ) -> DataFrame:
     if alphas is None:
         alphas = [2 ** i for i in range(-10, 10, 1)]
@@ -163,22 +159,26 @@ def normalize_df(
     normer = normer.reindex(target.columns, axis=1)
 
     target = target.transpose()
-    target['col0'] = 0
-    target.set_index('col0', append=True, inplace=True)
-    target = target.reorder_levels([target.index.names[-1], target.index.names[0]]).transpose()
+    target["col0"] = 0
+    target.set_index("col0", append=True, inplace=True)
+    target = target.reorder_levels(
+        [target.index.names[-1], target.index.names[0]]
+    ).transpose()
 
     normer = normer.transpose()
-    normer['col0'] = 1
-    normer.set_index('col0', append=True, inplace=True)
-    normer = normer.reorder_levels([normer.index.names[-1], normer.index.names[0]]).transpose()
+    normer["col0"] = 1
+    normer.set_index("col0", append=True, inplace=True)
+    normer = normer.reorder_levels(
+        [normer.index.names[-1], normer.index.names[0]]
+    ).transpose()
 
-    target['gene'] = [i.split(ind_sep)[0] for i in target.index]
-    target = target.loc[target['gene'].isin(normer.index), :]
-    data = target.merge(normer, how='left', left_on='gene', right_index=True)
+    target["gene"] = [i.split(ind_sep)[0] for i in target.index]
+    target = target.loc[target["gene"].isin(normer.index), :]
+    data = target.merge(normer, how="left", left_on="gene", right_index=True)
 
     model = lm.RidgeCV(alphas=alphas, cv=cv, **RidgeCV_kws)
     normed = data.apply(
-        (lambda row: convert_to_residuals(row[0], row[1], model)),
-        axis=1)
+        (lambda row: convert_to_residuals(row[0], row[1], model)), axis=1
+    )
 
     return normed

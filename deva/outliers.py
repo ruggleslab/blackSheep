@@ -15,14 +15,14 @@ SampleList = List[str]
 
 
 def make_outliers_table(
-        df: DataFrame,
-        iqrs: float = 1.5,
-        up_or_down: str = "up",
-        aggregate: bool = True,
-        save_outlier_table: bool = False,
-        save_frac_table: bool = False,
-        output_prefix: str = "outliers",
-        ind_sep: str = "-",
+    df: DataFrame,
+    iqrs: float = 1.5,
+    up_or_down: str = "up",
+    aggregate: bool = True,
+    save_outlier_table: bool = False,
+    save_frac_table: bool = False,
+    output_prefix: str = "outliers",
+    ind_sep: str = "-",
 ) -> OutlierTable:
     """Converts a DataFrame of values into an OutlierTable object, which includes a DataFrame
     of outlier and non-outlier count values.
@@ -171,10 +171,15 @@ def compare_groups_outliers(
             ]
             comp_df = pd.concat(
                 [fisher_info0, fisher_info1], axis=0, join="outer", sort=True
-            ).merge(results_df.reindex([label0, label1], axis=1), left_index=True, right_index=True)
+            ).merge(
+                results_df.reindex([label0, label1], axis=1),
+                left_index=True,
+                right_index=True,
+            )
             if len(comp_df) > 0:
                 comp_df.to_csv(
-                    ind_comparison_file_name % (output_prefix, up_or_down, comp), sep="\t"
+                    ind_comparison_file_name % (output_prefix, up_or_down, comp),
+                    sep="\t",
                 )
     results_df = results_df.dropna(how="all", axis=0)
     if save_qvalues:

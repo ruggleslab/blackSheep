@@ -1,7 +1,7 @@
 from typing import List, Optional, Iterable
 from pandas import DataFrame
 import numpy as np
-from deva.constants import *
+from deva.constants import col_seps, col_outlier_suffix, col_not_outlier_suffix
 
 
 def list_to_file(lis: Iterable, filename: str):
@@ -24,6 +24,7 @@ def list_to_file(lis: Iterable, filename: str):
 
 class OutlierTable:
     """Output of calling outliers. """
+
     def __init__(
         self,
         df: DataFrame,
@@ -72,6 +73,7 @@ class OutlierTable:
 
 class qValues:
     """Output from comparing groups using outliers. """
+
     def __init__(self, df: DataFrame, comps: list, frac_filter: Optional[float]):
         """Instantiates a qValues object.
 

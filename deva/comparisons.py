@@ -238,11 +238,13 @@ def _compare_groups(
         results_df = pd.concat([results_df, col], axis=1, join="outer", sort=False)
     else:
         logger.warning("No rows tested for %s" % label)
-        fisher_info = DataFrame(columns=[
-            outlier_count_lab + general_group_label_0,
-            outlier_count_lab + general_group_label_1,
-            not_outlier_count_lab + general_group_label_0,
-            not_outlier_count_lab + general_group_label_1,
-            fisherp_col,
-        ])
+        fisher_info = DataFrame(
+            columns=[
+                outlier_count_lab + general_group_label_0,
+                outlier_count_lab + general_group_label_1,
+                not_outlier_count_lab + general_group_label_0,
+                not_outlier_count_lab + general_group_label_1,
+                fisherp_col,
+            ]
+        )
     return results_df, fisher_info

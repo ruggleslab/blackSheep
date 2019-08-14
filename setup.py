@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blacksheep-outliers",
-    version="0.0.7",
+    version="0.0.8",
     author="Ruggles Lab",
     author_email="lili.blumenberg@gmail.com",
     description="A package for differential extreme values analysis",
@@ -19,12 +19,15 @@ setuptools.setup(
         "Operating System :: Unix",
     ],
     install_requires=[
-        'pandas >= 0.24.2',
-        'numpy >= 1.16.4',
-        'scipy >= 1.2.1',
-        'matplotlib >= 3.1.0',
-        'seaborn >= 0.9.0',
+        "pandas >= 0.24.2",
+        "numpy >= 1.16.4",
+        "scipy >= 1.2.1",
+        "matplotlib >= 3.1.0",
+        "seaborn >= 0.9.0",
+        "scikit-learn >= 0.21.2"
     ],
-    packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
+    packages=setuptools.find_packages(
+        exclude=["*.tests", "*.tests.*", "tests.*", "tests"]
+    ),
     entry_points={"console_scripts": ["deva = deva.cli:_main"]},
 )
