@@ -2,7 +2,7 @@ from typing import Optional, List, Iterable
 import sys
 import logging
 import argparse
-import argdown
+# import argdown
 import matplotlib.pyplot as plt
 from blacksheep.outliers import run_outliers
 from blacksheep.outliers import make_outliers_table
@@ -567,19 +567,19 @@ def _main(args: Optional[List[str]] = None):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
 
 # Get the helps into a good doc format
-parser = _make_parser()
-subparsers_actions = [
-    action.choices for action in parser._actions if isinstance(action, argparse._SubParsersAction)
-]
-helps = {}
-for choices in subparsers_actions:
-    for choice, subparser in choices.items():
-        helps[choice] = argdown.md_help(subparser)
-
-doc = []
-for k, v in helps.items():
-    doc.extend(['# blacksheep %s' % k, v])
-__doc__ = '\n'.join(doc)
+# parser = _make_parser()
+# subparsers_actions = [
+#     action.choices for action in parser._actions if isinstance(action, argparse._SubParsersAction)
+# ]
+# helps = {}
+# for choices in subparsers_actions:
+#     for choice, subparser in choices.items():
+#         helps[choice] = argdown.md_help(subparser)
+#
+# doc = []
+# for k, v in helps.items():
+#     doc.extend(['# blacksheep %s' % k, v])
+# __doc__ = '\n'.join(doc)
 
 # Run cli
 if __name__ == "__main__":
