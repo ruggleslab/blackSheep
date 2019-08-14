@@ -1,0 +1,14 @@
+usage: blacksheep binarize [-h] [--output_prefix OUTPUT_PREFIX] annotations
+
+Takes an annotation table where some columns may have more than 2 possible
+values (not including empty/null values) and outputs an annotation table with
+only two values per annotation. Propagates null values.
+
+positional arguments:
+  annotations           Annotation table with samples as rows and annotation
+                        labels as columns.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --output_prefix OUTPUT_PREFIX
+                        Output prefix for writing files. Default outliers.

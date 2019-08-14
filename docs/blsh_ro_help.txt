@@ -1,0 +1,63 @@
+usage: blacksheep outliers [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
+                           [--up_or_down {up,down}] [--do_not_aggregate]
+                           [--write_outlier_table] [--write_frac_table]
+                           [--ind_sep IND_SEP] [--frac_filter FRAC_FILTER]
+                           [--write_comparison_summaries] [--fdr FDR]
+                           [--write_gene_list] [--make_heatmaps]
+                           [--red_or_blue {red,blue}]
+                           [--annotation_colors ANNOTATION_COLORS]
+                           values annotations
+
+Runs whole outliers pipeline. Has options to output every possible output.
+
+positional arguments:
+  values                File path to input values. Samples are columns and
+                        genes/sites are rows. Only .tsv and .csv accepted.
+  annotations           File path to annotation values. Rows are sample names,
+                        header is different annotations. e.g. mutation status.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --output_prefix OUTPUT_PREFIX
+                        Output prefix for writing files. Default outliers.
+  --iqrs IQRS           Number of inter-quartile ranges (IQRs) above or below
+                        the median to consider a value an outlier. Default is
+                        1.5.
+  --up_or_down {up,down}
+                        Whether to look for up or down outliers. Choices are
+                        up or down. Default up.
+  --do_not_aggregate    Use flag if you do not want to sum outliers based on
+                        site prefixes.
+  --write_outlier_table
+                        Use flag to write a table of outlier counts.
+  --write_frac_table    Use flag if you want to write a table with fraction of
+                        values per site per sample that are outliers. Useful
+                        for custom visualization.
+  --ind_sep IND_SEP     If site labels have a parent molecule (e.g. a gene
+                        name such as ATM) and a site identifier (e.g. S365)
+                        this is the delimiter between the two elements.
+                        Default is -
+  --frac_filter FRAC_FILTER
+                        The minimum fraction of samples per group that must
+                        have an outlier in a gene toconsider that gene in the
+                        analysis. This is used to prevent a high number of
+                        outlier values in 1 sample from driving a low qvalue.
+                        Default 0.3
+  --write_comparison_summaries
+                        Use flag to write a separate file for each column in
+                        the annotations table, with outlier counts in each
+                        group, p-values and q-values in each group.
+  --fdr FDR             FDR threshold to use to select genes to visualize.
+                        Default 0.05
+  --write_gene_list     Use flag to write a list of significantly enriched
+                        genes for each value in each comparison.
+  --make_heatmaps       Use flag to draw a heatmap of significantly enriched
+                        genes for each value in each comparison. If used, need
+                        an fdr threshold as well.
+  --red_or_blue {red,blue}
+                        Color of values to draw on heatmap. Default red.
+  --annotation_colors ANNOTATION_COLORS
+                        File with color map to use for annotation header. Must
+                        have a line with 'value color' format for each value
+                        in annotations. Any value not represented will be
+                        assigned a new color.

@@ -1,0 +1,32 @@
+usage: blacksheep outliers_table [-h] [--output_prefix OUTPUT_PREFIX]
+                                 [--iqrs IQRS] [--up_or_down {up,down}]
+                                 [--ind_sep IND_SEP] [--do_not_aggregate]
+                                 [--write_frac_table]
+                                 values
+
+Takes a table of values and converts to a table of outlier counts.
+
+positional arguments:
+  values                File path to input values. Columns must be samples,
+                        genes must be sites or genes. Only .tsv and .csv
+                        accepted.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --output_prefix OUTPUT_PREFIX
+                        Output prefix for writing files. Default outliers.
+  --iqrs IQRS           Number of interquartile ranges (IQRs) above or below
+                        the median to consider a value an outlier. Default is
+                        1.5 IQRs.
+  --up_or_down {up,down}
+                        Whether to look for up or down outliers. Choices are
+                        up or down. Default up.
+  --ind_sep IND_SEP     If site labels have a parent molecule (e.g. a gene
+                        name such as ATM) and a site identifier (e.g. S365)
+                        this is the delimiter between the two elements.
+                        Default is -
+  --do_not_aggregate    Use flag if you do not want to sum outliers based on
+                        site prefixes.
+  --write_frac_table    Use flag if you want to write a table with fraction of
+                        values per site, per sample that are outliers. Will
+                        not be written by default. Useful for visualization.
