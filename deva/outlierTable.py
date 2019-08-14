@@ -28,6 +28,7 @@ def _convert_to_outliers(
 
     """
 
+    df = df.copy()
     df[row_iqr_name] = scipy.stats.iqr(df[samples], axis=1, nan_policy="omit")
     df[row_median_name] = np.nanquantile(df[samples], q=0.5, axis=1)
 

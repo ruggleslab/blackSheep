@@ -104,7 +104,7 @@ def _filter_outliers(
     rows without enough outliers in group0 are also removed.
 
     """
-
+    df = df.copy()
     group0_outliers = [x + col_seps + col_outlier_suffix for x in group0_list]
     group0_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group0_list]
     group1_outliers = [x + col_seps + col_outlier_suffix for x in group1_list]

@@ -19,6 +19,20 @@ def test_cli_outliers_table():
     _main(args)
 
 
+def test_cli_normer():
+    args = [
+        "normalize",
+        "tests/pidgin_values.csv",
+        "tests/pidgin_fracTable.csv",
+        "--output_prefix",
+        "tests/output/normer",
+        "--ind_sep",
+        "-",
+    ]
+
+    _main(args)
+
+
 def test_cli_compare_groups_with_heatmaps():
     args = [
         "compare_groups",
@@ -113,3 +127,5 @@ def test_cli_pipeline_with_figures():
     ]
 
     _main(args)
+
+

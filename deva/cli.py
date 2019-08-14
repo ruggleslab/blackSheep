@@ -142,8 +142,46 @@ def _make_parser():
     binarize.add_argument(
         "--output_prefix",
         type=_check_output_prefix,
-        default="outliers",
-        help="Output prefix for writing files. Default outliers. ",
+        default="annotations",
+        help="Output prefix for writing files. Default annotations. Suffix will be '.binarized.tsv'",
+    )
+
+    normalize = subparsers.add_parser(
+        "normalize",
+        description="Takes a target table and a normalizer table, and returns a normalized "
+                    "target table. Builds a regularized linear model for each line in the target "
+                    "table using the matching row ID in the normalizer table, and finds the "
+                    "residuals of that model for each value. for example, this could be used to "
+                    "normalize phospho-peptide data by protein abundance data; resulting values "
+                    "will reflect only abundance differences due to phosphorylation changes, "
+                    "not peptide abundances. Another use could be normalizing RNA by CNA. "
+    )
+    normalize.add_argument(
+        "target_values",
+        type=_is_valid_file,
+        help="Table of values to be normalized. Sites/genes as rows, samples as columns. "
+             "Row identifiers must be unique. "
+    )
+    normalize.add_argument(
+        "normalizer_values",
+        type=_is_valid_file,
+        help="Table of values to use for normalization. Sites/genes as rows, samples as columns. "
+             "Row identifiers must be unique, and must match the pre-ind_sep part of the target "
+             "values identifiers."
+    )
+    normalize.add_argument(
+        "--ind_sep",
+        type=str,
+        default=None,
+        help="Separator used in index if target is site specific. Row IDs before ind_sep in "
+             "the target must match the row IDs in normalizer_values. If row IDs already match, "
+             "leave blank."
+    )
+    normalize.add_argument(
+        "--output_prefix",
+        type=str,
+        default="values",
+        help="Prefix for output file. Suffix will be '.normalized.tsv'"
     )
 
     compare_groups = subparsers.add_parser(
@@ -152,7 +190,7 @@ def _make_parser():
         "table (output of outliers_table) and outputs qvalues from "
         "a statistical test that looks for enrichment of outlier values in each "
         "group in the annotation table. For each value in each comparison, the qvalue table will "
-        "have 1 column, if there are any genes in that comparison. ",
+        "have 1 column, if there are any genes in that comparison. "
     )
     compare_groups.add_argument(
         "outliers_table",
@@ -424,9 +462,6 @@ def _make_parser():
         "have a line with 'value    color' format for each value in annotations. Any value "
         "not represented will be assigned a new color. ",
     )
-    # argparsers = [outliers, compare_groups, visualize, outliers_table, binarize, parser]
-    # helps = {par.prog: argdown.md_help(par) for par in argparsers}
-
     return parser
 
 
@@ -458,7 +493,13 @@ def _main(args: Optional[List[str]] = None):
     elif args.which == "binarize":
         annotations = parsers.read_in_values(args.annotations)
         annotations = parsers.binarize_annotations(annotations)
-        annotations.to_csv("%s.tsv" % args.output_prefix, sep="\t")
+        annotations.to_csv("%s.binarized.tsv" % args.output_prefix, sep="\t")
+
+    elif args.which == "normalize":
+        target = parsers.read_in_values(args.target_values)
+        normalizer = parsers.read_in_values(args.normalizer_values)
+        df = parsers.normalize_df(target, normalizer, args.ind_sep)
+        df.to_csv(args.output_prefix + ".normalized.tsv", sep='\t')
 
     elif args.which == "compare_groups":
         outliers = parsers.read_in_outliers(

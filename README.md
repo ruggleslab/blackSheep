@@ -14,6 +14,8 @@ conda install -c bioconda blacksheep-outliers
 ### Requirements
 pandas  
 numpy  
+matplotlib  
+seaborn  
 scipy  
 scikit-learn  
 
@@ -48,9 +50,24 @@ vis_table = outliers.frac_table
 for col in annotations.columns:
     axs = deva.plot_heatmap(annotations, qvalues_table, col, vis_table, savefig=True)
 
+# Normalize values
+phospho = deva.read_in_values('') #Fill in file here
+protein = deva.read_in_values('') #Fill in file here
+
+
 ```
 
 ##### Command line interface
+*Example*
+```bash
+deva binarize annotations.tsv --output_prefix annotations_test
+deva outliers values.csv annotations_test.binarized.tsv --output_prefix test \
+--write_outlier_table --write_comparison_summaries --write_gene_list \
+--make_heatmaps
+```
+
+*Full help*
+Just make the outliers table:
 ```bash
 usage: deva outliers_table [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
                            [--up_or_down {up,down}] [--ind_sep IND_SEP]
@@ -83,8 +100,12 @@ optional arguments:
   --write_frac_table    Use flag if you want to write a table with fraction of
                         values per site, per sample that are outliers. Will
                         not be written by default. Useful for visualization.
+```
 
-
+Binarize the columns in an annotations table. 
+**Warning: do not include non-categorical columns, or columns you don't want binarized. You'll
+ end up with a huge un-wieldly table. **
+```bash
 usage: deva binarize [-h] [--output_prefix OUTPUT_PREFIX] annotations
 
 Takes an annotation table where some columns may have more than 2 possible
@@ -99,8 +120,10 @@ optional arguments:
   -h, --help            show this help message and exit
   --output_prefix OUTPUT_PREFIX
                         Output prefix for writing files. Default outliers.
+```
 
-
+Compare all the groups described in columns of an annotation table using outlier counts
+```bash
 usage: deva compare_groups [-h] [--output_prefix OUTPUT_PREFIX]
                            [--frac_filter FRAC_FILTER]
                            [--write_comparison_summaries] [--iqrs IQRS]
@@ -161,7 +184,10 @@ optional arguments:
                         --make_heatmaps is used. Must have a 'value color'
                         format for each value in annotations. Any value not
                         represented will be assigned a new color.
+```
 
+Make heatmaps visualizing enriched genes for each group in an annotation table
+```bash
 usage: deva visualize [-h] [--output_prefix OUTPUT_PREFIX]
                       [--annotations_to_show ANNOTATIONS_TO_SHOW [ANNOTATIONS_TO_SHOW ...]]
                       [--fdr FDR] [--red_or_blue {red,blue}]
@@ -203,8 +229,11 @@ optional arguments:
                         assigned a new color.
   --write_gene_list     Use flag to write a list of significantly enriched
                         genes for each value in each comparison.
+```
 
-
+Run the whole pipeline: call outliers, perform comparisons on all groups in an annotation table
+, optionally make heatmaps for each group. 
+```bash
 usage: deva outliers [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
                      [--up_or_down {up,down}] [--do_not_aggregate]
                      [--write_outlier_table] [--write_frac_table]
@@ -268,5 +297,43 @@ optional arguments:
                         have a line with 'value color' format for each value
                         in annotations. Any value not represented will be
                         assigned a new color.
-
 ``` 
+
+For finding the value differences that cannot be explained by a different data level. For example
+, this can be used to find out variation due to differential phosphorylation (phospho as
+ target_values) not due to protein abundance variation (protein as normalizer_values).  
+ **Warning: Row IDs between the two tables must match**  
+```bash
+usage: deva normalize [-h] [--ind_sep IND_SEP] [--output_prefix OUTPUT_PREFIX]
+                      target_values normalizer_values
+
+Takes a target table and a normalizer table, and returns a normalized target
+table. Builds a regularized linear model for each line in the target table
+using the matching row ID in the normalizer table, and finds the residuals of
+that model for each value. for example, this could be used to normalize
+phospho-peptide data by protein abundance data; resulting values will reflect
+only abundance differences due to phosphorylation changes, not peptide
+abundances. Another use could be normalizing RNA by CNA.
+
+positional arguments:
+  target_values         Table of values to be normalized. Sites/genes as rows,
+                        samples as columns. Row identifiers must be unique.
+  normalizer_values     Table of values to use for normalization. Sites/genes
+                        as rows, samples as columns. Row identifiers must be
+                        unique, and must match the pre-ind_sep part of the
+                        target values identifiers.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --ind_sep IND_SEP     Separator used in index if target is site specific.
+                        Row IDs before ind_sep in the target must match the
+                        row IDs in normalizer_values. If row IDs already
+                        match, leave blank.
+  --output_prefix OUTPUT_PREFIX
+                        Prefix for output file. Suffix will be
+                        '.normalized.tsv'
+
+```
+
+For a more thorough vignette, refer to our [supplementary notebooks](https://github.com
+/ruggleslab/blacksheep_supp) 

@@ -148,7 +148,7 @@ def convert_to_residuals(valstarget: Series, valsnormer: Series, model) -> Serie
 def normalize_df(
     target: DataFrame,
     normer: DataFrame,
-    ind_sep: str = "-",
+    ind_sep: Optional[str] = "-",
     alphas: Optional[Iterable[float]] = None,
     cv: float = 5,
     **RidgeCV_kws

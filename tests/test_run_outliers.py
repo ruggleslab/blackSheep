@@ -82,3 +82,10 @@ def test_run_outliers_comps():
 
     test_outliers, test_qvals = bsh.run_outliers(df, annotations)
     assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values()) == 0
+
+
+def test_normalizer():
+    with open("tests/pidgin_example.pickle", "rb") as fh:
+        df, annotations, outliers, fractable, qvalues = pickle.load(fh)
+    bsh.normalize_df(df, fractable)
+
