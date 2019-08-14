@@ -445,7 +445,7 @@ def _main(args: Optional[List[str]] = None):
         logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))
 
     if args.which == "outliers_table":
-        df = parsers.parse_values(args.values)
+        df = parsers.read_in_values(args.values)
         make_outliers_table(
             df,
             iqrs=args.iqrs,
@@ -458,16 +458,16 @@ def _main(args: Optional[List[str]] = None):
         )
 
     elif args.which == "binarize":
-        annotations = parsers.parse_values(args.annotations)
+        annotations = parsers.read_in_values(args.annotations)
         annotations = parsers.binarize_annotations(annotations)
         annotations.to_csv("%s.tsv" % args.output_prefix, sep="\t")
 
     elif args.which == "compare_groups":
-        outliers = parsers.parse_outliers(
+        outliers = parsers.read_in_outliers(
             args.outliers_table, args.up_or_down, args.iqrs
         )
 
-        annotations = parsers.parse_values(args.annotations)
+        annotations = parsers.read_in_values(args.annotations)
         qVals = compare_groups_outliers(
             outliers,
             annotations,
@@ -495,9 +495,9 @@ def _main(args: Optional[List[str]] = None):
                 plt.close()
 
     elif args.which == "visualize":
-        qvals = parsers.parse_values(args.comparison_qvalues)
-        annotations = parsers.parse_values(args.annotations)
-        frac_table = parsers.parse_values(args.visualization_table)
+        qvals = parsers.read_in_values(args.comparison_qvalues)
+        annotations = parsers.read_in_values(args.annotations)
+        frac_table = parsers.read_in_values(args.visualization_table)
         col_of_interest = args.comparison_of_interest
         annot_cols = args.annotations_to_show[0].split()
 
@@ -528,8 +528,8 @@ def _main(args: Optional[List[str]] = None):
             )
 
     elif args.which == "outliers":
-        df = parsers.parse_values(args.values)
-        annotations = parsers.parse_values(args.annotations)
+        df = parsers.read_in_values(args.values)
+        annotations = parsers.read_in_values(args.annotations)
         outLiers, qVals = run_outliers(
             df,
             annotations,

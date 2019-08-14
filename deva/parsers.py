@@ -63,7 +63,7 @@ def _check_suffix(path: str) -> str:
     return sep
 
 
-def parse_values(path: str) -> DataFrame:
+def read_in_values(path: str) -> DataFrame:
     """Figures out sep and parsing file into dataframe.
 
     Args:
@@ -78,7 +78,7 @@ def parse_values(path: str) -> DataFrame:
     return df
 
 
-def parse_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
+def read_in_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
     """Parses a file into an OutlierTable object.
 
     Args:

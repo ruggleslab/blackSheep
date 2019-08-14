@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blacksheep-outliers",
-    version="0.0.3",
+    version="0.0.4",
     author="Ruggles Lab",
     author_email="lili.blumenberg@gmail.com",
     description="A package for differential extreme values analysis",

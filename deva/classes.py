@@ -12,7 +12,6 @@ class OutlierTable:
         df: DataFrame,
         updown: str,
         iqrs: Optional[float],
-        iqrs: Optional[float],
         samples: Optional[list],
         frac_table: Optional[DataFrame],
     ):
