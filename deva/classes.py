@@ -1,8 +1,25 @@
-from typing import List, Optional
+from typing import List, Optional, Iterable
 from pandas import DataFrame
 import numpy as np
 from deva.constants import *
-from deva import parsers
+
+
+def list_to_file(lis: Iterable, filename: str):
+    """Takes an iterable and a file path and writes a value per line from the iterable into the new
+    file.
+
+    Args:
+        lis: Iterable to write to file
+        filename: Filename to write to.
+
+    Returns:
+        None
+
+    """
+
+    with open(filename, "w") as fh:
+        for x in lis:
+            fh.write("%s\n" % x)
 
 
 class OutlierTable:
@@ -98,6 +115,6 @@ class qValues:
 
         for comp in comparisons:
             sig_genes = list(self.df.loc[(self.df[comp] < fdr_cut_off), :].index)
-            parsers.list_to_file(
+            list_to_file(
                 sig_genes, gene_list_file_name % (output_prefix, comp, fdr_cut_off)
             )

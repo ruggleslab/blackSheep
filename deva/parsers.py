@@ -6,7 +6,6 @@ from pandas import DataFrame, Series
 import numpy as np
 import sklearn.linear_model as lm
 from sklearn.exceptions import UndefinedMetricWarning
-
 from deva.classes import OutlierTable
 from deva.constants import *
 
@@ -127,24 +126,6 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
                 new_df.loc[(df[col] == val), binarized_col_name % (col, val)] = val
                 new_df.loc[df[col].isnull(), binarized_col_name % (col, val)] = np.nan
     return new_df
-
-
-def list_to_file(lis: Iterable, filename: str):
-    """Takes an iterable and a file path and writes a value per line from the iterable into the new
-    file.
-
-    Args:
-        lis: Iterable to write to file
-        filename: Filename to write to.
-
-    Returns:
-        None
-
-    """
-
-    with open(_check_output_prefix(filename), "w") as fh:
-        for x in lis:
-            fh.write("%s\n" % x)
 
 
 def convert_to_residuals(

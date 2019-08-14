@@ -1,4 +1,4 @@
-from blacksheep.cli import _main
+from deva.cli import _main
 
 
 def test_cli_outliers_table():

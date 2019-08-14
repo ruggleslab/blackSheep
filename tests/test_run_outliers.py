@@ -1,6 +1,5 @@
 import pickle
-import pandas as pd
-import blacksheep as bsh
+import deva as bsh
 
 
 def test_outliers_table():

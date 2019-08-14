@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blacksheep-outliers",
-    version="0.0.4",
+    version="0.0.7",
     author="Ruggles Lab",
     author_email="lili.blumenberg@gmail.com",
     description="A package for differential extreme values analysis",
@@ -26,5 +26,5 @@ setuptools.setup(
         'seaborn >= 0.9.0',
     ],
     packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    entry_points={"console_scripts": ["deva = deva.cli:main"]},
+    entry_points={"console_scripts": ["deva = deva.cli:_main"]},
 )

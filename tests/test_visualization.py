@@ -1,6 +1,6 @@
 import pickle
 import pandas as pd
-from blacksheep import visualization
+from deva import visualization
 
 
 def test_heatmap_small():

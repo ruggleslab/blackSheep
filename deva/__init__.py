@@ -1,8 +1,8 @@
 import logging
-from .classes import qValues, OutlierTable
-from .outliers import make_outliers_table, compare_groups_outliers, run_outliers
-from .visualization import plot_heatmap
-from .parsers import binarize_annotations, normalize_df, read_in_values, read_in_outliers
+from deva.classes import qValues, OutlierTable
+from deva.outliers import make_outliers_table, compare_groups_outliers, run_outliers
+from deva.visualization import plot_heatmap
+from deva.parsers import binarize_annotations, normalize_df, read_in_values, read_in_outliers
 
 
 fmt = "%(asctime)s:%(levelname)s:%(message)s"
