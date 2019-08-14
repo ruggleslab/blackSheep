@@ -2,11 +2,11 @@ from typing import Optional, Iterable
 import logging
 from pandas import DataFrame
 import numpy as np
-from . import catheat
+from deva import catheat
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatch
 import seaborn as sns
-from .constants import *
+from deva.constants import *
 
 
 def _get_sample_order(annotations: DataFrame, col_of_interest: str) -> Iterable:

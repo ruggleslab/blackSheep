@@ -4,18 +4,18 @@ import logging
 import argparse
 # import argdown
 import matplotlib.pyplot as plt
-from blacksheep.outliers import run_outliers
-from blacksheep.outliers import make_outliers_table
-from blacksheep.outliers import compare_groups_outliers
-from blacksheep import parsers
-from blacksheep.parsers import _is_valid_file, _check_output_prefix
-from blacksheep.classes import qValues
-from blacksheep.visualization import plot_heatmap
-from blacksheep.constants import *
+from deva.outliers import run_outliers
+from deva.outliers import make_outliers_table
+from deva.outliers import compare_groups_outliers
+from deva import parsers
+from deva.parsers import _is_valid_file, _check_output_prefix
+from deva.classes import qValues
+from deva.visualization import plot_heatmap
+from deva.constants import *
 
 
 __doc__ = """
-Command line interface for blacksheep: 
+Command line interface for deva: 
 
     .. include:: ../docs/help_cli.txt
     
@@ -64,7 +64,7 @@ def _bn0and1(arg: str) -> float:
 # Argparser
 def _make_parser():
     parser = argparse.ArgumentParser(
-        prog="blacksheep", description='',
+        prog="deva", description='',
     )
     parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
@@ -440,7 +440,7 @@ def _main(args: Optional[List[str]] = None):
 
     logger = _set_up_logger(args.output_prefix)
 
-    logger.info("Running BlackSheep in %s mode" % args.which)
+    logger.info("Running deva in %s mode" % args.which)
     for arg in vars(args):
         logger.info("Parameter %s: %s" % (arg, getattr(args, arg)))
 
@@ -578,7 +578,7 @@ def _main(args: Optional[List[str]] = None):
 #
 # doc = []
 # for k, v in helps.items():
-#     doc.extend(['# blacksheep %s' % k, v])
+#     doc.extend(['# deva %s' % k, v])
 # __doc__ = '\n'.join(doc)
 
 # Run cli

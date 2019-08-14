@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blacksheep-outliers",
-    version="0.0.1",
+    version="0.0.3",
     author="Ruggles Lab",
     author_email="lili.blumenberg@gmail.com",
-    description="A package for differential expression analysis using outlier values.",
+    description="A package for differential extreme values analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ruggleslab/blackSheep/",
@@ -26,6 +26,5 @@ setuptools.setup(
         'seaborn >= 0.9.0',
     ],
     packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    # package_data={"tests": files},
-    entry_points={"console_scripts": ["blacksheep = blacksheep.cli:main"]},
+    entry_points={"console_scripts": ["deva = deva.cli:main"]},
 )

@@ -3,12 +3,12 @@ import logging
 import os.path
 import pandas as pd
 from pandas import DataFrame
-from .classes import OutlierTable, qValues
-from .outlierTable import _convert_to_outliers
-from .outlierTable import _convert_to_counts
-from .comparisons import _compare_groups
-from .comparisons import get_sample_lists
-from .constants import *
+from deva.classes import OutlierTable, qValues
+from deva.outlierTable import _convert_to_outliers
+from deva.outlierTable import _convert_to_counts
+from deva.comparisons import _compare_groups
+from deva.comparisons import get_sample_lists
+from deva.constants import *
 
 
 SampleList = List[str]

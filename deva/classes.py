@@ -1,8 +1,8 @@
 from typing import List, Optional
 from pandas import DataFrame
 import numpy as np
-from .constants import *
-import blacksheep as bsh
+from deva.constants import *
+from deva import parsers
 
 
 class OutlierTable:
@@ -11,6 +11,7 @@ class OutlierTable:
         self,
         df: DataFrame,
         updown: str,
+        iqrs: Optional[float],
         iqrs: Optional[float],
         samples: Optional[list],
         frac_table: Optional[DataFrame],
@@ -98,6 +99,6 @@ class qValues:
 
         for comp in comparisons:
             sig_genes = list(self.df.loc[(self.df[comp] < fdr_cut_off), :].index)
-            bsh.parsers.list_to_file(
+            parsers.list_to_file(
                 sig_genes, gene_list_file_name % (output_prefix, comp, fdr_cut_off)
             )
