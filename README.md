@@ -66,7 +66,7 @@ deva outliers values.csv annotations_test.binarized.tsv --output_prefix test \
 --make_heatmaps
 ```
 
-*Full help*
+*Full help*  
 Just make the outliers table:
 ```bash
 usage: deva outliers_table [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
@@ -102,7 +102,7 @@ optional arguments:
                         not be written by default. Useful for visualization.
 ```
 
-Binarize the columns in an annotations table. 
+Binarize the columns in an annotations table.   
 **Warning: do not include non-categorical columns, or columns you don't want binarized. You'll
  end up with a huge un-wieldly table. **
 ```bash
@@ -301,8 +301,8 @@ optional arguments:
 
 For finding the value differences that cannot be explained by a different data level. For example
 , this can be used to find out variation due to differential phosphorylation (phospho as
- target_values) not due to protein abundance variation (protein as normalizer_values).  
- **Warning: Row IDs between the two tables must match**  
+ target_values) not due to protein abundance variation (protein as normalizer_values).   
+**Warning: Row IDs between the two tables must match**  
 ```bash
 usage: deva normalize [-h] [--ind_sep IND_SEP] [--output_prefix OUTPUT_PREFIX]
                       target_values normalizer_values
@@ -335,5 +335,4 @@ optional arguments:
 
 ```
 
-For a more thorough vignette, refer to our [supplementary notebooks](https://github.com
-/ruggleslab/blacksheep_supp) 
+For a more thorough vignette, refer to our [supplementary notebooks](https://github.com/ruggleslab/blacksheep_supp) 
