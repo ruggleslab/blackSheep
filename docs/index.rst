@@ -10,16 +10,17 @@ Welcome to blacksheep's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+
+Indices and tables
+==================
+
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
+
+
 DEVA (Differential Extreme Value Analysis)
 ==========================================
 
 .. automodule:: deva
    :members:
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
