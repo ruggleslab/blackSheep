@@ -200,7 +200,8 @@ def run_outliers(
     ind_sep: str = "-",
     save_comparison_summaries: bool = False,
 ) -> Tuple[OutlierTable, qValues]:
-    """Takes a DataFrame of values and returns OutlierTable and qValues objects. This command runs
+    """
+    Takes a DataFrame of values and returns OutlierTable and qValues objects. This command runs
     the whole outliers pipeline. The DataFrame in the OutlierTable object can be used to run more
     comparisons in future. The qValues object can be used for visualization, or writing
     significant gene lists.

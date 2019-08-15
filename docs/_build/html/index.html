@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to blacksheep’s documentation! &mdash; blacksheep 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> blacksheep
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to blacksheep’s documentation!</a></li>
+<li><a class="reference internal" href="#module-deva">DEVA (Differential Extreme Value Analysis)</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">blacksheep</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to blacksheep’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-blacksheep-s-documentation">
+<h1>Welcome to blacksheep’s documentation!<a class="headerlink" href="#welcome-to-blacksheep-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="module-deva">
+<span id="deva-differential-extreme-value-analysis"></span><h1>DEVA (Differential Extreme Value Analysis)<a class="headerlink" href="#module-deva" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="deva.make_outliers_table">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">make_outliers_table</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">iqrs: float = 1.5</em>, <em class="sig-param">up_or_down: str = 'up'</em>, <em class="sig-param">aggregate: bool = True</em>, <em class="sig-param">save_outlier_table: bool = False</em>, <em class="sig-param">save_frac_table: bool = False</em>, <em class="sig-param">output_prefix: str = 'outliers'</em>, <em class="sig-param">ind_sep: str = '-'</em><span class="sig-paren">)</span> &#x2192; deva.classes.OutlierTable<a class="headerlink" href="#deva.make_outliers_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a DataFrame of values into an OutlierTable object, which includes a DataFrame
+of outlier and non-outlier count values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – Input DataFrame with samples as columns and sites/genes as columns.</p></li>
+<li><p><strong>iqrs</strong> – The number of inter-quartile ranges (IQRs) above or below the median to consider a         value as an outlier.</p></li>
+<li><p><strong>up_or_down</strong> – Whether to call up or down outliers. Up is above the median; down         is below the median. Options “up” or “down”.</p></li>
+<li><p><strong>aggregate</strong> – Whether to sum outliers across a grouping (e.g. gene-level) than individual         sites. For instance if columns indicate phosphosites on proteins, with the format         “RAG2-S365”, output will show counts of outliers per protein (e.g. RAG2) rather than on         individual sites (e.g. RAG2-S365).</p></li>
+<li><p><strong>save_outlier_table</strong> – Whether to write a file with the outlier count table.</p></li>
+<li><p><strong>save_frac_table</strong> – Whether to write a file with the outlier fraction table.</p></li>
+<li><p><strong>output_prefix</strong> – If files are written, a prefix for the files.</p></li>
+<li><p><strong>ind_sep</strong> – The separator used in sites, for instance, to separate a gene and site.         If just using genes (i.e. no separator), or not aggregating this parameter has no effect.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: outliers</dt><dd><p>Returns an OutlierTable object, with outlier and non-outlier counts and metadata
+about how the outliers were called.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="deva.compare_groups_outliers">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">compare_groups_outliers</code><span class="sig-paren">(</span><em class="sig-param">outliers: deva.classes.OutlierTable</em>, <em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">frac_filter: Optional[float] = 0.3</em>, <em class="sig-param">save_qvalues: bool = False</em>, <em class="sig-param">output_prefix: str = 'outliers'</em>, <em class="sig-param">save_comparison_summaries: bool = False</em><span class="sig-paren">)</span> &#x2192; deva.classes.qValues<a class="headerlink" href="#deva.compare_groups_outliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an OutlierTable object and a sample annotation DataFrame and performs comparisons for
+any column in annotations with exactly 2 groups. For each group identified in the annotations
+DataFrame, this function will calculate the q-values of enrichment of outliers for each row in
+each group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outliers</strong> – An OutlierTable, with a DataFrame of outlier and non-outlier counts,         as well as parameters for how outliers were calculated.</p></li>
+<li><p><strong>annotations</strong> – A DataFrame with samples as rows and annotations as columns. Each         column must contain exactly 2 different categories, not counting missing values. Columns         without 2 options will be ignored.</p></li>
+<li><p><strong>frac_filter</strong> – The fraction of samples in the group of interest that must         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.</p></li>
+<li><p><strong>save_qvalues</strong> – Whether to write a file with a table of qvalues.</p></li>
+<li><p><strong>output_prefix</strong> – If files are written, a prefix for the files.</p></li>
+<li><p><strong>save_comparison_summaries</strong> – Whether to write a file for each annotation column with the         counts in the fisher table, pvalues and q values per row.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: qvals</dt><dd><p>A qValues object, which includes a DataFrame of q-values for each comparison,         as well as some metadata about how the comparisons were performed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="deva.run_outliers">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">run_outliers</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">iqrs: float = 1.5</em>, <em class="sig-param">up_or_down: str = 'up'</em>, <em class="sig-param">aggregate: bool = True</em>, <em class="sig-param">save_outlier_table: bool = False</em>, <em class="sig-param">save_frac_table: bool = False</em>, <em class="sig-param">frac_filter: Optional[float] = 0.3</em>, <em class="sig-param">save_qvalues: bool = False</em>, <em class="sig-param">output_prefix: str = 'outliers'</em>, <em class="sig-param">ind_sep: str = '-'</em>, <em class="sig-param">save_comparison_summaries: bool = False</em><span class="sig-paren">)</span> &#x2192; Tuple[deva.classes.OutlierTable, deva.classes.qValues]<a class="headerlink" href="#deva.run_outliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a DataFrame of values and returns OutlierTable and qValues objects. This command runs
+the whole outliers pipeline. The DataFrame in the OutlierTable object can be used to run more
+comparisons in future. The qValues object can be used for visualization, or writing
+significant gene lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – Input DataFrame with samples as columns and sites/genes as rows.</p></li>
+<li><p><strong>annotations</strong> – A DataFrame with samples as rows and annotations as columns. Each         column must contain exactly 2 different values, not counting missing         values. Other columns will be ignored.</p></li>
+<li><p><strong>iqrs</strong> – The number of interquartile ranges (IQRs) above or below the median to consider a         value as an outlier.</p></li>
+<li><p><strong>up_or_down</strong> – Whether to call up or down outliers. Up is above the median; down         is below the median. Options “up” or “down”.</p></li>
+<li><p><strong>aggregate</strong> – Whether to sum outliers across a grouping (e.g. gene-level) than individual         sites. For instance if columns indicate phosphosites on proteins, with the format         “RAG2-S365”, output will show counts of outliers per protein (e.g. RAG2) rather than on         individual sites (e.g. RAG2-S365).</p></li>
+<li><p><strong>save_outlier_table</strong> – Whether to write a file with the outlier count table.</p></li>
+<li><p><strong>save_frac_table</strong> – Whether to write a file of the fraction of outliers.</p></li>
+<li><p><strong>frac_filter</strong> – The fraction of samples in the group of interest that must         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.</p></li>
+<li><p><strong>save_qvalues</strong> – Whether to write a file of qvalues.</p></li>
+<li><p><strong>output_prefix</strong> – If files are written, a prefix for the files.</p></li>
+<li><p><strong>ind_sep</strong> – The separator used in the columns, for instance, to separate a gene and site.         If just using genes (i.e. no separator), or not aggregating this parameter         has no effect.</p></li>
+<li><p><strong>save_comparison_summaries</strong> – Whether to write a table for each comparison with the         counts in the fisher table, pvalues and qvalues per row.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: outliers, qvals</dt><dd><p>Returns an OutlierTable object and qValues object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="deva.plot_heatmap">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">plot_heatmap</code><span class="sig-paren">(</span><em class="sig-param">annotations: pandas.core.frame.DataFrame</em>, <em class="sig-param">qvals: pandas.core.frame.DataFrame</em>, <em class="sig-param">col_of_interest: str</em>, <em class="sig-param">vis_table: pandas.core.frame.DataFrame</em>, <em class="sig-param">fdr: float = 0.05</em>, <em class="sig-param">red_or_blue: str = 'red'</em>, <em class="sig-param">output_prefix: str = 'outliers'</em>, <em class="sig-param">colors: Optional[str] = None</em>, <em class="sig-param">savefig: bool = False</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#deva.plot_heatmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a heatmap of significantly enriched values for a given comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>annotations</strong> – Annotations DataFrame, samples as rows, annotations as columns</p></li>
+<li><p><strong>qvals</strong> – qvalues DataFrame with genes/sites as rows and comparisons as columns</p></li>
+<li><p><strong>col_of_interest</strong> – Which column from qvalues should be used to find signficant genes</p></li>
+<li><p><strong>vis_table</strong> – Table to be visualized in heatmap. Index values should correspond to the         annotation df index, column names should correspond to qvals df index</p></li>
+<li><p><strong>fdr</strong> – FDR threshold to for significance</p></li>
+<li><p><strong>red_or_blue</strong> – Whether heatmap should be in red or blue color scale</p></li>
+<li><p><strong>output_prefix</strong> – If saving files, output prefix</p></li>
+<li><p><strong>colors</strong> – File to find color map for annotation header</p></li>
+<li><p><strong>savefig</strong> – Whether to save the plot to a pdf</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: [annot_ax, vals_ax, cbar_ax, leg_ax]</dt><dd><p>List of matplotlib axs, can be further customized before saving. In order the axes         contain: annotation header, the heatmap, the color bar, and the legend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="deva.binarize_annotations">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">binarize_annotations</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#deva.binarize_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an annotation DataFrame, checks each column for the number of possible values,
+and adjusts based on that. If the column has 0 or 1 options, it is dropped. Cols with 2
+possible values are retained as-is. Cols with more than 2 values are expanded. For each
+value in that column, a new column is created with val and not_val options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> – Annotations DataFrame.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: new_df</dt><dd><p>Refactored annotations DataFrame.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="deva.read_in_values">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">read_in_values</code><span class="sig-paren">(</span><em class="sig-param">path: str</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#deva.read_in_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Figures out sep and parsing file into dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – File path</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: df</dt><dd><p>DataFrame from table in file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="deva.read_in_outliers">
+<code class="sig-prename descclassname">deva.</code><code class="sig-name descname">read_in_outliers</code><span class="sig-paren">(</span><em class="sig-param">path: str</em>, <em class="sig-param">updown: str</em>, <em class="sig-param">iqrs: float</em><span class="sig-paren">)</span> &#x2192; deva.classes.OutlierTable<a class="headerlink" href="#deva.read_in_outliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a file into an OutlierTable object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – File path</p></li>
+<li><p><strong>updown</strong> – Whether the outliers represent up or down outliers</p></li>
+<li><p><strong>iqrs</strong> – How many IQRs were used to define an outlier</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: outliers</dt><dd><p>OutlierTable object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, RugglesLab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
