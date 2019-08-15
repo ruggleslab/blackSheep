@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pandas import Series
 import numpy as np
 import scipy.stats
-from deva.constants import *
+from deva._constants import *
 
 
 SampleList = List[str]
@@ -66,8 +66,8 @@ def get_sample_lists(
 
     Args:
         annotations: A DataFrame with samples as the index and annotations as columns. Each
-        column must contain exactly 2 different values, and optionally missing values. Columns with
-        less or more than 2 options will be ignored.
+        column must contain exactly 2 different values, and optionally missing values. Columns
+        with less or more than 2 options will be ignored.
         col: Which column for which to define groups.
 
     Returns: A label for group0, the list of samples in group0, a label for group1 and the list
@@ -110,6 +110,8 @@ def _filter_outliers(
     group1_outliers = [x + col_seps + col_outlier_suffix for x in group1_list]
     group1_notOutliers = [x + col_seps + col_not_outlier_suffix for x in group1_list]
 
+    if (frac_filter < 0) or (frac_filter > 1):
+        raise ValueError("Frac filter must be between 0 and 1")
     if frac_filter != None:
         min_num_outlier_samps = len(group0_list) * frac_filter
         num_outlier_samps = (df[group0_outliers] > 0).sum(axis=1)

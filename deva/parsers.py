@@ -1,4 +1,5 @@
 import warnings
+import logging
 import os.path
 from typing import Iterable, Optional
 import pandas as pd
@@ -7,7 +8,7 @@ import numpy as np
 import sklearn.linear_model as lm
 from sklearn.exceptions import UndefinedMetricWarning
 from deva.classes import OutlierTable
-from deva.constants import *
+from deva._constants import *
 
 
 def _is_valid_file(arg: str) -> str:
@@ -121,7 +122,20 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
     return new_df
 
 
-def convert_to_residuals(valstarget: Series, valsnormer: Series, model) -> Series:
+def _convert_to_residuals(valstarget: Series, valsnormer: Series, model) -> Series:
+    """ Take a 1d array of values to normalize, and a 1d array of values to use for
+    normalization and a model. Trains the model using the target as labels and normer as
+    features, then predicts for each normer values and subtracts the original target value,
+    leaving residual values.
+
+    Args:
+        valstarget: 1d array of values to normalize
+        valsnormer: 1d array of values to use to normalize
+        model: a machine learning model, on which you can perform .fit and .predict
+
+    Returns: residuals
+
+    """
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
     nonull = (valstarget.isnull() == False) & (valsnormer.isnull() == False)
@@ -144,11 +158,36 @@ def normalize_df(
     cv: float = 5,
     **RidgeCV_kws
 ) -> DataFrame:
+    """ Used to normalize a dataset by another dataset, using a linear model with regularization
+    chosen through cross validation (aka sklearn's RidgeCV). This is useful for normalizing,
+    for example, RNA values by CNA, or phosphopeptide values by protein abundance. If target and
+    normer dataframe row IDs (index) match 1:1, pass None for ind_sep.
+
+    Args:
+        target: Dataframe of values to normalize. Row IDs (index) before the sep (or whole ID
+        if no sep) must match normer IDs. Row IDs must be unique.
+        normer: Dataframe of values to use for normalization. Row IDs must match all or
+        pre-ind_sep portions of target row IDs. Row IDs must be unique.
+        ind_sep: If multiple rows in target map to 1 row in normer, the delimiter used to split
+        the unique ID that matches the normer IDs. Defaul "-"
+        alphas: Parameters to try for regulariztion. If None, tries powers of 2 from -10 to 10.
+        cv: Fold for cross validation. Also the minimum number of non-null values for each
+        row. Default 5
+        **RidgeCV_kws: kws to pass to sklearn's RidgeCV
+
+    Returns: normed
+        The target dataframe normalized by the normer dataframe. Only includes rows with
+        sufficient non-null values from both dataframe.
+
+    """
 
     if not alphas:
         alphas = [2 ** i for i in range(-10, 10, 1)]
 
-    normer = normer.reindex(target.columns, axis=1)
+    normer = normer[[col for col in target.columns if col in normer.columns]]
+    target = target[normer.columns]
+    if (len(normer.columns) < cv) or (len(target.columns) < cv):
+        raise KeyError("target and normer dataframes do not have at least %s columns in common" %cv)
 
     target = target.transpose()
     target["col0"] = 0
@@ -166,11 +205,17 @@ def normalize_df(
 
     target["gene"] = [i.split(ind_sep)[0] for i in target.index]
     target = target.loc[target["gene"].isin(normer.index), :]
+    if len(target) == 0:
+        raise KeyError("No rows in common between target and normer")
+    logging.info(
+        "Normalizing %s common rows and %s common samples between target and normer"
+        %(len(target), len(normer.columns))
+    )
     data = target.merge(normer, how="left", left_on="gene", right_index=True)
 
     model = lm.RidgeCV(alphas=alphas, cv=cv, **RidgeCV_kws)
     normed = data.apply(
-        (lambda row: convert_to_residuals(row[0], row[1], model)), axis=1
+        (lambda row: _convert_to_residuals(row[0], row[1], model)), axis=1
     )
 
     return normed

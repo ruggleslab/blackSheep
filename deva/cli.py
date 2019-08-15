@@ -3,7 +3,6 @@ import sys
 import logging
 import argparse
 
-# import argdown
 import matplotlib.pyplot as plt
 from deva.outliers import run_outliers
 from deva.outliers import make_outliers_table
@@ -12,13 +11,13 @@ from deva import parsers
 from deva.parsers import _is_valid_file, _check_output_prefix
 from deva.classes import qValues
 from deva.visualization import plot_heatmap
-from deva.constants import *
+from deva._constants import *
 
 
 __doc__ = """
 Command line interface for deva: 
 
-    .. include:: ../docs/help_cli.txt
+  .. include:: ../docs/helpcli.txt
     
 """
 

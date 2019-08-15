@@ -6,7 +6,7 @@ from deva import catheat
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatch
 import seaborn as sns
-from deva.constants import *
+from deva._constants import *
 
 
 def _get_sample_order(annotations: DataFrame, col_of_interest: str) -> Iterable:

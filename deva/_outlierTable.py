@@ -3,13 +3,14 @@ import numpy as np
 import scipy.stats
 from pandas import DataFrame
 from typing import List
-from deva.constants import *
+from deva._constants import *
+
 
 SampleList = List[str]
 
 
 def _convert_to_outliers(
-    df: DataFrame, samples: SampleList, NUM_IQRs: float, up_or_down: str
+    df: DataFrame, samples: SampleList, num_iqrs: float, up_or_down: str
 ) -> DataFrame:
     """Calls outliers on a given values table.
 
@@ -18,7 +19,7 @@ def _convert_to_outliers(
         Index should be an identifier for each row.
         samples: List of samples to be considered in the distribution when defining median, \
         IQR and outliers.
-        NUM_IQRs: How many inter-quartile ranges (IQRs) above or below the median to consider \
+        num_iqrs: How many inter-quartile ranges (IQRs) above or below the median to consider \
         something an outlier.
         up_or_down: Whether to call outliers above the median (up) or below the median (down)
 
@@ -27,6 +28,8 @@ def _convert_to_outliers(
         an outlier. Missing values are propagated.
 
     """
+    if num_iqrs <= 0:
+        raise ValueError("num_iqrs must be greater than 0")
 
     df = df.copy()
     df[row_iqr_name] = scipy.stats.iqr(df[samples], axis=1, nan_policy="omit")
@@ -35,20 +38,20 @@ def _convert_to_outliers(
     outlier_df = pd.DataFrame()
 
     if up_or_down == "up":
-        df[row_upper_bound_name] = df[row_median_name] + (NUM_IQRs * df[row_iqr_name])
+        df[row_upper_bound_name] = df[row_median_name] + (num_iqrs * df[row_iqr_name])
         outlier_df[samples] = (
             df[samples].gt(df[row_upper_bound_name], axis=0).astype(int)
         )
-
+        outlier_df[df[samples].isnull()] = np.nan
+        return outlier_df
     elif up_or_down == "down":
-        df[row_lower_bound_name] = df[row_median_name] - (NUM_IQRs * df[row_iqr_name])
+        df[row_lower_bound_name] = df[row_median_name] - (num_iqrs * df[row_iqr_name])
         outlier_df[samples] = (
             df[samples].lt(df[row_lower_bound_name], axis=0).astype(int)
         )
-
-    outlier_df[df[samples].isnull()] = np.nan
-
-    return outlier_df
+        outlier_df[df[samples].isnull()] = np.nan
+        return outlier_df
+    raise ValueError("up_or_down must be either 'up' or 'down'")
 
 
 def _convert_to_counts(
