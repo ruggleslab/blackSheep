@@ -11,9 +11,6 @@ from deva.comparisons import get_sample_lists
 from deva.constants import *
 
 
-SampleList = List[str]
-
-
 def make_outliers_table(
     df: DataFrame,
     iqrs: float = 1.5,
@@ -55,12 +52,11 @@ def make_outliers_table(
     df = _convert_to_outliers(df, samples, iqrs, up_or_down)
     df = _convert_to_counts(df, samples, aggregate, ind_sep)
     outliers = OutlierTable(df, up_or_down, iqrs, samples, None)
-    frac_table = outliers.make_frac_table()
 
     if save_frac_table:
         frac_path = os.path.abspath(frac_table_file_name % (output_prefix, up_or_down))
         logging.info("Saving outlier fraction table to %s" % frac_path)
-        frac_table.to_csv(frac_path, sep="\t")
+        outliers.frac_table.to_csv(frac_path, sep="\t")
 
     if save_outlier_table:
         out_path = os.path.abspath(

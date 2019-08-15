@@ -22,6 +22,23 @@ def list_to_file(lis: Iterable, filename: str):
             fh.write("%s\n" % x)
 
 
+def make_frac_table(df, samples):
+    """Constructs the fraction table from the outliers table
+
+    Returns: A DataFrame with one column per sample, with the fraction of outliers per row
+    per sample. This table is useful for visualization but not statistics.
+
+    """
+    df = df.copy()
+    cols_outliers = [x + col_seps + col_outlier_suffix for x in samples]
+    cols_notOutliers = [x + col_seps + col_not_outlier_suffix for x in samples]
+    df = df.fillna(0)
+    num_total_psites = df[cols_notOutliers].values + df[cols_outliers].values
+    with np.errstate(divide="ignore", invalid="ignore"):
+        frac_table = df[cols_outliers].values / num_total_psites
+
+    return DataFrame(frac_table, index=df.index, columns=samples)
+
 class OutlierTable:
     """Output of calling outliers. """
 
@@ -48,27 +65,11 @@ class OutlierTable:
         self.up_or_down = updown
         self.iqrs = iqrs
         self.samples = samples
-        self.frac_table = frac_table
+        if frac_table is not None:
+            self.frac_table = frac_table
+        else:
+            self.frac_table = make_frac_table(df, samples)
 
-    def make_frac_table(self):
-        """Constructs the fraction table from the outliers table
-
-        Returns: A DataFrame with one column per sample, with the fraction of outliers per row
-        per sample. This table is useful for visualization but not statistics.
-
-        """
-
-        df = self.df
-        cols_outliers = [x + col_seps + col_outlier_suffix for x in self.samples]
-        cols_notOutliers = [x + col_seps + col_not_outlier_suffix for x in self.samples]
-        df = df.fillna(0)
-        num_total_psites = df[cols_notOutliers].values + df[cols_outliers].values
-        with np.errstate(divide="ignore", invalid="ignore"):
-            frac_table = df[cols_outliers].values / num_total_psites
-
-        self.frac_table = DataFrame(frac_table, index=df.index, columns=self.samples)
-
-        return self.frac_table
 
 
 class qValues:

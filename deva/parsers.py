@@ -54,12 +54,10 @@ def _check_suffix(path: str) -> str:
     """
 
     if path[-4:] == ".tsv":
-        sep = "\t"
-    elif path[-4:] == ".csv":
-        sep = ","
-    else:
-        raise ValueError("File must be .csv or .tsv")
-    return sep
+        return "\t"
+    if path[-4:] == ".csv":
+        return ","
+    raise ValueError("File must be .csv or .tsv")
 
 
 def read_in_values(path: str) -> DataFrame:
@@ -73,8 +71,7 @@ def read_in_values(path: str) -> DataFrame:
 
     """
     sep = _check_suffix(path)
-    df = pd.read_csv(_is_valid_file(path), sep=sep, index_col=0)
-    return df
+    return pd.read_csv(_is_valid_file(path), sep=sep, index_col=0)
 
 
 def read_in_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
@@ -93,9 +90,7 @@ def read_in_outliers(path: str, updown: str, iqrs: float) -> OutlierTable:
     sep = _check_suffix(path)
     df = pd.read_csv(_is_valid_file(path), sep=sep, index_col=0)
     samples = sorted(list(set([ind.rsplit(col_seps, 1)[0] for ind in df.columns])))
-    outliers = OutlierTable(df, updown, iqrs, samples, None)
-    outliers.make_frac_table()
-    return outliers
+    return OutlierTable(df, updown, iqrs, samples, None)
 
 
 def binarize_annotations(df: DataFrame) -> DataFrame:
@@ -109,8 +104,6 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
 
     Returns: new_df
         Refactored annotations DataFrame.
-
-
     """
 
     new_df = pd.DataFrame(index=df.index)
@@ -134,15 +127,13 @@ def convert_to_residuals(valstarget: Series, valsnormer: Series, model) -> Serie
     nonull = (valstarget.isnull() == False) & (valsnormer.isnull() == False)
     if sum(nonull) < model.get_params()["cv"]:
         residuals = np.empty(len(valstarget))
-        residuals = pd.Series(residuals, index=valstarget.index)
-    else:
-        features = valsnormer[nonull].values.reshape(-1, 1)
-        labels = valstarget[nonull].values
-        model = model.fit(features, labels)
-        prediction = model.predict(features)
-        residuals = labels - prediction
-        residuals = pd.Series(residuals, index=valstarget[nonull].index)
-    return residuals
+        return pd.Series(residuals, index=valstarget.index)
+    features = valsnormer[nonull].values.reshape(-1, 1)
+    labels = valstarget[nonull].values
+    model = model.fit(features, labels)
+    prediction = model.predict(features)
+    residuals = labels - prediction
+    return pd.Series(residuals, index=valstarget[nonull].index)
 
 
 def normalize_df(
@@ -153,7 +144,8 @@ def normalize_df(
     cv: float = 5,
     **RidgeCV_kws
 ) -> DataFrame:
-    if alphas is None:
+
+    if not alphas:
         alphas = [2 ** i for i in range(-10, 10, 1)]
 
     normer = normer.reindex(target.columns, axis=1)

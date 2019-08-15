@@ -134,19 +134,17 @@ def _determine_colors(path: str, annotations: DataFrame) -> dict:
 
     """
 
-    if path is None:
+    if not path:
+        return _assign_colors(annotations, {}, default_palette)
+    try:
+        with open(path, "r") as fh:
+            colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
+        colors = _check_colors(colors)
+    except FileNotFoundError:
+        logging.warning("%s is not a valid file, generating colors" % path)
         colors = {}
-    else:
-        try:
-            with open(path, "r") as fh:
-                colors = {line.split()[0]: line.split()[1] for line in fh.readlines()}
-            colors = _check_colors(colors)
-        except FileNotFoundError:
-            logging.warning("%s is not a valid file, generating colors" % path)
-            colors = {}
 
-    colors = _assign_colors(annotations, colors, default_palette)
-    return colors
+    return _assign_colors(annotations, colors, default_palette)
 
 
 def plot_heatmap(
