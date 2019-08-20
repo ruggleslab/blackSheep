@@ -1,5 +1,5 @@
 import pickle
-import deva as bsh
+import blacksheep as bsh
 
 
 def test_outliers_table():
@@ -48,7 +48,7 @@ def test_run_outliers_outTable():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
-    test_outliers, test_qvals = bsh.run_outliers(df, annotations)
+    test_outliers, test_qvals = bsh.deva(df, annotations)
     outliers = outliers.sort_index().sort_index(axis=1)
     test_outliers.df = test_outliers.df.sort_index().sort_index(axis=1)
 
@@ -59,7 +59,7 @@ def test_run_outliers_fracTable():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
-    test_outliers, test_qvals = bsh.run_outliers(df, annotations)
+    test_outliers, test_qvals = bsh.deva(df, annotations)
     fractable = fractable.sort_index().sort_index(axis=1)
     test_outliers.frac_table = test_outliers.frac_table.sort_index().sort_index(axis=1)
     assert fractable.equals(test_outliers.frac_table)
@@ -69,7 +69,7 @@ def test_run_outliers_qvals():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
-    _, test_qvals = bsh.run_outliers(df, annotations)
+    _, test_qvals = bsh.deva(df, annotations)
     test_qvals.df = test_qvals.df.sort_index().sort_index(axis=1)
     qvalues = qvalues.sort_index().sort_index(axis=1)
 
@@ -80,7 +80,7 @@ def test_run_outliers_comps():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
-    test_outliers, test_qvals = bsh.run_outliers(df, annotations)
+    test_outliers, test_qvals = bsh.deva(df, annotations)
     assert sum(annotations.columns.sort_values() != test_qvals.comps.sort_values()) == 0
 
 

@@ -1,4 +1,4 @@
-from deva.cli import _main
+from blacksheep.cli import _main
 
 
 def test_cli_outliers_table():
@@ -81,7 +81,7 @@ def test_vis():
 
 def test_cli_pipeline():
     args = [
-        "outliers",
+        "deva",
         "tests/pidgin_values.csv",
         "tests/pidgin_annotations.csv",
         "--iqrs",
@@ -104,7 +104,7 @@ def test_cli_pipeline():
 
 def test_cli_pipeline_with_figures():
     args = [
-        "outliers",
+        "deva",
         "tests/pidgin_values.csv",
         "tests/pidgin_annotations.csv",
         "--iqrs",
