@@ -7,8 +7,8 @@ from pandas import DataFrame, Series
 import numpy as np
 import sklearn.linear_model as lm
 from sklearn.exceptions import UndefinedMetricWarning
-from deva.classes import OutlierTable
-from deva._constants import *
+from blacksheep.classes import OutlierTable
+from blacksheep._constants import *
 
 
 def _is_valid_file(arg: str) -> str:

@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pandas import Series
 import numpy as np
 import scipy.stats
-from deva._constants import *
+from blacksheep._constants import *
 
 
 SampleList = List[str]

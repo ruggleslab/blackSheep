@@ -4,22 +4,14 @@ import logging
 import argparse
 
 import matplotlib.pyplot as plt
-from deva.outliers import run_outliers
-from deva.outliers import make_outliers_table
-from deva.outliers import compare_groups_outliers
-from deva import parsers
-from deva.parsers import _is_valid_file, _check_output_prefix
-from deva.classes import qValues
-from deva.visualization import plot_heatmap
-from deva._constants import *
-
-
-__doc__ = """
-Command line interface for deva: 
-
-  .. include:: ../docs/helpcli.txt
-    
-"""
+from blacksheep.deva import deva
+from blacksheep.deva import make_outliers_table
+from blacksheep.deva import compare_groups_outliers
+from blacksheep import parsers
+from blacksheep.parsers import _is_valid_file, _check_output_prefix
+from blacksheep.classes import qValues
+from blacksheep.visualization import plot_heatmap
+from blacksheep._constants import *
 
 
 fmt = "%(asctime)s:%(levelname)s:%(message)s"
@@ -348,7 +340,7 @@ def _make_parser():
     )
 
     outliers = subparsers.add_parser(
-        "outliers",
+        "deva",
         description="Runs whole outliers pipeline. Has options to output every "
         "possible output. ",
     )
@@ -565,10 +557,10 @@ def _main(args: Optional[List[str]] = None):
                 args.fdr, args.output_prefix
             )
 
-    elif args.which == "outliers":
+    elif args.which == "deva":
         df = parsers.read_in_values(args.values)
         annotations = parsers.read_in_values(args.annotations)
-        outLiers, qVals = run_outliers(
+        outLiers, qVals = deva(
             df,
             annotations,
             iqrs=args.iqrs,
@@ -604,21 +596,6 @@ def _main(args: Optional[List[str]] = None):
         for arg in vars(args):
             fh.write("%s: %s\n" % (arg, getattr(args, arg)))
 
-
-# Get the helps into a good doc format
-# parser = _make_parser()
-# subparsers_actions = [
-#     action.choices for action in parser._actions if isinstance(action, argparse._SubParsersAction)
-# ]
-# helps = {}
-# for choices in subparsers_actions:
-#     for choice, subparser in choices.items():
-#         helps[choice] = argdown.md_help(subparser)
-#
-# doc = []
-# for k, v in helps.items():
-#     doc.extend(['# deva %s' % k, v])
-# __doc__ = '\n'.join(doc)
 
 # Run cli
 if __name__ == "__main__":

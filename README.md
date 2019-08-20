@@ -11,7 +11,7 @@ With conda
 conda install -c bioconda blacksheep-outliers
 ```
 
-### Requirements
+### Requirements (automatically taken care of with pip and conda)
 pandas  
 numpy  
 matplotlib  
@@ -19,6 +19,8 @@ seaborn
 scipy  
 scikit-learn  
 
+### Documentation
+https://blacksheep.readthedocs.io/en/latest/index.html
 
 ### Usage
 ##### In python
@@ -36,9 +38,9 @@ annotations = deva.binarize_annotations(annotations)
 
 # Run outliers comparative analysis
 outliers, qvalues = deva.run_outliers(
-    values, annotations, 
+    values, annotations,
     save_outlier_table=True,
-    save_qvalues=True, 
+    save_qvalues=True,
     save_comparison_summaries=True
 )
 
@@ -232,7 +234,7 @@ optional arguments:
 ```
 
 Run the whole pipeline: call outliers, perform comparisons on all groups in an annotation table
-, optionally make heatmaps for each group. 
+, optionally make heatmaps for each group.
 ```bash
 usage: deva outliers [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
                      [--up_or_down {up,down}] [--do_not_aggregate]
@@ -297,7 +299,7 @@ optional arguments:
                         have a line with 'value color' format for each value
                         in annotations. Any value not represented will be
                         assigned a new color.
-``` 
+```
 
 For finding the value differences that cannot be explained by a different data level. For example
 , this can be used to find out variation due to differential phosphorylation (phospho as
@@ -335,4 +337,4 @@ optional arguments:
 
 ```
 
-For a more thorough vignette, refer to our [supplementary notebooks](https://github.com/ruggleslab/blacksheep_supp) 
+For a more thorough vignette, refer to our [supplementary notebooks](https://github.com/ruggleslab/blacksheep_supp)

@@ -1,8 +1,8 @@
 import logging
-from deva.classes import qValues, OutlierTable
-from deva.outliers import make_outliers_table, compare_groups_outliers, run_outliers
-from deva.visualization import plot_heatmap
-from deva.parsers import (
+from blacksheep.classes import qValues, OutlierTable
+from blacksheep.deva import make_outliers_table, compare_groups_outliers, deva
+from blacksheep.visualization import plot_heatmap
+from blacksheep.parsers import (
     binarize_annotations,
     normalize_df,
     read_in_values,
@@ -17,10 +17,12 @@ logging.basicConfig(format=FMT, level=logging.WARNING, datefmt="%m/%d/%Y %H:%M:%
 __all__ = [
     "make_outliers_table",
     "compare_groups_outliers",
-    "run_outliers",
+    "deva",
     "plot_heatmap",
     "binarize_annotations",
     "normalize_df",
     "read_in_values",
     "read_in_outliers",
+    "qValues",
+    "OutlierTable"
 ]

@@ -3,12 +3,12 @@ import logging
 import os.path
 import pandas as pd
 from pandas import DataFrame
-from deva.classes import OutlierTable, qValues
-from deva._outlierTable import _convert_to_outliers
-from deva._outlierTable import _convert_to_counts
-from deva.comparisons import _compare_groups
-from deva.comparisons import get_sample_lists
-from deva._constants import *
+from blacksheep.classes import OutlierTable, qValues
+from blacksheep._outlierTable import _convert_to_outliers
+from blacksheep._outlierTable import _convert_to_counts
+from blacksheep.comparisons import _compare_groups
+from blacksheep.comparisons import get_sample_lists
+from blacksheep._constants import *
 
 
 def make_outliers_table(
@@ -186,7 +186,7 @@ def compare_groups_outliers(
     return qvals
 
 
-def run_outliers(
+def deva(
     df: DataFrame,
     annotations: DataFrame,
     iqrs: float = 1.5,

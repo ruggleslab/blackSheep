@@ -1,7 +1,7 @@
 from typing import List, Optional, Iterable
 from pandas import DataFrame
 import numpy as np
-from deva._constants import col_seps, col_outlier_suffix, col_not_outlier_suffix, gene_list_file_name
+from blacksheep._constants import col_seps, col_outlier_suffix, col_not_outlier_suffix, gene_list_file_name
 
 
 def list_to_file(lis: Iterable, filename: str):

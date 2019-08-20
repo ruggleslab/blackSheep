@@ -3,7 +3,7 @@ import numpy as np
 import scipy.stats
 from pandas import DataFrame
 from typing import List
-from deva._constants import *
+from blacksheep._constants import *
 
 
 SampleList = List[str]

@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="blacksheep-outliers",
+    name="blksheep",
     version="0.0.1",
     author="Ruggles Lab",
     author_email="lili.blumenberg@gmail.com",
@@ -29,5 +29,5 @@ setuptools.setup(
     packages=setuptools.find_packages(
         exclude=["*.tests", "*.tests.*", "tests.*", "tests"]
     ),
-    entry_points={"console_scripts": ["deva = deva.cli:_main"]},
+    entry_points={"console_scripts": ["blacksheep = blacksheep.cli:_main"]},
 )
