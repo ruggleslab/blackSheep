@@ -4,11 +4,11 @@
 ### Installation
 With pip
 ```bash
-pip install blacksheep-outliers
+pip install blksheep
 ```
 With conda
 ```bash
-conda install -c bioconda blacksheep-outliers
+conda install -c bioconda blksheep
 ```
 
 ### Requirements (automatically taken care of with pip and conda)
@@ -25,7 +25,7 @@ https://blacksheep.readthedocs.io/en/latest/index.html
 ### Usage
 ##### In python
 ```python
-import deva
+import blacksheep
 
 # Read in data
 values_file = '' #insert values file here
@@ -34,10 +34,10 @@ values = deva.read_in_values(values_file)
 annotations = deva.read_in_values(annotations_file)
 
 # Binarize annotation columns
-annotations = deva.binarize_annotations(annotations)
+annotations = blacksheep.binarize_annotations(annotations)
 
 # Run outliers comparative analysis
-outliers, qvalues = deva.run_outliers(
+outliers, qvalues = blacksheep.deva(
     values, annotations,
     save_outlier_table=True,
     save_qvalues=True,
@@ -50,11 +50,11 @@ vis_table = outliers.frac_table
 
 # Make heatmaps for significant genes
 for col in annotations.columns:
-    axs = deva.plot_heatmap(annotations, qvalues_table, col, vis_table, savefig=True)
+    axs = blacksheep.plot_heatmap(annotations, qvalues_table, col, vis_table, savefig=True)
 
 # Normalize values
-phospho = deva.read_in_values('') #Fill in file here
-protein = deva.read_in_values('') #Fill in file here
+phospho = blacksheep.read_in_values('') #Fill in file here
+protein = blacksheep.read_in_values('') #Fill in file here
 
 
 ```
@@ -62,8 +62,8 @@ protein = deva.read_in_values('') #Fill in file here
 ##### Command line interface
 *Example*
 ```bash
-deva binarize annotations.tsv --output_prefix annotations_test
-deva outliers values.csv annotations_test.binarized.tsv --output_prefix test \
+blacksheep binarize annotations.tsv --output_prefix annotations_test
+blacksheep deva values.csv annotations_test.binarized.tsv --output_prefix test \
 --write_outlier_table --write_comparison_summaries --write_gene_list \
 --make_heatmaps
 ```
@@ -71,7 +71,7 @@ deva outliers values.csv annotations_test.binarized.tsv --output_prefix test \
 *Full help*  
 Just make the outliers table:
 ```bash
-usage: deva outliers_table [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
+usage: blacksheep outliers_table [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
                            [--up_or_down {up,down}] [--ind_sep IND_SEP]
                            [--do_not_aggregate] [--write_frac_table]
                            values
@@ -108,7 +108,7 @@ Binarize the columns in an annotations table.
 **Warning: do not include non-categorical columns, or columns you don't want binarized. You'll
  end up with a huge un-wieldly table. **
 ```bash
-usage: deva binarize [-h] [--output_prefix OUTPUT_PREFIX] annotations
+usage: blacksheep binarize [-h] [--output_prefix OUTPUT_PREFIX] annotations
 
 Takes an annotation table where some columns may have more than 2 possible
 values (not including empty/null values) and outputs an annotation table with
@@ -126,7 +126,7 @@ optional arguments:
 
 Compare all the groups described in columns of an annotation table using outlier counts
 ```bash
-usage: deva compare_groups [-h] [--output_prefix OUTPUT_PREFIX]
+usage: blacksheep compare_groups [-h] [--output_prefix OUTPUT_PREFIX]
                            [--frac_filter FRAC_FILTER]
                            [--write_comparison_summaries] [--iqrs IQRS]
                            [--up_or_down {up,down}] [--write_gene_list]
@@ -190,7 +190,7 @@ optional arguments:
 
 Make heatmaps visualizing enriched genes for each group in an annotation table
 ```bash
-usage: deva visualize [-h] [--output_prefix OUTPUT_PREFIX]
+usage: blacksheep visualize [-h] [--output_prefix OUTPUT_PREFIX]
                       [--annotations_to_show ANNOTATIONS_TO_SHOW [ANNOTATIONS_TO_SHOW ...]]
                       [--fdr FDR] [--red_or_blue {red,blue}]
                       [--annotation_colors ANNOTATION_COLORS]
@@ -236,7 +236,7 @@ optional arguments:
 Run the whole pipeline: call outliers, perform comparisons on all groups in an annotation table
 , optionally make heatmaps for each group.
 ```bash
-usage: deva outliers [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
+usage: blacksheep deva [-h] [--output_prefix OUTPUT_PREFIX] [--iqrs IQRS]
                      [--up_or_down {up,down}] [--do_not_aggregate]
                      [--write_outlier_table] [--write_frac_table]
                      [--ind_sep IND_SEP] [--frac_filter FRAC_FILTER]
@@ -306,7 +306,7 @@ For finding the value differences that cannot be explained by a different data l
  target_values) not due to protein abundance variation (protein as normalizer_values).   
 **Warning: Row IDs between the two tables must match**  
 ```bash
-usage: deva normalize [-h] [--ind_sep IND_SEP] [--output_prefix OUTPUT_PREFIX]
+usage: blacksheep normalize [-h] [--ind_sep IND_SEP] [--output_prefix OUTPUT_PREFIX]
                       target_values normalizer_values
 
 Takes a target table and a normalizer table, and returns a normalized target
