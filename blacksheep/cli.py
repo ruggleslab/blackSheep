@@ -55,7 +55,7 @@ def _bn0and1(arg: str) -> float:
 
 # Argparser
 def _make_parser():
-    parser = argparse.ArgumentParser(prog="deva", description="")
+    parser = argparse.ArgumentParser(prog="blacksheep", description="")
     parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
 
     subparsers = parser.add_subparsers(dest="which")

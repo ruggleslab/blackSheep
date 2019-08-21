@@ -7,7 +7,7 @@ setuptools.setup(
     name="blksheep",
     version="0.0.1",
     author="Ruggles Lab",
-    author_email="lili.blumenberg@gmail.com",
+    author_email="ruggleslab@gmail.com",
     description="A package for differential extreme values analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",
