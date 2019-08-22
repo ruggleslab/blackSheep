@@ -154,7 +154,7 @@ class qValues:
                 temp = pd.DataFrame(
                     (-np.log10(self.df[cols[0]]).subtract(
                     -np.log10(self.df[cols[1]]), fill_value=0
-                    )), columns=[comp])
+                    )), columns=['%s_%s'%(comp, cols[0].rsplit('_', 1)[1])])
             signed_qs = pd.concat([signed_qs, temp], join='outer', axis=1, sort=False)
 
         return signed_qs
