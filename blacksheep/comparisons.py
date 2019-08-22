@@ -22,7 +22,7 @@ def _multi_hyp_correct(
         correction_type: correction_type: Which procedure to use. Options are "Benjamini-Hochberg" or
         "Bonferroni"
 
-    Returns: rray of p-values corrected for multiple hypothesis testing (aka q-values).
+    Returns: Array of p-values corrected for multiple hypothesis testing (aka q-values).
 
     """
 
@@ -100,7 +100,7 @@ def _filter_outliers(
         frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
 
-    Returns:A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
+    Returns: A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
     rows without enough outliers in group0 are also removed.
 
     """

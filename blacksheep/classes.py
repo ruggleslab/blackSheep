@@ -1,4 +1,6 @@
 from typing import List, Optional, Iterable
+import logging
+import pandas as pd
 from pandas import DataFrame
 import numpy as np
 from blacksheep._constants import col_seps, col_outlier_suffix, col_not_outlier_suffix, gene_list_file_name
@@ -103,7 +105,7 @@ class qValues:
             comparisons: which subset of qvalue columns to write gene lists for. Default will
             write for all columns
 
-        Returns:
+        Returns: None
 
         """
 
@@ -121,3 +123,38 @@ class qValues:
             list_to_file(
                 sig_genes, gene_list_file_name % (output_prefix, comp, fdr_cut_off)
             )
+
+
+    def make_signed_logqs(self) -> DataFrame:
+        """Create a DataFrame with signed log10 qvalues for each comparison. E.g. group1 qvalues
+        will be positive, and group 2 qvalues will be negative. Assignment of positive group is
+        based on order in qvalues, could be helpful to negate some columns in output depending on
+        group of interest.
+
+        Returns: DataFrame with signed qvalues.
+
+        """
+        if not self.comps:
+            self.comps = [i.split('_', 1)[1].rsplit('_', 1)[0] for i in self.df.columns]
+
+        signed_qs = pd.DataFrame()
+        for comp in self.comps:
+            cols = [
+                col for col in self.df.columns if col.split('_', 1)[1].rsplit('_', 1)[0] == comp
+            ]
+            if len(cols) > 2 or len(cols) == 0:
+                logging.warning("Excluding %s, %s columns are associated with %s, need 1 or 2 "
+                                "columns. Annotation value probably has an _ in it. "
+                                %(comp, len(cols), comp))
+                continue
+
+            if len(cols) == 1:
+                temp = self.df[cols[0]]
+            elif len(cols) == 2:
+                temp = pd.DataFrame(
+                    (-np.log10(self.df[cols[0]]).subtract(
+                    -np.log10(self.df[cols[1]]), fill_value=0
+                    )), columns=[comp])
+            signed_qs = pd.concat([signed_qs, temp], join='outer', axis=1, sort=False)
+
+        return signed_qs
