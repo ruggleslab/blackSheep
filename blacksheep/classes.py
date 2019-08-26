@@ -134,7 +134,7 @@ class qValues:
         Returns: DataFrame with signed qvalues.
 
         """
-        if not self.comps:
+        if not (self.comps is None):
             self.comps = [i.split('_', 1)[1].rsplit('_', 1)[0] for i in self.df.columns]
 
         signed_qs = pd.DataFrame()

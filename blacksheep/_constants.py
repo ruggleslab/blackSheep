@@ -19,7 +19,7 @@ outlier_count_lab = "Outliers"
 not_outlier_count_lab = "NotOutlier"
 fisherp_col = "fisherp"
 fisherfdr_col = "fisherFDR"
-mult_hypoth_method = "Benjamini-Hochberg"
+mult_hypoth_method = "fdr_bh"
 
 
 # Used in outliers
