@@ -136,12 +136,14 @@ class qValues:
         """
         if not (self.comps is None):
             self.comps = [i.split('_', 1)[1].rsplit('_', 1)[0] for i in self.df.columns]
+            self.comps = sorted(list(set(self.comps)))
 
         signed_qs = pd.DataFrame()
         for comp in self.comps:
             cols = [
                 col for col in self.df.columns if col.split('_', 1)[1].rsplit('_', 1)[0] == comp
             ]
+
             if len(cols) > 2 or len(cols) == 0:
                 logging.warning("Excluding %s, %s columns are associated with %s, need 1 or 2 "
                                 "columns. Annotation value probably has an _ in it. "
@@ -152,9 +154,9 @@ class qValues:
                 temp = self.df[cols[0]]
             elif len(cols) == 2:
                 temp = pd.DataFrame(
-                    (-np.log10(self.df[cols[0]]).subtract(
-                    -np.log10(self.df[cols[1]]), fill_value=0
-                    )), columns=['%s_%s'%(comp, cols[0].rsplit('_', 1)[1])])
+                    -np.log10(self.df[cols[1]]).subtract(np.log10(self.df[cols[0]]), fill_value=0),
+                    columns=['%s_%s'%(comp, cols[1].rsplit('_', 1)[1])]
+                )
             signed_qs = pd.concat([signed_qs, temp], join='outer', axis=1, sort=False)
 
         return signed_qs

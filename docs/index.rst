@@ -1,5 +1,5 @@
 .. Blacksheep documentation master file, created by
-   sphinx-quickstart on Thu Aug 15 16:51:07 2019.
+   sphinx-quickstart on Mon Sep  9 14:53:20 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -10,7 +10,7 @@ Welcome to Blacksheep's documentation!
    :maxdepth: 4
    :caption: Contents:
 
-   deva
+   blacksheep
 
 
 Indices and tables
@@ -19,3 +19,12 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+Command Line Interface
+======================
+
+.. argparse::
+   :module: blacksheep.cli
+   :func: _make_parser
+   :prog: blacksheep
