@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blksheep",
-    version="0.0.1",
+    version="0.0.2",
     author="Ruggles Lab",
     author_email="ruggleslab@gmail.com",
     description="A package for differential extreme values analysis",
