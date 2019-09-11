@@ -18,6 +18,7 @@ matplotlib
 seaborn  
 scipy  
 scikit-learn  
+statsmodels  
 
 ### Documentation
 https://blacksheep.readthedocs.io/en/latest/index.html
