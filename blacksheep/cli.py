@@ -10,6 +10,7 @@ from blacksheep.deva import compare_groups_outliers
 from blacksheep import parsers
 from blacksheep.parsers import _is_valid_file, _check_output_prefix
 from blacksheep.classes import qValues
+from blacksheep.simulate import run_simulations
 from blacksheep.visualization import plot_heatmap
 from blacksheep._constants import *
 
@@ -453,6 +454,52 @@ def _make_parser():
         "have a line with 'value    color' format for each value in annotations. Any value "
         "not represented will be assigned a new color. ",
     )
+    
+    simulations = subparsers.add_parser(
+        "simulations",
+        description="Add here. ",
+    )
+    simulations.add_argument(
+        "values",
+        type=_is_valid_file,
+        help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
+        "and .csv accepted.",
+    )
+    simulations.add_argument(
+        "--ind_sep",
+        type=str,
+        default="-",
+        help="Delimiter between the parent molecule (e.g. a gene name such "
+        "as ATM) and a site identifier (e.g. S365). Default is -",
+    )
+    simulations.add_argument(
+        "--iqrs",
+        type=_check_positive,
+        default=1.5,
+        help="Number of inter-quartile ranges (IQRs) above or below the "
+        "median to consider a value an outlier. Default is 1.5.",
+    )
+    simulations.add_argument(
+        "--reps",
+        type=_check_positive,
+        default=1000000,
+        help="Number of repetitions for the simulation to perform. "
+        "Default is 1,000,000.",
+    )
+    simulations.add_argument(
+        "--output_prefix",
+        type=_check_output_prefix,
+        default="simulated_pvals",
+        help="Output prefix for writing files. Default simulated_pvals. ",
+    )
+    simulations.add_argument(
+    	"--molecules",
+    	nargs='+',
+    	default=[],
+    	help="List of parent molecules of interest. Empty list or absence of "
+    	"argument defaults to all parent molecules in input file.",
+    )
+    
     return parser
 
 
@@ -591,6 +638,16 @@ def _main(args: Optional[List[str]] = None):
                     savefig=True,
                 )
                 plt.close()
+                
+    elif args.which == "simulations":
+        run_simulations(
+            args.values,
+            args.ind_sep,
+            args.iqrs,
+            int(args.reps),
+            args.output_prefix,
+            args.molecules,
+        )
 
     with open(parameters_file_name % args.output_prefix, "w") as fh:
         for arg in vars(args):

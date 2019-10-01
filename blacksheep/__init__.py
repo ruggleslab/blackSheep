@@ -2,6 +2,7 @@ import logging
 from blacksheep.classes import qValues, OutlierTable
 from blacksheep.deva import make_outliers_table, compare_groups_outliers, deva
 from blacksheep.visualization import plot_heatmap
+from blacksheep.simulate import run_simulations
 from blacksheep.parsers import (
     binarize_annotations,
     normalize_df,
@@ -19,6 +20,7 @@ __all__ = [
     "compare_groups_outliers",
     "deva",
     "plot_heatmap",
+    "run_simulations",
     "binarize_annotations",
     "normalize_df",
     "read_in_values",
