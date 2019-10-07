@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: blksheep
-Version: 0.0.2
+Version: 0.0.3
 Summary: A package for differential extreme values analysis
 Home-page: https://github.com/ruggleslab/blackSheep/
 Author: Ruggles Lab
@@ -26,6 +26,7 @@ Description: # BlackSheep
         seaborn  
         scipy  
         scikit-learn  
+        statsmodels  
         
         ### Documentation
         https://blacksheep.readthedocs.io/en/latest/index.html
