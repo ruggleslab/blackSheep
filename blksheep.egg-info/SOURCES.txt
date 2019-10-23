@@ -9,6 +9,7 @@ blacksheep/cli.py
 blacksheep/comparisons.py
 blacksheep/deva.py
 blacksheep/parsers.py
+blacksheep/simulate.py
 blacksheep/visualization.py
 blksheep.egg-info/PKG-INFO
 blksheep.egg-info/SOURCES.txt
