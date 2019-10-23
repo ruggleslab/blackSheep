@@ -15,7 +15,6 @@ import numpy as np
 from scipy.stats import ttest_1samp
 from scipy.stats import percentileofscore
 from scipy.stats import gaussian_kde
-#from sets import Set
 
 def get_full_gene_list(ind_sep, infile):
 	# Gets a list of all molecules in the file
