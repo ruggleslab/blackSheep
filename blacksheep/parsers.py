@@ -108,7 +108,7 @@ def binarize_annotations(df: DataFrame) -> DataFrame:
             new_df[col] = df[col]
         elif len(df[col].dropna().value_counts().keys()) > 2:
             for val in df[col].dropna().value_counts().keys():
-                val = val.replace("_", "-")
+                val = str(val).replace("_", "-")
                 new_df.loc[(df[col] != val), binarized_col_name % (col, val)] = (
                     outgroup_val % val
                 )

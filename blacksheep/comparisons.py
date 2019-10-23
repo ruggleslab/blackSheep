@@ -3,60 +3,13 @@ from typing import List, Tuple, Iterable, Optional
 import pandas as pd
 from pandas import DataFrame
 from pandas import Series
-import numpy as np
 import scipy.stats
+from statsmodels.stats.multitest import multipletests
 from blacksheep._constants import *
 
 
 SampleList = List[str]
 logger = logging.getLogger("cli")
-
-
-def _multi_hyp_correct(
-    pvalues: Iterable[float], correction_type: str = "Benjamini-Hochberg"
-) -> Iterable[float]:
-    """Corrects p-values for multiple hypothesis testing
-
-    Args:
-        pvalues:  Array of p-values to correct
-        correction_type: correction_type: Which procedure to use. Options are "Benjamini-Hochberg" or
-        "Bonferroni"
-
-    Returns: rray of p-values corrected for multiple hypothesis testing (aka q-values).
-
-    """
-
-    pvalues = np.array(pvalues)
-    n = sum(~np.isnan(pvalues))
-    new_pvalues = np.empty(len(pvalues))
-
-    if correction_type == "Bonferroni":
-        new_pvalues = n * pvalues
-
-    elif correction_type == "Benjamini-Hochberg":
-
-        values = [(pvalue, i) for i, pvalue in enumerate(pvalues)]
-        values = [x for x in values if ~np.isnan(x[0])]
-        values.sort()
-        values.reverse()
-        new_values = []
-        for i, vals in enumerate(values):
-            rank = n - i
-            pvalue, index = vals
-            new_values.append((n / rank) * pvalue)
-        for i in range(0, int(n) - 1):
-            if new_values[i] < new_values[i + 1]:
-                new_values[i + 1] = new_values[i]
-        for i, vals in enumerate(values):
-            pvalue, index = vals
-            new_pvalues[index] = new_values[i]
-
-    new_pvalues[np.isnan(pvalues)] = np.nan
-    for i, val in enumerate(new_pvalues):
-        if ~np.isnan(val):
-            new_pvalues[i] = min(1, val)
-
-    return new_pvalues
 
 
 def get_sample_lists(
@@ -100,7 +53,7 @@ def _filter_outliers(
         frac_filter: The fraction of samples in group0 (i.e. the group of interest) that must
         have an outlier value to be considered in the comparison. Float between 0 and 1 or None.
 
-    Returns:A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
+    Returns: A DataFrame with rows that are not enriched in group0 removed. If frac_filter > 0,
     rows without enough outliers in group0 are also removed.
 
     """
@@ -193,9 +146,9 @@ def _fisher_test_groups(
         axis=1,
     )
 
-    outlier_table[fisherfdr_col] = _multi_hyp_correct(
-        list(outlier_table[fisherp_col]), correction_type
-    )
+    outlier_table[fisherfdr_col] = multipletests(
+        list(outlier_table[fisherp_col]), method=correction_type
+    )[1]
     fisher_info = outlier_table[
         [
             outlier_count_lab + general_group_label_0,

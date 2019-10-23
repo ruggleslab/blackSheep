@@ -79,14 +79,12 @@ def _convert_to_counts(
     outlier_cols = [x + col_seps + col_outlier_suffix for x in samples]
 
     if aggregate:
-        df[agg_col] = [ind.split(ind_sep)[0] for ind in df.index]
+        df.index = [ind.split(ind_sep)[0] for ind in df.index]
+        df_inv = df == 0
+
         output_df = pd.DataFrame()
-        output_df[not_outlier_cols] = df.groupby(by=agg_col)[samples].agg(
-            lambda x: pd.Series(x == 0).sum()
-        )
-        output_df[outlier_cols] = df.groupby(by=agg_col)[samples].agg(
-            lambda x: pd.Series(x == 1).sum()
-        )
+        output_df[not_outlier_cols] = df_inv.groupby(level=0)[samples].sum()
+        output_df[outlier_cols] = df.groupby(level=0)[samples].sum()
     elif not aggregate:
         output_df = pd.DataFrame(index=df.index)
         output_df[outlier_cols] = df[samples]
