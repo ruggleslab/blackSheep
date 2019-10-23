@@ -3,7 +3,8 @@ import logging
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
-from blacksheep._constants import col_seps, col_outlier_suffix, col_not_outlier_suffix, gene_list_file_name
+from blacksheep._constants import col_seps, col_outlier_suffix, col_not_outlier_suffix, \
+    gene_list_file_name
 
 
 def list_to_file(lis: Iterable, filename: str):
@@ -41,16 +42,17 @@ def make_frac_table(df, samples):
 
     return DataFrame(frac_table, index=df.index, columns=samples)
 
+
 class OutlierTable:
     """Output of calling outliers. """
 
     def __init__(
-        self,
-        df: DataFrame,
-        updown: str,
-        iqrs: Optional[float],
-        samples: Optional[list],
-        frac_table: Optional[DataFrame],
+            self,
+            df: DataFrame,
+            updown: str,
+            iqrs: Optional[float],
+            samples: Optional[list],
+            frac_table: Optional[DataFrame],
     ):
         """Instantiate an OutlierTable
 
@@ -73,7 +75,6 @@ class OutlierTable:
             self.frac_table = make_frac_table(df, samples)
 
 
-
 class qValues:
     """Output from comparing groups using outliers. """
 
@@ -92,10 +93,10 @@ class qValues:
         self.frac_filter = frac_filter
 
     def write_gene_lists(
-        self,
-        fdr_cut_off: float = 0.01,
-        output_prefix: str = "outliers",
-        comparisons: Optional[List] = None,
+            self,
+            fdr_cut_off: float = 0.01,
+            output_prefix: str = "outliers",
+            comparisons: Optional[List] = None,
     ):
         """ Writes significant gene list files for every column in a qvalue table
 
@@ -124,7 +125,6 @@ class qValues:
                 sig_genes, gene_list_file_name % (output_prefix, comp, fdr_cut_off)
             )
 
-
     def make_signed_logqs(self) -> DataFrame:
         """Create a DataFrame with signed log10 qvalues for each comparison. E.g. group1 qvalues
         will be positive, and group 2 qvalues will be negative. Assignment of positive group is
@@ -147,7 +147,7 @@ class qValues:
             if len(cols) > 2 or len(cols) == 0:
                 logging.warning("Excluding %s, %s columns are associated with %s, need 1 or 2 "
                                 "columns. Annotation value probably has an _ in it. "
-                                %(comp, len(cols), comp))
+                                % (comp, len(cols), comp))
                 continue
 
             if len(cols) == 1:
@@ -155,7 +155,7 @@ class qValues:
             elif len(cols) == 2:
                 temp = pd.DataFrame(
                     -np.log10(self.df[cols[1]]).subtract(np.log10(self.df[cols[0]]), fill_value=0),
-                    columns=['%s_%s'%(comp, cols[1].rsplit('_', 1)[1])]
+                    columns=['%s_%s' % (comp, cols[1].rsplit('_', 1)[1])]
                 )
             signed_qs = pd.concat([signed_qs, temp], join='outer', axis=1, sort=False)
 

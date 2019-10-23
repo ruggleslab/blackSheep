@@ -3,6 +3,7 @@ import logging
 import os.path
 import pandas as pd
 from pandas import DataFrame
+from blacksheep.parsers import subset_by_genes
 from blacksheep.classes import OutlierTable, qValues
 from blacksheep._outlierTable import _convert_to_outliers
 from blacksheep._outlierTable import _convert_to_counts

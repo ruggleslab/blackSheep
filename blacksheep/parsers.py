@@ -1,7 +1,8 @@
 import os.path
 import pandas as pd
-from pandas import DataFrame
 import numpy as np
+from pandas import DataFrame
+from typing import Iterable
 from blacksheep.classes import OutlierTable
 from blacksheep._constants import *
 
@@ -132,3 +133,9 @@ def normalize(df: DataFrame) -> DataFrame:
     ))
 
 
+def subset_by_genes(
+        outliers: DataFrame, ind_list: Iterable[str], ind_sep: str = None,
+        ) -> DataFrame:
+    if ind_sep:
+        return outliers.loc[[i for i in outliers.index if i.split(ind_sep, 1)[0] in ind_list], :]
+    return outliers.loc[ind_list, :]

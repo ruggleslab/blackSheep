@@ -8,16 +8,15 @@ from blacksheep.deva import deva
 from blacksheep.deva import make_outliers_table
 from blacksheep.deva import compare_groups_outliers
 from blacksheep import parsers
-from blacksheep.parsers import _is_valid_file, _check_output_prefix
+from blacksheep.parsers import _is_valid_file, _check_output_prefix, subset_by_genes
 from blacksheep.classes import qValues
 from blacksheep.simulate import run_simulations
 from blacksheep.visualization import plot_heatmap
 from blacksheep._constants import *
 
-
 fmt = "%(asctime)s:%(levelname)s:%(message)s"
 logging.basicConfig(format=fmt, level=logging.INFO, datefmt="%m/%d/%Y %H:%M:%S")
-
+logging.captureWarnings(True)
 
 def _set_up_logger(path):
     logger = logging.getLogger("cli")
@@ -62,16 +61,34 @@ def _make_parser():
     subparsers = parser.add_subparsers(dest="which")
     subparsers.required = True
 
+    normalize = subparsers.add_parser(
+        "normalize",
+        description="Takes an unnormalized values table and uses median of ratios normalization "
+                    "to normalize. Saves a log2 normalized table appropriate for BlackSheep "
+                    "analysis."
+    )
+    normalize.add_argument(
+        "unnormed_values",
+        type=_is_valid_file,
+        help="Table of values to be normalized. Sites/genes as rows, samples as columns. "
+    )
+    normalize.add_argument(
+        "--output_prefix",
+        type=str,
+        default="values",
+        help="Prefix for output file. Suffix will be '.normalized.tsv'"
+    )
+
     outliers_table = subparsers.add_parser(
         "outliers_table",
         description="Takes a table of values and converts to a "
-        "table of outlier counts.",
+                    "table of outlier counts.",
     )
     outliers_table.add_argument(
         "values",
         type=_is_valid_file,
         help="File path to input values. Columns must be samples, "
-        "genes must be sites or genes. Only .tsv and .csv accepted.",
+             "genes must be sites or genes. Only .tsv and .csv accepted.",
     )
     outliers_table.add_argument(
         "--output_prefix",
@@ -84,7 +101,7 @@ def _make_parser():
         type=_check_positive,
         default=1.5,
         help="Number of interquartile ranges (IQRs) above or below the "
-        "median to consider a value an outlier. Default is 1.5 IQRs.",
+             "median to consider a value an outlier. Default is 1.5 IQRs.",
     )
     outliers_table.add_argument(
         "--up_or_down",
@@ -92,15 +109,15 @@ def _make_parser():
         default="true",
         choices=["up", "down"],
         help="Whether to look for up or down outliers. Choices are up or "
-        "down. Default up.",
+             "down. Default up.",
     )
     outliers_table.add_argument(
         "--ind_sep",
         type=str,
         default="-",
         help="If site labels have a parent molecule (e.g. a gene name such "
-        "as ATM) and a site identifier (e.g. S365) this is the "
-        "delimiter between the two elements. Default is -",
+             "as ATM) and a site identifier (e.g. S365) this is the "
+             "delimiter between the two elements. Default is -",
     )
     outliers_table.add_argument(
         "--do_not_aggregate",
@@ -113,23 +130,23 @@ def _make_parser():
         default=False,
         action="store_true",
         help="Use flag if you want to write a table with fraction of "
-        "values per site, per sample that are outliers. Will not be "
-        "written by default. Useful for visualization. ",
+             "values per site, per sample that are outliers. Will not be "
+             "written by default. Useful for visualization. ",
     )
 
     binarize = subparsers.add_parser(
         "binarize",
         description="Takes an annotation table where some columns "
-        "may have more than 2 possible values (not "
-        "including empty/null values) and outputs an "
-        "annotation table with only two values per "
-        "annotation. Propagates null values. ",
+                    "may have more than 2 possible values (not "
+                    "including empty/null values) and outputs an "
+                    "annotation table with only two values per "
+                    "annotation. Propagates null values. ",
     )
     binarize.add_argument(
         "annotations",
         type=_is_valid_file,
         help="Annotation table with samples as rows and "
-        "annotation labels as columns. ",
+             "annotation labels as columns. ",
     )
     binarize.add_argument(
         "--output_prefix",
@@ -138,67 +155,42 @@ def _make_parser():
         help="Output prefix for writing files. Default annotations. Suffix will be '.binarized.tsv'",
     )
 
-    normalize = subparsers.add_parser(
-        "normalize",
-        description="Takes a target table and a normalizer table, and returns a normalized "
-                    "target table. Builds a regularized linear model for each line in the target "
-                    "table using the matching row ID in the normalizer table, and finds the "
-                    "residuals of that model for each value. for example, this could be used to "
-                    "normalize phospho-peptide data by protein abundance data; resulting values "
-                    "will reflect only abundance differences due to phosphorylation changes, "
-                    "not peptide abundances. Another use could be normalizing RNA by CNA. "
-    )
-    normalize.add_argument(
-        "target_values",
-        type=_is_valid_file,
-        help="Table of values to be normalized. Sites/genes as rows, samples as columns. "
-             "Row identifiers must be unique. "
-    )
-    normalize.add_argument(
-        "normalizer_values",
-        type=_is_valid_file,
-        help="Table of values to use for normalization. Sites/genes as rows, samples as columns. "
-             "Row identifiers must be unique, and must match the pre-ind_sep part of the target "
-             "values identifiers."
-    )
-    normalize.add_argument(
-        "--ind_sep",
-        type=str,
-        default=None,
-        help="Separator used in index if target is site specific. Row IDs before ind_sep in "
-             "the target must match the row IDs in normalizer_values. If row IDs already match, "
-             "leave blank."
-    )
-    normalize.add_argument(
-        "--output_prefix",
-        type=str,
-        default="values",
-        help="Prefix for output file. Suffix will be '.normalized.tsv'"
-    )
-
     compare_groups = subparsers.add_parser(
         "compare_groups",
         description="Takes an annotation table and outlier count "
-        "table (output of outliers_table) and outputs qvalues from "
-        "a statistical test that looks for enrichment of outlier values in each "
-        "group in the annotation table. For each value in each comparison, the qvalue table will "
-        "have 1 column, if there are any genes in that comparison. "
+                    "table (output of outliers_table) and outputs qvalues from "
+                    "a statistical test that looks for enrichment of outlier values in each "
+                    "group in the annotation table. For each value in each comparison, the qvalue table will "
+                    "have 1 column, if there are any genes in that comparison. "
     )
     compare_groups.add_argument(
         "outliers_table",
         type=_is_valid_file,
         help="Table of outlier counts (output of outliers_table). Must be "
-        ".tsv or .csv file, with outlier and non-outlier counts as columns, and genes/sites as "
-        "rows. ",
+             ".tsv or .csv file, with outlier and non-outlier counts as columns, and genes/sites as "
+             "rows. ",
     )
     compare_groups.add_argument(
         "annotations",
         type=_is_valid_file,
         help="Table of annotations. Must be .csv or .tsv. Samples as rows "
-        "and comparisons as columns. Comparisons must have only  "
-        "unique values (not including missing values). If there are "
-        "more options than that, you can use binarize to prepare the "
-        "table. ",
+             "and comparisons as columns. Comparisons must have only  "
+             "unique values (not including missing values). If there are "
+             "more options than that, you can use binarize to prepare the "
+             "table. ",
+    )
+    compare_groups.add_argument(
+        "--ind_subset",
+        type=_is_valid_file,
+        default=None,
+        help="File with subset of indexes to consider in comparison",
+    )
+    compare_groups.add_argument(
+        "--ind_sep",
+        type=str,
+        default=None,
+        help="Index separator for subsetting genes. Only needed if using ind_subset, and if rows "
+             "of outliers are NOT aggregated. ",
     )
     compare_groups.add_argument(
         "--output_prefix",
@@ -211,15 +203,15 @@ def _make_parser():
         type=_bn0and1,
         default=0.3,
         help="The minimum fraction of samples per group that must have an outlier in a gene to"
-        "consider that gene in the analysis. This is used to prevent a high number of outlier "
-        "values in 1 sample from driving a low qvalue. Default 0.3",
+             "consider that gene in the analysis. This is used to prevent a high number of outlier "
+             "values in 1 sample from driving a low qvalue. Default 0.3",
     )
     compare_groups.add_argument(
         "--write_comparison_summaries",
         default=False,
         action="store_true",
         help="Use flag to write a separate file for each column in the annotations table, "
-        "with outlier counts in each group, p-values and q-values in each group. ",
+             "with outlier counts in each group, p-values and q-values in each group. ",
     )
     compare_groups.add_argument(
         "--iqrs",
@@ -232,21 +224,21 @@ def _make_parser():
         type=str,
         choices=["up", "down"],
         help="Whether input outlier table represents up or down outliers. Needed for "
-        "output file labels. Default up",
+             "output file labels. Default up",
     )
     compare_groups.add_argument(
         "--write_gene_list",
         default=False,
         action="store_true",
         help="Use flag to write a list of significantly enriched genes for each value in each "
-        "comparison. If used, need an fdr threshold as well. ",
+             "comparison. If used, need an fdr threshold as well. ",
     )
     compare_groups.add_argument(
         "--make_heatmaps",
         default=False,
         action="store_true",
         help="Use flag to draw a heatmap of signficantly enriched genes for each value in each "
-        "comparison. If used, need an fdr threshold as well. ",
+             "comparison. If used, need an fdr threshold as well. ",
     )
     compare_groups.add_argument(
         "--fdr",
@@ -266,8 +258,8 @@ def _make_parser():
         type=_is_valid_file,
         default=None,
         help="File with color map to use for annotation header if --make_heatmaps is used. Must "
-        "have a 'value    color' format for each value in annotations. Any value not "
-        "represented will be assigned a new color. ",
+             "have a 'value    color' format for each value in annotations. Any value not "
+             "represented will be assigned a new color. ",
     )
 
     visualize = subparsers.add_parser(
@@ -278,7 +270,7 @@ def _make_parser():
         "comparison_qvalues",
         type=_is_valid_file,
         help="Table of qvalues, output from compare_groups. Must be .csv or .tsv. Has genes/sites "
-        "as rows and comparison values as columns. ",
+             "as rows and comparison values as columns. ",
     )
     visualize.add_argument(
         "annotations",
@@ -289,8 +281,8 @@ def _make_parser():
         "visualization_table",
         type=_is_valid_file,
         help="Values to visualize in heatmap. Samples as columns and "
-        "genes/sites as rows. Using outlier fraction table is recommended, but original "
-        "values can also be used if no aggregation was used. ",
+             "genes/sites as rows. Using outlier fraction table is recommended, but original "
+             "values can also be used if no aggregation was used. ",
     )
     visualize.add_argument(
         "comparison_of_interest",
@@ -309,7 +301,7 @@ def _make_parser():
         default=None,
         nargs="+",
         help="Names of columns from the annotation table to show in the header of the heatmap. "
-        "Default is all columns. ",
+             "Default is all columns. ",
     )
     visualize.add_argument(
         "--fdr",
@@ -329,132 +321,132 @@ def _make_parser():
         type=_is_valid_file,
         default=None,
         help="File with color map to use for annotation header. Must "
-        "have a line with 'value    color' format for each value in annotations. Any value "
-        "not represented will be assigned a new color. ",
+             "have a line with 'value    color' format for each value in annotations. Any value "
+             "not represented will be assigned a new color. ",
     )
     visualize.add_argument(
         "--write_gene_list",
         default=False,
         action="store_true",
         help="Use flag to write a list of significantly enriched genes for each value in each "
-        "comparison.",
+             "comparison.",
     )
 
-    outliers = subparsers.add_parser(
+    deva = subparsers.add_parser(
         "deva",
         description="Runs whole outliers pipeline. Has options to output every "
-        "possible output. ",
+                    "possible output. ",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "values",
         type=_is_valid_file,
         help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
-        "and .csv accepted.",
+             "and .csv accepted.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "annotations",
         type=_is_valid_file,
         help="File path to annotation values. Rows are sample names, "
-        "header is different annotations. e.g. mutation status.",
+             "header is different annotations. e.g. mutation status.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--output_prefix",
         type=_check_output_prefix,
         default="outliers",
         help="Output prefix for writing files. Default outliers. ",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--iqrs",
         type=_check_positive,
         default=1.5,
         help="Number of inter-quartile ranges (IQRs) above or below the "
-        "median to consider a value an outlier. Default is 1.5.",
+             "median to consider a value an outlier. Default is 1.5.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--up_or_down",
         type=str,
         default="true",
         choices=["up", "down"],
         help="Whether to look for up or down outliers. Choices are up or down. Default up.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--do_not_aggregate",
         default=False,
         action="store_true",
         help="Use flag if you do not want to sum outliers based on site prefixes.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--write_outlier_table",
         default=False,
         action="store_true",
         help="Use flag to write a table of outlier counts.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--write_frac_table",
         default=False,
         action="store_true",
         help="Use flag if you want to write a table with fraction of "
-        "values per site per sample that are outliers. Useful for custom visualization.",
+             "values per site per sample that are outliers. Useful for custom visualization.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--ind_sep",
         type=str,
         default="-",
         help="If site labels have a parent molecule (e.g. a gene name such "
-        "as ATM) and a site identifier (e.g. S365) this is the "
-        "delimiter between the two elements. Default is -",
+             "as ATM) and a site identifier (e.g. S365) this is the "
+             "delimiter between the two elements. Default is -",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--frac_filter",
         type=_bn0and1,
         default=0.3,
         help="The minimum fraction of samples per group that must have an outlier in a gene to"
-        "consider that gene in the analysis. This is used to prevent a high number of outlier "
-        "values in 1 sample from driving a low qvalue. Default 0.3",
+             "consider that gene in the analysis. This is used to prevent a high number of outlier "
+             "values in 1 sample from driving a low qvalue. Default 0.3",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--write_comparison_summaries",
         default=False,
         action="store_true",
         help="Use flag to write a separate file for each column in the annotations table, "
-        "with outlier counts in each group, p-values and q-values in each group. ",
+             "with outlier counts in each group, p-values and q-values in each group. ",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--fdr",
         type=_bn0and1,
         default=0.05,
         help="FDR threshold to use to select genes to visualize. Default 0.05",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--write_gene_list",
         default=False,
         action="store_true",
         help="Use flag to write a list of significantly enriched genes for each value in each "
-        "comparison.",
+             "comparison.",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--make_heatmaps",
         default=False,
         action="store_true",
         help="Use flag to draw a heatmap of significantly enriched genes for each value in each "
-        "comparison. If used, need an fdr threshold as well. ",
+             "comparison. If used, need an fdr threshold as well. ",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--red_or_blue",
         type=str,
         choices=["red", "blue"],
         default="red",
         help="Color of values to draw on heatmap. Default red. ",
     )
-    outliers.add_argument(
+    deva.add_argument(
         "--annotation_colors",
         type=_is_valid_file,
         default=None,
         help="File with color map to use for annotation header. Must "
-        "have a line with 'value    color' format for each value in annotations. Any value "
-        "not represented will be assigned a new color. ",
+             "have a line with 'value    color' format for each value in annotations. Any value "
+             "not represented will be assigned a new color. ",
     )
-    
+
     simulations = subparsers.add_parser(
         "simulations",
         description="Add here. ",
@@ -463,28 +455,28 @@ def _make_parser():
         "values",
         type=_is_valid_file,
         help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
-        "and .csv accepted.",
+             "and .csv accepted.",
     )
     simulations.add_argument(
         "--ind_sep",
         type=str,
         default="-",
         help="Delimiter between the parent molecule (e.g. a gene name such "
-        "as ATM) and a site identifier (e.g. S365). Default is -",
+             "as ATM) and a site identifier (e.g. S365). Default is -",
     )
     simulations.add_argument(
         "--iqrs",
         type=_check_positive,
         default=1.5,
         help="Number of inter-quartile ranges (IQRs) above or below the "
-        "median to consider a value an outlier. Default is 1.5.",
+             "median to consider a value an outlier. Default is 1.5.",
     )
     simulations.add_argument(
         "--reps",
         type=_check_positive,
         default=1000000,
         help="Number of repetitions for the simulation to perform. "
-        "Default is 1,000,000.",
+             "Default is 1,000,000.",
     )
     simulations.add_argument(
         "--output_prefix",
@@ -493,13 +485,13 @@ def _make_parser():
         help="Output prefix for writing files. Default simulated_pvals. ",
     )
     simulations.add_argument(
-    	"--molecules",
-    	nargs='+',
-    	default=[],
-    	help="List of parent molecules of interest. Empty list or absence of "
-    	"argument defaults to all parent molecules in input file.",
+        "--molecules",
+        nargs='+',
+        default=[],
+        help="List of parent molecules of interest. Empty list or absence of "
+             "argument defaults to all parent molecules in input file.",
     )
-    
+
     return parser
 
 
@@ -534,15 +526,18 @@ def _main(args: Optional[List[str]] = None):
         annotations.to_csv("%s.binarized.tsv" % args.output_prefix, sep="\t")
 
     elif args.which == "normalize":
-        target = parsers.read_in_values(args.target_values)
-        normalizer = parsers.read_in_values(args.normalizer_values)
-        df = parsers.normalize_df(target, normalizer, args.ind_sep)
+        target = parsers.read_in_values(args.unnormed_values)
+        df = parsers.normalize(target)
         df.to_csv(args.output_prefix + ".normalized.tsv", sep='\t')
 
     elif args.which == "compare_groups":
         outliers = parsers.read_in_outliers(
             args.outliers_table, args.up_or_down, args.iqrs
         )
+        if args.ind_subset:
+            with open(args.ind_subset, 'r') as fh:
+                ind_list = [i.strip() for i in fh.readlines()]
+                outliers.df = subset_by_genes(outliers.df, ind_list, args.ind_sep)
 
         annotations = parsers.read_in_values(args.annotations)
         qVals = compare_groups_outliers(
@@ -607,7 +602,7 @@ def _main(args: Optional[List[str]] = None):
     elif args.which == "deva":
         df = parsers.read_in_values(args.values)
         annotations = parsers.read_in_values(args.annotations)
-        outLiers, qVals = deva(
+        Outliers, qVals = deva(
             df,
             annotations,
             iqrs=args.iqrs,
@@ -630,7 +625,7 @@ def _main(args: Optional[List[str]] = None):
                     annotations,
                     qVals.df,
                     col_of_interest,
-                    outLiers.frac_table,
+                    Outliers.frac_table,
                     fdr=args.fdr,
                     red_or_blue=args.red_or_blue,
                     output_prefix=args.output_prefix,
@@ -638,7 +633,7 @@ def _main(args: Optional[List[str]] = None):
                     savefig=True,
                 )
                 plt.close()
-                
+
     elif args.which == "simulations":
         run_simulations(
             args.values,

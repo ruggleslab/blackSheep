@@ -23,11 +23,8 @@ def test_cli_normer():
     args = [
         "normalize",
         "tests/pidgin_values.csv",
-        "tests/pidgin_fracTable.csv",
         "--output_prefix",
         "tests/output/normer",
-        "--ind_sep",
-        "-",
     ]
 
     _main(args)

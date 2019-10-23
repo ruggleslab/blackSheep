@@ -87,5 +87,5 @@ def test_run_outliers_comps():
 def test_normalizer():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
-    bsh.normalize_df(df, fractable)
+    bsh.normalize(df)
 
