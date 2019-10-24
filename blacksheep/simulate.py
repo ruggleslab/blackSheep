@@ -11,10 +11,67 @@ Emily Kawaler, last updated 10/01/19
 '''
 
 import random
+import sys
+import argparse
 import numpy as np
 from scipy.stats import ttest_1samp
 from scipy.stats import percentileofscore
 from scipy.stats import gaussian_kde
+
+# Argparser, when testing on its own
+def _make_parser():
+    parser = argparse.ArgumentParser(prog="blacksheep", description="")
+    parser.add_argument("--version", "-v", action="version", version="%(prog)s 0.0.1")
+
+    parser.add_argument(
+        "values",
+        type=str,
+        help="File path to input values. Samples are columns and genes/sites are rows. Only .tsv "
+             "and .csv accepted.",
+    )
+    parser.add_argument(
+        "--ind_sep",
+        type=str,
+        default="-",
+        help="Delimiter between the parent molecule (e.g. a gene name such "
+             "as ATM) and a site identifier (e.g. S365). Default is -",
+    )
+    parser.add_argument(
+        "--iqrs",
+        type=float,
+        default=1.5,
+        help="Number of inter-quartile ranges (IQRs) above or below the "
+             "median to consider a value an outlier. Default is 1.5.",
+    )
+    parser.add_argument(
+        "--reps",
+        type=int,
+        default=1000000,
+        help="Number of repetitions for the simulation to perform. "
+             "Default is 1,000,000.",
+    )
+    parser.add_argument(
+        "--output_prefix",
+        type=str,
+        default="simulated_pvals",
+        help="Output prefix for writing files. Default is 'simulated_pvals'.",
+    )
+    parser.add_argument(
+        "--molecules",
+        nargs='+',
+        default=[],
+        help="List of parent molecules of interest. Empty list or absence of "
+             "argument defaults to all parent molecules in input file.",
+    )
+    parser.add_argument(
+        "--pval",
+        type=float,
+        default=0.05,
+        help="p-value threshold for significant results. Must be between 0 and 1."
+        "Default is 0.05.",
+    )
+
+    return parser
 
 def get_full_gene_list(ind_sep, infile):
 	# Gets a list of all molecules in the file
@@ -36,8 +93,10 @@ def get_values(gene, ind_sep, infile):
 	total = len(line.split())-1
 	while line:
 		if line.split(ind_sep)[0] == gene and len(line.split()) > 1:
-			values[line.split()[0]] = [float(num) for num in line.split()[1:]]
-			missings[line.split()[0]] = 1-(len(values[line.split()[0]])/float(total))
+			temp_vals = [float(num) for num in line.split()[1:]]
+			if len(temp_vals) > 1:
+				values[line.split()[0]] = [float(num) for num in line.split()[1:]]
+				missings[line.split()[0]] = 1-(len(values[line.split()[0]])/float(total))
 		line = f.readline()
 		
 	return values, missings
@@ -95,20 +154,15 @@ def simulate_kde(values, missings, o_thresh, reps):
 		ol_list.append(outliers)
 	return ol_list
 
-def alpha_thresh(ol_dist):
-	# Spits out outlier (p<0.05) number of outliers
-	return np.percentile(ol_dist,95)
+def alpha_thresh(ol_dist, pval):
+	# Spits out outlier number of outliers
+	pv = 100-(100*pval)
+	return np.percentile(ol_dist,pv)
 	#return np.mean(ol_dist)+1.64*np.std(ol_dist) # I think this is the 0.05, if you have a normal distribution, which you probably won't. 
 	
-def run_simulations(infile, ind_sep, thresh, reps, outfile, genes):
+def run_simulations(infile, ind_sep, thresh, reps, outfile, genes, pval):
 
 	w = open(outfile+"_pvals.tsv", 'w')
-	
-	# Write header line - not actually a thing
-	#f = open(infile, 'r')
-	#line = f.readline()
-	#w.write(line)
-	#f.close()
 	
 	if len(genes) == 0:
 		genes = get_full_gene_list(ind_sep, infile)
@@ -121,7 +175,7 @@ def run_simulations(infile, ind_sep, thresh, reps, outfile, genes):
 		# Do the actual simulation
 		ol_dist = simulate_kde(values, missings, o_thresh, reps)
 		# Grab out the significance threshold for outliers
-		out_line = alpha_thresh(ol_dist)
+		out_line = alpha_thresh(ol_dist, pval)
 	
 		# Write to the output file
 		w.write(gene)
@@ -133,3 +187,18 @@ def run_simulations(infile, ind_sep, thresh, reps, outfile, genes):
 				w.write('\t'+str(i+1)+'\t'+str(round(((100-percentileofscore(ol_dist,i,kind='weak'))/100.0),3)))
 		w.write('\n')
 	w.close()
+
+if __name__=='__main__':
+
+	args = sys.argv[1:]
+	args = _make_parser().parse_args(args) 
+    
+	run_simulations(
+            args.values,
+            args.ind_sep,
+            args.iqrs,
+            int(args.reps),
+            args.output_prefix,
+            args.molecules,
+            args.pval,
+        )
