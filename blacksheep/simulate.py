@@ -87,8 +87,9 @@ def get_full_gene_list(ind_sep, infile):
 def get_values(gene, ind_sep, infile):
 	# Digs around in the input file for the specified gene
 	f = open(infile,'r')
-	values = {}
-	missings = {}
+	values = {} # only non-missing values
+	missings = {} # missing values
+	all_values = {} # all values, including missing and present
 	line = f.readline()
 	total = len(line.split())-1
 	while line:
@@ -97,9 +98,10 @@ def get_values(gene, ind_sep, infile):
 			if len(temp_vals) > 1:
 				values[line.split()[0]] = [float(num) for num in line.split()[1:]]
 				missings[line.split()[0]] = 1-(len(values[line.split()[0]])/float(total))
+				all_values[line.split()[0]] = line.rstrip().split('\t')[1:]
 		line = f.readline()
 		
-	return values, missings
+	return values, missings, all_values
 
 def outlier_thresholds(values, thresh):
 	# Fixes the value that is (threshold) IQR above the median for each phospho
@@ -159,33 +161,54 @@ def alpha_thresh(ol_dist, pval):
 	pv = 100-(100*pval)
 	return np.percentile(ol_dist,pv)
 	#return np.mean(ol_dist)+1.64*np.std(ol_dist) # I think this is the 0.05, if you have a normal distribution, which you probably won't. 
+
+def generate_output_line(o_thresh, values, ol_dist, pval):
+	# Determines the p-value for each sample being significantly hyperphosphorylated
+	# for the given gene.
+		
+	output_list = []
+	
+	for s in range(len(values.values()[0])): # for each sample
+		tot_outliers = 0
+		for o in o_thresh.keys():
+			if values[o][s]:
+				if float(values[o][s]) > o_thresh[o]:
+					tot_outliers += 1
+		pv = round(((100-percentileofscore(ol_dist,tot_outliers-1,kind='weak'))/100.0),3) # pval for i+1 outliers
+		if pv <= pval:
+			output_list.append(str(pv))
+		else:
+			output_list.append('NS')
+		
+	return output_list
 	
 def run_simulations(infile, ind_sep, thresh, reps, outfile, genes, pval):
 
 	w = open(outfile+"_pvals.tsv", 'w')
+	
+	# writing header to file
+	f = open(infile, 'r')
+	w.write(f.readline())
+	f.close()
 	
 	if len(genes) == 0:
 		genes = get_full_gene_list(ind_sep, infile)
 	
 	for gene in genes: # Can make this much more efficient
 		# Get values for your gene from the input file
-		values, missings = get_values(gene, ind_sep, infile)
+		values, missings, all_values = get_values(gene, ind_sep, infile)
 		# Figure out the outlier threshold for each phosphosite
 		o_thresh = outlier_thresholds(values, thresh)
 		# Do the actual simulation
 		ol_dist = simulate_kde(values, missings, o_thresh, reps)
 		# Grab out the significance threshold for outliers
 		out_line = alpha_thresh(ol_dist, pval)
-	
+		
 		# Write to the output file
-		w.write(gene)
-		if int(out_line) == len(values):
-			pass
-		else:
-			for i in range(int(out_line), len(values)):
-			#for i in range(int(out_line)+1,len(values)+1): This is how it used to be. I think I was wrong? If something downstream is broken, though, look here for a possible cause.
-				w.write('\t'+str(i+1)+'\t'+str(round(((100-percentileofscore(ol_dist,i,kind='weak'))/100.0),3)))
-		w.write('\n')
+		w.write(gene+'\t')
+		to_write = generate_output_line(o_thresh, all_values, ol_dist, pval)
+		w.write('\t'.join(to_write)+'\n')
+		
 	w.close()
 
 if __name__=='__main__':
