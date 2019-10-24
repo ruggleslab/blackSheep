@@ -482,7 +482,7 @@ def _make_parser():
         "--output_prefix",
         type=_check_output_prefix,
         default="simulated_pvals",
-        help="Output prefix for writing files. Default simulated_pvals. ",
+        help="Output prefix for writing files. Default is 'simulated_pvals'.",
     )
     simulations.add_argument(
         "--molecules",
@@ -490,6 +490,13 @@ def _make_parser():
         default=[],
         help="List of parent molecules of interest. Empty list or absence of "
              "argument defaults to all parent molecules in input file.",
+    )
+    simulations.add_argument(
+        "--pval",
+        type=_bn0and1,
+        default=0.05,
+        help="p-value threshold for significant results. Must be between 0 and 1."
+        "Default is 0.05.",
     )
 
     return parser
@@ -642,6 +649,7 @@ def _main(args: Optional[List[str]] = None):
             int(args.reps),
             args.output_prefix,
             args.molecules,
+            args.pval,
         )
 
     with open(parameters_file_name % args.output_prefix, "w") as fh:
