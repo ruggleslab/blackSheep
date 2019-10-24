@@ -99,7 +99,7 @@ def get_values(gene, ind_sep, infile):
 			if len(temp_vals) > 1:
 				values[line.split()[0]] = [float(num) for num in line.split()[1:]]
 				missings[line.split()[0]] = 1-(len(values[line.split()[0]])/float(total))
-				all_values[line.split()[0]] = line.rstrip().split('\t')[1:]
+				all_values[line.split()[0]] = line.rstrip('\n').split('\t')[1:]
 		line = f.readline()
 		
 	return values, missings, all_values
@@ -172,8 +172,8 @@ def generate_output_line(o_thresh, values, ol_dist, pval):
 	# for the given gene.
 		
 	output_list = []
-	
-	for s in range(len(values.values()[0])): # for each sample
+
+	for s in range(len(list(values.values())[0])): # for each sample
 		tot_outliers = 0
 		for o in o_thresh.keys():
 			if values[o][s]:
@@ -209,9 +209,10 @@ def run_simulations(infile, ind_sep, thresh, reps, outfile, genes, pval):
 		out_line = alpha_thresh(ol_dist, pval)
 		
 		# Write to the output file
-		w.write(gene+'\t')
-		to_write = generate_output_line(o_thresh, all_values, ol_dist, pval)
-		w.write('\t'.join(to_write)+'\n')
+		if len(all_values) > 0: # won't write it out if the gene has no phosphosites with more than one value
+			w.write(gene+'\t')
+			to_write = generate_output_line(o_thresh, all_values, ol_dist, pval)
+			w.write('\t'.join(to_write)+'\n')
 		
 	w.close()
 
