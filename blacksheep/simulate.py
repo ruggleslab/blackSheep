@@ -16,6 +16,7 @@ from scipy.stats import ttest_1samp
 from scipy.stats import percentileofscore
 from scipy.stats import gaussian_kde
 
+
 def get_full_gene_list(ind_sep, infile):
 	# Gets a list of all molecules in the file
 	f = open(infile, 'r')
@@ -26,6 +27,7 @@ def get_full_gene_list(ind_sep, infile):
 		genes.add(line.split()[0].split(ind_sep)[0])
 		line = f.readline()
 	return genes
+
 
 def get_values(gene, ind_sep, infile):
 	# Digs around in the input file for the specified gene
@@ -42,6 +44,7 @@ def get_values(gene, ind_sep, infile):
 		
 	return values, missings
 
+
 def outlier_thresholds(values, thresh):
 	# Fixes the value that is (threshold) IQR above the median for each phospho
 	o_thresh = {}
@@ -51,6 +54,7 @@ def outlier_thresholds(values, thresh):
 		outlier_threshold = np.percentile(dist,50)+(iqr*thresh)
 		o_thresh[val] = outlier_threshold
 	return o_thresh
+
 
 def simulate(values, missings, o_thresh, reps):
 	# Generates a random value for each p-site and counts outliers
@@ -69,6 +73,7 @@ def simulate(values, missings, o_thresh, reps):
 				outliers +=1
 		ol_list.append(outliers)
 	return ol_list
+
 
 def simulate_kde(values, missings, o_thresh, reps):
 	# Generates a KDE for each p-site from the existing values,
@@ -95,11 +100,13 @@ def simulate_kde(values, missings, o_thresh, reps):
 		ol_list.append(outliers)
 	return ol_list
 
+
 def alpha_thresh(ol_dist):
 	# Spits out outlier (p<0.05) number of outliers
 	return np.percentile(ol_dist,95)
 	#return np.mean(ol_dist)+1.64*np.std(ol_dist) # I think this is the 0.05, if you have a normal distribution, which you probably won't. 
-	
+
+
 def run_simulations(infile, ind_sep, thresh, reps, outfile, genes):
 
 	w = open(outfile+"_pvals.tsv", 'w')
