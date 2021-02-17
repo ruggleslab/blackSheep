@@ -5,10 +5,9 @@ import blacksheep as bsh
 def test_outliers_table():
     with open("tests/pidgin_example.pickle", "rb") as fh:
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
-
     test_outliers = bsh.make_outliers_table(df)
-    test_df = test_outliers.df.sort_index().sort_index(axis=1)
-    outliers = outliers.sort_index().sort_index(axis=1)
+    test_df = test_outliers.df.sort_index().sort_index(axis=1).astype(float)
+    outliers = outliers.sort_index().sort_index(axis=1).astype(float)
     assert outliers.equals(test_df)
 
 
@@ -49,8 +48,8 @@ def test_run_outliers_outTable():
         df, annotations, outliers, fractable, qvalues = pickle.load(fh)
 
     test_outliers, test_qvals = bsh.deva(df, annotations)
-    outliers = outliers.sort_index().sort_index(axis=1)
-    test_outliers.df = test_outliers.df.sort_index().sort_index(axis=1)
+    outliers = outliers.sort_index().sort_index(axis=1).astype(float)
+    test_outliers.df = test_outliers.df.sort_index().sort_index(axis=1).astype(float)
 
     assert outliers.equals(test_outliers.df)
 

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blksheep",
-    version="0.0.6",
+    version="0.0.7",
     author="Ruggles Lab",
     author_email="ruggleslab@gmail.com",
     description="A package for differential extreme values analysis",
@@ -19,12 +19,12 @@ setuptools.setup(
         "Operating System :: Unix",
     ],
     install_requires=[
-        "pandas >= 0.24.2",
-        "numpy >= 1.16.4",
-        "scipy >= 1.2.1",
-        "matplotlib >= 3.1.0",
-        "seaborn >= 0.9.0",
-        "statsmodels >= 0.10.0"
+        "matplotlib >= 3.3.4",
+        "numpy >= 1.20.1",
+        "pandas >= 1.2.2",
+        "scipy >= 1.6.0",
+        "seaborn >= 0.11.1",
+        "statsmodels >= 0.12.2"
     ],
     packages=setuptools.find_packages(
         exclude=["*.tests", "*.tests.*", "tests.*", "tests"]
