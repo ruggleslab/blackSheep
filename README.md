@@ -21,7 +21,7 @@ scikit-learn
 statsmodels  
 
 ### Documentation
-https://blacksheep.readthedocs.io/en/latest/index.html
+https://blacksheep.readthedocs.io/en/master/
 
 ### Usage
 ##### In python
