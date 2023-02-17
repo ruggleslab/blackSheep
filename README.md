@@ -50,7 +50,7 @@ qvalues_table = qvalues.df
 vis_table = outliers.frac_table
 
 # Make heatmaps for significant genes
-for col in annotations.columns:
+for col in qvalues_table.columns:
     axs = blacksheep.plot_heatmap(annotations, qvalues_table, col, vis_table, savefig=True)
 
 # Normalize values
